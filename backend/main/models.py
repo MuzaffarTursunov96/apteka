@@ -29,9 +29,10 @@ MESSAGE_OWNER =(
 class Message(models.Model):
     chat_id = models.IntegerField()
     message_id = models.IntegerField()
-    user = models.ForeignKey(TelegramUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(TelegramUser, on_delete=models.CASCADE,related_name='messages')
     text = models.TextField()
     owner = models.SmallIntegerField()
+    saw = models.SmallIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

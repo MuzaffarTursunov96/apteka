@@ -1,6 +1,6 @@
 from django.db import models
 
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager,PermissionsMixin
 from django.utils import timezone
 import os
 from config.settings import STATIC_ROOT
@@ -40,9 +40,9 @@ class UserManager(BaseUserManager):
         user.is_staff = True
         user.is_superadmin = True
         user.save(using=self._db)
+        return user
 
-
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     ADMIN = 1
     STAFF = 2
     CLIENT = 3
@@ -82,14 +82,19 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-
+    
+    def get_all_permissions(self, obj=None):
+        if self.is_superadmin:
+            return PermissionsMixin.get_all_permissions(self, obj)
+        return set()
+    
     def get_role(self):
       if self.role == 2:
         user_role ='operator'
       elif self.role == 3:
         user_role ='client'
       else:
-        user_role ='fdmin'
+        user_role ='admin'
     #   print(self.role)
       return user_role
     

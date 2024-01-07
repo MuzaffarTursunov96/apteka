@@ -19,7 +19,7 @@ import requests as rq
 
 from aiohttp import web
 
-API_TOKEN = '6918479750:AAHcV4liDF29Y10uIqxVDTD0-PsBOkZFXY8'
+API_TOKEN = '6918479750:AAFm4eunDMv6IHZaAHv7w_YDup-VSL7YhHA'
 
 loop = asyncio.get_event_loop()
 
@@ -31,7 +31,7 @@ bot = Bot(token=API_TOKEN, loop=loop)
 
 webhook_path = f'/{API_TOKEN}'
 
-base_url ='https://302b-188-113-212-5.ngrok-free.app'
+base_url ='https://f474-188-113-204-5.ngrok-free.app'
 local_url ='http://127.0.0.1:8000'
 
 
@@ -70,6 +70,7 @@ async def on_startup(_):
 
 @dp.message_handler(commands=['start'])
 async def cmd_start(message: types.Message):
+   
     # if message.from_user.id in operator_ids:
         # return await bot.send_message(text='<em>Assalomu alaykum hushkelibsiz!</em>',chat_id=message.chat.id,reply_markup=operator_menu,parse_mode='HTML')
     user_states[message.chat.id] = STATES['LANGUAGE']
@@ -80,11 +81,13 @@ async def handle_webhook(request):
     url = str(request.url)
     index = url.rfind('/')
     token = url[index+1:]
+    
     if token == API_TOKEN:
         request_data = await request.json()
         update = types.Update(**request_data)
         await dp.process_update(update)
         return web.Response()
+
     else:
         return web.Response(status=403)
 
@@ -265,12 +268,12 @@ app.router.add_post(f'/{API_TOKEN}',handle_webhook)
 
 
 if __name__ == '__main__':
-    app.on_startup.append(on_startup)
+    # app.on_startup.append(on_startup)
 
-    web.run_app(
-        app,
-        host='0.0.0.0',
-        port=8080
-    )
-    # executor.start_polling(dp, loop=loop, skip_updates=True)
+    # web.run_app(
+    #     app,
+    #     host='0.0.0.0',
+    #     port=8080
+    # )
+    executor.start_polling(dp, loop=loop, skip_updates=True)
 

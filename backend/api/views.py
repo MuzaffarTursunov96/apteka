@@ -12,6 +12,8 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import websocket
 import json
+from datetime import datetime
+
 
 
 
@@ -28,6 +30,7 @@ def send_message_to_websocket(websocket_url,data):
 class ListOperators(APIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    permission_classes =[permissions.AllowAny]
 
     def get(self,request,region_name):
         queryset = User.objects.filter(viloyat__name__icontains =region_name)
@@ -38,6 +41,7 @@ class ListOperators(APIView):
 class ListViloyatlar(APIView):
     serializer_class = ViloyatSerializer
     queryset = Viloyatlar.objects.all()
+    permission_classes =[permissions.AllowAny]
 
     def get(self,request):
         queryset = Viloyatlar.objects.all()
@@ -62,6 +66,8 @@ def user_message_receive(request):
         if 'user_id' in data:
             user_id = data['user_id'][0]
             user = TelegramUser.objects.get(user_id=user_id)
+            user.updated_at =datetime.now()
+            user.save()
         if 'text' in data:
             text = data['text'][0]
         
@@ -146,7 +152,7 @@ def TelegramUserSave(request):
 
 def messages_all(request,id):
     
-    messages =Message.objects.filter(user__user_id =id).order_by('created_at')
+    messages =Message.objects.filter(user__user_id =id).order_by('-created_at')[:10][::-1]
     user = TelegramUser.objects.get(user_id = id)
 
 
@@ -161,4 +167,29 @@ def get_operator_id(request,id):
     operator_id = TelegramUser.objects.get(user_id = id).operator.id
 
     return JsonResponse({'operator_id':operator_id})    
-    
+
+@csrf_exempt    
+def send_message_to_client(request):
+    if request.method =='POST':
+        data = dict(request.POST)
+        chat_id = Message.objects.filter(user__user_id =int(data['user_id'][0]))[:1].get().chat_id
+        sended = send_message_to_aiogram(chat_id=chat_id,text=data['message'][0])
+        if sended:
+            return JsonResponse({'msg':True})
+    return JsonResponse({'msg':False})
+
+def send_message_to_aiogram(chat_id,text):
+    bot_token = '6918479750:AAFm4eunDMv6IHZaAHv7w_YDup-VSL7YhHA'  
+    url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
+    payload = {
+        'chat_id': chat_id,
+        'text': text
+    }
+
+    response = rq.post(url, json=payload)
+    if response.status_code == 200:
+        print('Message sent successfully')
+        return True
+    else:
+        print('Failed to send message:', response.text)
+        return False

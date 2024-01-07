@@ -19,7 +19,10 @@ urlpatterns = [
     #chat
     path("chat/<str:chat_box_name>/", views.chat_box, name="chat"),
 
+    ######authentications########
 
+    path('login/',views.login,name='login'),
+    path('logout/',views.logout,name='logout')
 
 
 

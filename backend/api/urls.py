@@ -1,6 +1,10 @@
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.urls import path
+
 from . import views
+
+
+
 urlpatterns = [
 
     path('operators/<region_name>',views.ListOperators.as_view(),name='operators'),
@@ -14,8 +18,7 @@ urlpatterns = [
     ########## messages #######
     path('user-message-get/<int:id>',views.messages_all,name='messages_all'),
 
+    path('receive-operator-message',views.send_message_to_client,name='send_message_to_client')
 
-
-    
-    
+   
 ]

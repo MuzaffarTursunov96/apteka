@@ -119,14 +119,14 @@
                           <img src="{{user.image.url}}" alt="Avatar" class="rounded-circle">
                         </div>
                         <div class="chat-contact-info flex-grow-1 ms-3">
-                          <h6 class="chat-contact-name text-truncate m-0">{{user}}</h6>
-                          <p class="chat-contact-status text-truncate mb-0 text-muted" id="new{{user.user_id}}">Refer friends. Get rewards.</p>
+                          <h6 class="chat-contact-name text-truncate m-0">{{user.first_name}}</h6>
+                          <p class="chat-contact-status text-truncate mb-0 text-muted" id="new{{user.user_id}}">{{user.username|cut:'None'}}</p>
                         </div>
                         <small class="text-muted mb-auto">5 Minutes</small>
                       </a>
                     </li>
                     {%endfor%}
-                  </div>
+                 
                   <!-- <li class="chat-contact-list-item active">
                     <a class="d-flex align-items-center">
                       <div class="flex-shrink-0 avatar avatar-offline">
@@ -166,14 +166,14 @@
             <!-- /Chat contacts -->
 
             <!-- Chat History -->
-            <div class="col app-chat-history"  id="chat_history">
+            <div class="col app-chat-history"  id="chat_history" data-id="nan">
               <div class="chat-history-wrapper">
                 <div class="chat-history-header border-bottom">
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex overflow-hidden align-items-center">
                       <i class="bx bx-menu bx-sm cursor-pointer d-lg-none d-block me-2" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-contacts"></i>
                       <div class="flex-shrink-0 avatar">
-                        <img  alt="Avatar" class="rounded-circle" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-sidebar-right" id="client_basic_img">
+                        <img   class="rounded-circle" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-sidebar-right" id="client_basic_img">
                       </div>
                       <div class="chat-contact-info flex-grow-1 ms-3">
                         <h6 class="m-0" id="client_name_basic"></h6>
@@ -199,7 +199,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="chat-history-body">
+                <div class="chat-history-body ps--scrolling-y">
                   <ul class="list-unstyled chat-history mb-0" id="chats">
                     
                   </ul>
@@ -207,14 +207,14 @@
                 
                 <div class="chat-history-footer">
                   <form class="form-send-message d-flex justify-content-between align-items-center ">
-                    <input class="form-control message-input border-0 me-3 shadow-none" placeholder="Type your message here...">
+                    <input class="form-control message-input border-0 me-3 shadow-none" placeholder="Type your message here..." id="text_operator">
                     <div class="message-actions d-flex align-items-center">
                       <i class="speech-to-text bx bx-microphone bx-sm cursor-pointer"></i>
                       <label for="attach-doc" class="form-label mb-0">
                         <i class="bx bx-paperclip bx-sm cursor-pointer mx-3 text-body"></i>
                         <input type="file" id="attach-doc" hidden>
                       </label>
-                      <button class="btn btn-primary d-flex send-msg-btn">
+                      <button class="btn btn-primary d-flex send-msg-btn" onclick="send_message()" type="button" id="send_msg">
                         <i class="bx bx-paper-plane me-md-1 me-0"></i>
                         <span class="align-middle d-md-inline-block d-none">Send</span>
                       </button>
@@ -226,7 +226,7 @@
             <!-- /Chat History -->
 
             <!-- Sidebar Right -->
-            <div class="col app-chat-sidebar-right app-sidebar overflow-hidden" id="app-chat-sidebar-right">
+            <!-- <div class="col app-chat-sidebar-right app-sidebar overflow-hidden" id="app-chat-sidebar-right">
               <div class="sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap p-4 mt-2">
                 <div class="avatar avatar-xl avatar-online">
                   <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle">
@@ -283,7 +283,7 @@
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- /Sidebar Right -->
 
             <div class="app-overlay"></div>
@@ -357,6 +357,40 @@
 
       basic_div_for_chat.insertAdjacentHTML('afterbegin', li);
       
+      var chat_history = document.getElementById('chat_history')
+      console.log(data.chat_id)
+      chat_history.setAttribute('data-chat_id',data.chat_id)
+      const attributeValue = chat_history.getAttribute('data-id')
+      // console.log(attributeValue)
+      if(attributeValue !='nan' && String(attributeValue) ==data.user_id){
+        var chats = document.getElementById('chats');
+        var chat_text =''
+        var newElement = document.createElement('li');
+        newElement.className = 'chat-message';
+  
+        newElement.innerHTML =`        <div class="d-flex ">
+                            <div class="user-avatar flex-shrink-0 me-3">
+                              <div class="avatar avatar-sm">
+                                <img src="/media/${data.image}" alt="Avatar" class="rounded-circle">
+                              </div>
+                            </div>
+                            <div class="chat-message-wrapper flex-grow-1">
+                              <div class="chat-message-text">
+                                <p class="mb-0" style="color: #788494;">${data.text}</p>
+                              </div>
+                              <div class="text-muted mt-1">
+                                <small>10:02 AM</small>
+                              </div>
+                            </div>
+                          </div>`
+          
+          chats.appendChild(newElement)
+
+
+          
+          
+      }
+
       // console.log(chat_list)
       // document.querySelector('#chat-text').value += (data.message) // add message to text box
   } 
@@ -364,7 +398,7 @@
  //###### endwebsocket####
 
 function get_user_messages(url){
-  console.log('funcga kel')
+  // console.log('funcga kel')
   fetch(url, {
     method: 'GET',
     headers: {
@@ -376,12 +410,13 @@ function get_user_messages(url){
     .then(data => {
       
       var chat_history = document.getElementById('chat_history')
+      chat_history.setAttribute('data-id',data.client.user_id)
       chat_history.style.display ='block';
       var basic_img = document.getElementById('client_basic_img')
       basic_img.setAttribute('src',data.client.image)
       var client_name_basic = document.getElementById('client_name_basic')
       client_name_basic.innerText = data.client.first_name
-      console.log(chat_history)//,basic_img,client_name_basic)
+      // console.log(chat_history)//,basic_img,client_name_basic)
       // chats
       var chats = document.getElementById('chats');
       var chat_text =''
@@ -439,5 +474,82 @@ function get_user_messages(url){
     });
 }
 
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  var input = document.getElementById('text_operator');
+  var button = document.getElementById('send_msg');
+
+  input.addEventListener('keyup', function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {  // Check if Enter key is pressed
+      send_message()  // Simulate button click
+    }
+  });
+
+  
+});
+
+function send_message(){
+  var text = document.getElementById('text_operator')
+  
+
+  var url ='{%url "send_message_to_client"%}'
+
+  var chat_history = document.getElementById('chat_history')
+  const attributeValue = chat_history.getAttribute('data-id')
+  
+  if(attributeValue !='nan'){
+    console.log(url);
+    $.ajax({
+      url: url,
+      method: 'POST',
+      data: {
+        message: text.value,
+        user_id: attributeValue
+      },
+      dataType: 'json',
+      success: function(response) {
+        // Handle the response data
+        console.log(response);
+      },
+      error: function(xhr, status, error) {
+        // Handle any errors
+        console.error(error);
+      }
+    });
+
+
+
+    var chats = document.getElementById('chats');
+        var chat_text =''
+        var newElement = document.createElement('li');
+        newElement.className = 'chat-message chat-message-right';
+  
+        newElement.innerHTML =`
+                            <div class="d-flex overflow-hidden">
+                          <div class="chat-message-wrapper flex-grow-1">
+                            <div class="chat-message-text">
+                              <p class="mb-0" style="color: #788494;">${text.value}</p>
+                            </div>
+                            <div class="text-end text-muted mt-1">
+                              <i class='bx bx-check-double text-success'></i>
+                              <small>10:00 AM</small>
+                            </div>
+                          </div>
+                          <div class="user-avatar flex-shrink-0 ms-3">
+                            <div class="avatar avatar-sm">
+                              <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
+                            </div>
+                          </div>
+                        </div>`
+          
+          chats.appendChild(newElement)
+          var text = document.getElementById('text_operator')
+          text.value ="";
+  }
+  
+  
+  }
 </script>
 {%endblock%}

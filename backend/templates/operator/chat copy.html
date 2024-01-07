@@ -86,21 +86,88 @@
             <!-- /Sidebar Left-->
 
             <!-- Chat & Contacts -->
-            <form>
-              <div class="form-group">
-                  <label for="exampleFormControlTextarea1" class="h4 pt-5">Chatbox</label>
-                  <textarea class="form-control" id="chat-text" readonly rows="2"></textarea><br>
+            <div class="col app-chat-contacts app-sidebar flex-grow-0 overflow-hidden border-end" id="app-chat-contacts">
+              <div class="sidebar-header pt-3 px-3 mx-1">
+                <div class="d-flex align-items-center me-3 me-lg-0">
+                  <div class="flex-shrink-0 avatar avatar-online me-2" data-bs-toggle="sidebar" data-overlay="app-overlay-ex" data-target="#app-chat-sidebar-left">
+                    <img class="user-avatar rounded-circle cursor-pointer" src="{%static 'icons/operator.png' %}" alt="Avatar">
+                  </div>
+                  <div class="flex-grow-1 input-group input-group-merge rounded-pill ms-1">
+                    <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search fs-4"></i></span>
+                    <input type="text" class="form-control chat-search-input" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon-search31">
+                  </div>
+                </div>
+                <i class="bx bx-x cursor-pointer position-absolute top-0 end-0 mt-2 me-1 fs-4 d-lg-none d-block" data-overlay data-bs-toggle="sidebar" data-target="#app-chat-contacts"></i>
               </div>
-              <div class="form-group">
-                  <input class="form-control" placeholder="Enter text here" id="input" type="text"></br>
+              <hr class="container-m-nx mt-3 mb-0">
+              <div class="sidebar-body">
+
+                <!-- Chats -->
+                
+                <ul class="list-unstyled chat-contact-list pt-1" id="chat-list">
+                  <li class="chat-contact-list-item chat-contact-list-item-title">
+                    <h5 class="text-primary mb-0">Chats</h5>
+                  </li>
+                  <div  id="basic_div_for_chat">
+                  {%if users %}
+                    {%for user in users %}
+                  
+                    <li class="chat-contact-list-item" id="user{{user.user_id}}">
+                      {% url 'messages_all' user.user_id as messages_url %}
+                      <a class="d-flex align-items-center"   onclick="get_user_messages('{{messages_url}}')">
+                        <div class="flex-shrink-0 avatar avatar-online">
+                          <img src="{{user.image.url}}" alt="Avatar" class="rounded-circle">
+                        </div>
+                        <div class="chat-contact-info flex-grow-1 ms-3">
+                          <h6 class="chat-contact-name text-truncate m-0">{{user}}</h6>
+                          <p class="chat-contact-status text-truncate mb-0 text-muted" id="new{{user.user_id}}">Refer friends. Get rewards.</p>
+                        </div>
+                        <small class="text-muted mb-auto">5 Minutes</small>
+                      </a>
+                    </li>
+                    {%endfor%}
+                  
+                  <!-- <li class="chat-contact-list-item active">
+                    <a class="d-flex align-items-center">
+                      <div class="flex-shrink-0 avatar avatar-offline">
+                        <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle">
+                      </div>
+                      <div class="chat-contact-info flex-grow-1 ms-3">
+                        <h6 class="chat-contact-name text-truncate m-0">Felecia Rower</h6>
+                        <p class="chat-contact-status text-truncate mb-0 text-muted">I will purchase it for sure. 👍</p>
+                      </div>
+                      <small class="text-muted mb-auto">30 Minutes</small>
+                    </a>
+                  </li>
+                  <li class="chat-contact-list-item">
+                    <a class="d-flex align-items-center">
+                      <div class="flex-shrink-0 avatar avatar-busy">
+                        <span class="avatar-initial rounded-circle bg-label-success">CM</span>
+                      </div>
+                      <div class="chat-contact-info flex-grow-1 ms-3">
+                        <h6 class="chat-contact-name text-truncate m-0">Calvin Moore</h6>
+                        <p class="chat-contact-status text-truncate mb-0 text-muted">If it takes long you can mail inbox user</p>
+                      </div>
+                      <small class="text-muted mb-auto">1 Day</small>
+                    </a>
+                  </li> -->
+                  {%else%}
+                  <li class="chat-contact-list-item chat-list-item-0 d-none">
+                    <h6 class="text-muted mb-0">No Chats Found</h6>
+                  </li>
+                  {%endif%}
+                </div>
+                </ul>
+                
+                <!-- Contacts -->
+                
               </div>
-              <input class="btn btn-primary btn-lg btn-block" id="submit" type="button" value="Send">
-          </form>
+            </div>
             
             <!-- /Chat contacts -->
 
             <!-- Chat History -->
-            <div class="col app-chat-history" style="display: none;" id="chat_history">
+            <div class="col app-chat-history" style="display: block;" id="chat_history">
               <div class="chat-history-wrapper">
                 <div class="chat-history-header border-bottom">
                   <div class="d-flex justify-content-between align-items-center">
