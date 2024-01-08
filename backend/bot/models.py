@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager,Permiss
 from django.utils import timezone
 import os
 from config.settings import STATIC_ROOT
+from django.contrib.auth.hashers import make_password
 
 tz = timezone.get_current_timezone()
 
@@ -22,9 +23,11 @@ class UserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name
         )
+        print('called create user')
         user.set_password(password)
         user.save(using=self._db)
         return user
+
 
     def create_superuser(self, first_name, last_name, username, email, password=None):
 

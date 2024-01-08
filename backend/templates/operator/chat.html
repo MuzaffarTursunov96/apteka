@@ -114,13 +114,13 @@
                   
                     <li class="chat-contact-list-item" id="user{{user.user_id}}">
                       {% url 'messages_all' user.user_id as messages_url %}
-                      <a class="d-flex align-items-center"   onclick="get_user_messages('{{messages_url}}')">
+                      <a class="d-flex align-items-center"   onclick="get_user_messages('{{messages_url}}','{{user.user_id}}')">
                         <div class="flex-shrink-0 avatar avatar-online">
                           <img src="{{user.image.url}}" alt="Avatar" class="rounded-circle">
                         </div>
                         <div class="chat-contact-info flex-grow-1 ms-3">
                           <h6 class="chat-contact-name text-truncate m-0">{{user.first_name}}</h6>
-                          <p class="chat-contact-status text-truncate mb-0 text-muted" id="new{{user.user_id}}">{{user.username|cut:'None'}}</p>
+                          <p class="chat-contact-status text-truncate mb-0 text-muted" id="new{{user.user_id}}">{{user.username|cut:'None'}} <span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count{{user.user_id}}" style="display: {%if user.count_message_saw > 0 %}block;{%else%}none{%endif%}">{%if user.count_message_saw > 0 %}{{user.count_message_saw}}{%endif%}</span></p>
                         </div>
                         <small class="text-muted mb-auto">5 Minutes</small>
                       </a>
@@ -206,15 +206,15 @@
                 </div>
                 
                 <div class="chat-history-footer">
-                  <form class="form-send-message d-flex justify-content-between align-items-center ">
-                    <input class="form-control message-input border-0 me-3 shadow-none" placeholder="Type your message here..." id="text_operator">
+                  <form class="form-send-message d-flex justify-content-between align-items-center " id="my_form">
+                    <input type="text" class="form-control message-input border-0 me-3 shadow-none"   placeholder="Type your message here..." id="text_operator">
                     <div class="message-actions d-flex align-items-center">
                       <i class="speech-to-text bx bx-microphone bx-sm cursor-pointer"></i>
                       <label for="attach-doc" class="form-label mb-0">
                         <i class="bx bx-paperclip bx-sm cursor-pointer mx-3 text-body"></i>
                         <input type="file" id="attach-doc" hidden>
                       </label>
-                      <button class="btn btn-primary d-flex send-msg-btn" onclick="send_message()" type="button" id="send_msg">
+                      <button class="btn btn-primary d-flex send-msg-btn" onclick="send_message()"  id="send_msg">
                         <i class="bx bx-paper-plane me-md-1 me-0"></i>
                         <span class="align-middle d-md-inline-block d-none">Send</span>
                       </button>
@@ -325,6 +325,22 @@
     </div>
 
 <script>
+  var myForm = document.getElementById("my_form");
+  myForm.addEventListener("submit", function(event) {
+  // Prevent the default form submission
+  event.preventDefault();
+});
+
+
+document.getElementById("text_operator").addEventListener("keyup", function(event) {
+  // Check if the key pressed is Enter (keycode 13) or "Enter" (key property)
+  if (event.keyCode === 13 || event.key === "Enter") {
+    send_message(); 
+    
+  }
+});
+
+
 
  // ###### Websocket####
   var boxName ='{{request.user.id}}'
@@ -335,21 +351,28 @@
 
   chatSocket.onmessage = function (e) {
     console.log(e.data)
+
+    
+
       const data = JSON.parse(e.data);
       var chat_list = document.getElementById('user'+data.user_id)
+      var badge = document.getElementById('msg_count'+data.user_id)
+      var new_count=String(parseInt(badge.innerText)+1);
       if(chat_list){
         chat_list.remove()
       }
+      
+
       var basic_div_for_chat = document.getElementById('basic_div_for_chat');
       var li = `<li class="chat-contact-list-item" id="user${data.user_id}">
                   
-                  <a class="d-flex align-items-center"   onclick="get_user_messages('/api/v1/user-message-get/${data.user_id}')">
+                  <a class="d-flex align-items-center"   onclick="get_user_messages('/api/v1/user-message-get/${data.user_id}',${data.user_id})">
                     <div class="flex-shrink-0 avatar avatar-online">
                       <img src="/media/${data.image}" alt="Avatar" class="rounded-circle">
                     </div>
                     <div class="chat-contact-info flex-grow-1 ms-3">
                       <h6 class="chat-contact-name text-truncate m-0">${data.username}</h6>
-                      <p class="chat-contact-status text-truncate mb-0 text-muted" id="new${data.user_id}">${data.text}</p>
+                      <p class="chat-contact-status text-truncate mb-0 text-muted" id="new${data.user_id}">${data.text} <span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span></p>
                     </div>
                     <small class="text-muted mb-auto">5 Minutes</small>
                   </a>
@@ -397,7 +420,12 @@
 
  //###### endwebsocket####
 
-function get_user_messages(url){
+function get_user_messages(url,user_id){
+  console.log(user_id)
+  var badge = document.getElementById('msg_count'+user_id)
+  console.log(badge)
+  badge.innerText ='0';
+  badge.style.display='none';
   // console.log('funcga kel')
   fetch(url, {
     method: 'GET',
@@ -476,19 +504,6 @@ function get_user_messages(url){
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  var input = document.getElementById('text_operator');
-  var button = document.getElementById('send_msg');
-
-  input.addEventListener('keyup', function(event) {
-    event.preventDefault();
-    if (event.keyCode === 13) {  // Check if Enter key is pressed
-      send_message()  // Simulate button click
-    }
-  });
-
-  
-});
 
 function send_message(){
   var text = document.getElementById('text_operator')

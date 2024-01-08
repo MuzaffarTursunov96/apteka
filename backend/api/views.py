@@ -66,6 +66,7 @@ def user_message_receive(request):
         if 'user_id' in data:
             user_id = data['user_id'][0]
             user = TelegramUser.objects.get(user_id=user_id)
+            user.count_message_saw += 1
             user.updated_at =datetime.now()
             user.save()
         if 'text' in data:
@@ -154,7 +155,8 @@ def messages_all(request,id):
     
     messages =Message.objects.filter(user__user_id =id).order_by('-created_at')[:10][::-1]
     user = TelegramUser.objects.get(user_id = id)
-
+    user.count_message_saw = 0
+    user.save()
 
     message_serializer = MessageSerializer(messages,many=True)
     client_serializer = ClientSerializer(user)
@@ -172,8 +174,17 @@ def get_operator_id(request,id):
 def send_message_to_client(request):
     if request.method =='POST':
         data = dict(request.POST)
-        chat_id = Message.objects.filter(user__user_id =int(data['user_id'][0]))[:1].get().chat_id
-        sended = send_message_to_aiogram(chat_id=chat_id,text=data['message'][0])
+        chat = Message.objects.filter(user__user_id =int(data['user_id'][0]))[:1].get()
+        sended = send_message_to_aiogram(chat_id=chat.chat_id,text=data['message'][0])
+        message =Message(
+            chat_id =chat.chat_id,
+            message_id=chat.message_id,
+            user =chat.user,
+            text =data['message'][0],
+            owner =2,
+            saw=1
+        )
+        message.save()
         if sended:
             return JsonResponse({'msg':True})
     return JsonResponse({'msg':False})

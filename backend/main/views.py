@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Message,TelegramUser
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Max
+from django.db.models import Max,Count,Q,Prefetch
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth,messages
 
@@ -15,12 +15,8 @@ def index(request):
 @login_required(login_url='/accounts/login/')
 def chat_operator(request):
     
-    users = TelegramUser.objects.all().order_by('-created_at')#filter(operator =request.user)
-    
-    for user in users:
-        print(user.messages,'&&&&&&&&&&&')
-        # for mes in user.messages:
-        #     print(mes,user.id)
+    users = TelegramUser.objects.filter(operator = request.user)
+    unread_messaged = Message.objects.filter()
 
     context ={
         'users':users,

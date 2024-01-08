@@ -10,6 +10,7 @@ class TelegramUser(models.Model):
     last_name = models.CharField(max_length=255, blank=True, null=True)
     operator = models.ForeignKey(User,on_delete= models.CASCADE)
     image = models.ImageField(upload_to='uploads/images/',default='uploads/images/man.png')
+    count_message_saw = models.SmallIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
