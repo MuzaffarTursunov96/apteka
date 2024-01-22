@@ -16,11 +16,12 @@ import string
 import random
 import requests as rq
 from aiogram.types import ContentType
+from decouple import config
 
 
 from aiohttp import web
 
-API_TOKEN = '6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
+API_TOKEN = config('API_TOKEN')
 
 loop = asyncio.get_event_loop()
 
@@ -254,7 +255,6 @@ async def operators(vil_name):
 
 
 async def user_message_save(data):
-    print(data,'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
     async with aiohttp.ClientSession() as session:
         async with session.post(local_url+'/api/v1/user-message-receive',data=data) as response:
             data = await response.json()

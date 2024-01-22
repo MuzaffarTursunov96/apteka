@@ -19,9 +19,9 @@ import asyncio
 from .forms import FileUploadForm
 from PIL import Image
 from config.settings import MEDIA_ROOT
-from asgiref.sync import sync_to_async
 import os
 from django.core.files.base import ContentFile
+from decouple import config
 
 def hodimlar_save(APIView):
     serializer_class = OperatorSerializer
@@ -77,8 +77,7 @@ class ListViloyatlar(APIView):
    
 @csrf_exempt
 def user_message_receive(request):
-    # print('aaaaaaaaa',dict(request.POST))
-    websocket_url ='ws://127.0.0.1:8000/ws/messages/'
+    websocket_url =config('WEBSOCKET_URL')
     
     if request.method =='POST':
         data = dict(request.POST)
@@ -88,8 +87,6 @@ def user_message_receive(request):
         text =''
         owner =3
        
-        # bot = Bot(token='6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU')
-        # print('$$'*80)
         
 
         if 'chat_id' in data:
@@ -106,11 +103,11 @@ def user_message_receive(request):
             text = data['text'][0]
         
         
-        # print(response.content)
+        
         
         if 'file' in data:
             file_path =data['file'][0]
-            bot_token = '6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
+            bot_token = config('API_TOKEN')
             file_url = f'https://api.telegram.org/file/bot{bot_token}/{file_path}'
             response = rq.get(file_url)
            
@@ -156,19 +153,6 @@ def user_message_receive(request):
     else:
         return JsonResponse({'msg':'GET method not allowed!'})
 
-def download_and_save_file(file_path, msg):
-    print(msg)
-    
-    return True
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        # Create an instance of your model
-        img_name =file_path.split('/')[-1]
-        
-        message = Message.objects.get(id=msg_id)
-        message.file = file
-        message.save()
-        return True
 
 
 @csrf_exempt
@@ -300,7 +284,7 @@ def send_message_to_client(request):
 
 def send_message_to_aiogram(chat_id,text,smg_type,file_path=None):
 
-    bot_token = '6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
+    bot_token = config('API_TOKEN')
     if smg_type =='text': 
         payload = {
         'chat_id': chat_id,
@@ -315,11 +299,6 @@ def send_message_to_aiogram(chat_id,text,smg_type,file_path=None):
             data = {'chat_id': chat_id, 'caption': ''}
 
             response = rq.post(url, files=files, data=data)
-
-    
-    
-    
-        
 
     
     if response.status_code == 200:

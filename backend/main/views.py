@@ -14,6 +14,7 @@ from telegram import Bot
 from django.http import HttpResponse
 import asyncio
 from asgiref.sync import async_to_sync
+from decouple import config
 
 # Create your views here.
 
@@ -257,7 +258,8 @@ def teamlead_edit(request,id):
 
 
 async def get_file_path(file_id):
-    API_TOKEN='6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
+    
+    API_TOKEN = config('API_TOKEN')
     bot = Bot(token=API_TOKEN)
     file_info = await bot.get_file(file_id)
     return file_info.file_path
