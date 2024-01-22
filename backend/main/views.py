@@ -110,11 +110,12 @@ def message_show(request,id):
         messagess = Message.objects.filter(user__user_id = int(teleg_user_id))
         telegram_user = TelegramUser.objects.get(user_id = int(teleg_user_id))
 
-    print(users)
+    
     context ={
         'users':users,
         'messages':messagess,
-        'telegram_user':telegram_user
+        'telegram_user':telegram_user,
+        'operator_id':id
     }
     return render(request,'admin/chat.html',context)
 

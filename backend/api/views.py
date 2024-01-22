@@ -277,19 +277,28 @@ def send_message_to_client(request):
             file_form = form.save()
         else:
             print('helllo',form.errors)
-        send_message_to_aiogram(data['chat_id'],data['text'],msg_type,file_form.file)
+        send_message_to_aiogram(request,data['chat_id'],data['text'],msg_type,file_form.file)
         
     return JsonResponse({'msg':False,'text':text,'msg_type':msg_type})
 
 
-def send_message_to_aiogram(chat_id,text,smg_type,file_path=None):
+def send_message_to_aiogram(request,chat_id,text,smg_type,file_path=None):
 
     bot_token = config('API_TOKEN')
-    if smg_type =='text': 
+    if smg_type =='text':
+        if request.user.get_role() =='admin': 
+            text ='<em><b>Admin:</b></em>\n' +text
+        elif request.user.get_role() =='operator':
+            text ='<em><b>Asosiy operator:</b></em>\n' +text
+        else:
+            text =f'<em>{text}</em>'
+
         payload = {
         'chat_id': chat_id,
-        'text': text
+        'text': text,
+        'parse_mode':'HTML'
         }
+        
         url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
         response = rq.post(url, json=payload)
     else:

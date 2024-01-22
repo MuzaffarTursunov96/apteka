@@ -127,30 +127,7 @@
                     </li>
                     {%endfor%}
                  
-                  <!-- <li class="chat-contact-list-item active">
-                    <a class="d-flex align-items-center">
-                      <div class="flex-shrink-0 avatar avatar-offline">
-                        <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle">
-                      </div>
-                      <div class="chat-contact-info flex-grow-1 ms-3">
-                        <h6 class="chat-contact-name text-truncate m-0">Felecia Rower</h6>
-                        <p class="chat-contact-status text-truncate mb-0 text-muted">I will purchase it for sure. 👍</p>
-                      </div>
-                      <small class="text-muted mb-auto">30 Minutes</small>
-                    </a>
-                  </li>
-                  <li class="chat-contact-list-item">
-                    <a class="d-flex align-items-center">
-                      <div class="flex-shrink-0 avatar avatar-busy">
-                        <span class="avatar-initial rounded-circle bg-label-success">CM</span>
-                      </div>
-                      <div class="chat-contact-info flex-grow-1 ms-3">
-                        <h6 class="chat-contact-name text-truncate m-0">Calvin Moore</h6>
-                        <p class="chat-contact-status text-truncate mb-0 text-muted">If it takes long you can mail inbox user</p>
-                      </div>
-                      <small class="text-muted mb-auto">1 Day</small>
-                    </a>
-                  </li> -->
+                  
                   {%else%}
                   <li class="chat-contact-list-item chat-list-item-0 d-none">
                     <h6 class="text-muted mb-0">No Chats Found</h6>
@@ -171,31 +148,13 @@
                 <div class="chat-history-header border-bottom">
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex overflow-hidden align-items-center">
-                      {%if not telegram_user %}
                       <i class="bx bx-menu bx-sm cursor-pointer d-lg-none d-block me-2" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-contacts"></i>
                       <div class="flex-shrink-0 avatar">
                         <img   class="rounded-circle" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-sidebar-right" id="client_basic_img">
                       </div>
-                      {%endif%}
                       <div class="chat-contact-info flex-grow-1 ms-3">
                         <h6 class="m-0" id="client_name_basic"></h6>
-                        
-                        {%if telegram_user %}
-                          <li class="chat-contact-list-item" id="user{{telegram_user.user_id}}">
-                    
-                            <a class="d-flex align-items-center"   onclick="get_user_messages('/api/v1/user-message-get/{{telegram_user.user_id}}','{{telegram_user.user_id}}')">
-                              <div class="flex-shrink-0 avatar avatar-online">
-                                <img src="{{telegram_user.image.url}}" alt="Avatar" class="rounded-circle">
-                              </div>
-                              <div class="chat-contact-info flex-grow-1 ms-3">
-                                <h6 class="chat-contact-name text-truncate m-0">{{telegram_user.username}}</h6>
-                                <p class="chat-contact-status text-truncate mb-0 text-muted" id="new{{telegram_user.user_id}}">{{telegram_user.text}} <span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count{{telegram_user.user_id}}" style="display: none;">0</span></p>
-                              </div>
-                              <!-- <small class="text-muted mb-auto">5 Minutes</small> -->
-                            </a>
-                          </li>
-                        {%endif%}
-
+                       
                       </div>
                     </div>
                     <div class="d-flex align-items-center">
@@ -219,59 +178,18 @@
                 </div>
                 <div class="chat-history-body ps--scrolling-y">
                   <ul class="list-unstyled chat-history mb-0" id="chats">
-                    {%if messages %}
-                          {%for mes in messages%}
-                            {%if mes.owner == 3 %}
-                            <li class="chat-message">
-                              <div class="d-flex overflow-hidden">
-                                <div class="user-avatar flex-shrink-0 me-3">
-                                  <div class="avatar avatar-sm">
-                                    <img src="{{mes.user.image.url}}" alt="Avatar" class="rounded-circle">
-                                  </div>
-                                </div>
-                                <div class="chat-message-wrapper flex-grow-1">
-                                  <div class="chat-message-text">
-                                    <p class="mb-0" style="color: #788494;">{{mes.text}}</p>
-                                  </div>
-                                  <div class="text-muted mt-1">
-                                    <small>10:02 AM</small>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                            {%else%}
-                            <li class="chat-message chat-message-right">
-                              <div class="d-flex overflow-hidden">
-                                <div class="chat-message-wrapper flex-grow-1">
-                                  <div class="chat-message-text">
-                                    <p class="mb-0" style="color: #788494;">{{mes.text}}</p>
-                                  </div>
-                                  <div class="text-end text-muted mt-1">
-                                    <i class='bx bx-check-double text-success'></i>
-                                    <small>10:00 AM</small>
-                                  </div>
-                                </div>
-                                <div class="user-avatar flex-shrink-0 ms-3">
-                                  <div class="avatar avatar-sm">
-                                    <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                            {%endif%}
-                          {%endfor%}
-                        {%endif%}
+                    
                   </ul>
                 </div>
                 
                 <div class="chat-history-footer">
-                  <form class="form-send-message d-flex justify-content-between align-items-center " id="my_form">
-                    <input type="text" class="form-control message-input border-0 me-3 shadow-none"   placeholder="Type your message here..." id="text_operator">
+                  <form class="form-send-message d-flex justify-content-between align-items-center " id="my_form" enctype="multipart/form-data">
+                    <input type="text" class="form-control message-input border-0 me-3 shadow-none"  name="text" placeholder="Type your message here..." id="text_operator">
                     <div class="message-actions d-flex align-items-center">
                       <i class="speech-to-text bx bx-microphone bx-sm cursor-pointer"></i>
                       <label for="attach-doc" class="form-label mb-0">
                         <i class="bx bx-paperclip bx-sm cursor-pointer mx-3 text-body"></i>
-                        <input type="file" id="attach-doc" hidden>
+                        <input type="file" id="attach-doc" name="file" hidden>
                       </label>
                       <button class="btn btn-primary d-flex send-msg-btn" onclick="send_message()"  id="send_msg">
                         <i class="bx bx-paper-plane me-md-1 me-0"></i>
@@ -282,73 +200,12 @@
                 </div>
               </div>
             </div>
-            <!-- /Chat History -->
-
-            <!-- Sidebar Right -->
-            <!-- <div class="col app-chat-sidebar-right app-sidebar overflow-hidden" id="app-chat-sidebar-right">
-              <div class="sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap p-4 mt-2">
-                <div class="avatar avatar-xl avatar-online">
-                  <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle">
-                </div>
-                <h6 class="mt-3 mb-1">Felecia Rower</h6>
-                <small class="text-muted">NextJS Developer</small>
-                <i class="bx bx-x bx-sm cursor-pointer close-sidebar me-1 fs-4 d-block" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-sidebar-right"></i>
-              </div>
-              <div class="sidebar-body px-4 pb-4">
-                <div class="my-3">
-                  <span class="text-muted text-uppercase">About</span>
-                  <p class="mb-0 mt-2">A Next. js developer is a software developer who uses the Next. js framework alongside ReactJS to build web applications.</p>
-                </div>
-                <div class="my-4">
-                  <span class="text-muted text-uppercase">Personal Information</span>
-                  <ul class="list-unstyled d-grid gap-2 mt-2">
-                    <li class="d-flex align-items-center">
-                      <i class='bx bx-envelope'></i>
-                      <span class="align-middle ms-2">josephGreen@email.com</span>
-                    </li>
-                    <li class="d-flex align-items-center">
-                      <i class='bx bx-phone-call'></i>
-                      <span class="align-middle ms-2">+1(123) 456 - 7890</span>
-                    </li>
-                    <li class="d-flex align-items-center">
-                      <i class='bx bx-time-five'></i>
-                      <span class="align-middle ms-2">Mon - Fri 10AM - 8PM</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="mt-4">
-                  <span class="text-muted text-uppercase">Options</span>
-                  <ul class="list-unstyled d-grid gap-2 mt-2">
-                    <li class="cursor-pointer d-flex align-items-center">
-                      <i class='bx bx-bookmark'></i>
-                      <span class="align-middle ms-2">Add Tag</span>
-                    </li>
-                    <li class="cursor-pointer d-flex align-items-center">
-                      <i class='bx bx-star'></i>
-                      <span class="align-middle ms-2">Important Contact</span>
-                    </li>
-                    <li class="cursor-pointer d-flex align-items-center">
-                      <i class='bx bx-image-alt'></i>
-                      <span class="align-middle ms-2">Shared Media</span>
-                    </li>
-                    <li class="cursor-pointer d-flex align-items-center">
-                      <i class='bx bx-trash-alt'></i>
-                      <span class="align-middle ms-2">Delete Contact</span>
-                    </li>
-                    <li class="cursor-pointer d-flex align-items-center">
-                      <i class='bx bx-block'></i>
-                      <span class="align-middle ms-2">Block Contact</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div> -->
-            <!-- /Sidebar Right -->
+              
 
             <div class="app-overlay"></div>
           </div>
         </div>
-
+        
 
         </div>
         <!-- / Content -->
@@ -387,6 +244,7 @@
   var myForm = document.getElementById("my_form");
   myForm.addEventListener("submit", function(event) {
   // Prevent the default form submission
+  
   event.preventDefault();
 });
 
@@ -394,7 +252,7 @@
 document.getElementById("text_operator").addEventListener("keyup", function(event) {
   // Check if the key pressed is Enter (keycode 13) or "Enter" (key property)
   if (event.keyCode === 13 || event.key === "Enter") {
-    send_message(); 
+    // send_message(); 
     
   }
 });
@@ -402,7 +260,7 @@ document.getElementById("text_operator").addEventListener("keyup", function(even
 
 
  // ###### Websocket####
-  var boxName ='{{request.user.id}}'
+  var boxName ='{{operator_id}}'
  var url = 'ws://127.0.0.1:8000/ws/messages/'+ boxName +'/'
   const chatSocket = new WebSocket(
     url
@@ -416,13 +274,30 @@ document.getElementById("text_operator").addEventListener("keyup", function(even
       const data = JSON.parse(e.data);
       var chat_list = document.getElementById('user'+data.user_id)
       var badge = document.getElementById('msg_count'+data.user_id)
-      var new_count=String(parseInt(badge.innerText)+1);
-      if(chat_list){
-        chat_list.remove()
+      
+      if(badge){
+        var new_count=String(parseInt(badge.innerText)+1);
+        if(chat_list){
+          chat_list.remove()
+        }
+      }else{
+        var new_count ='0'
       }
+     
       
 
       var basic_div_for_chat = document.getElementById('basic_div_for_chat');
+      if(data.msg_type =='text'){
+        var text =`<p class="chat-contact-status text-truncate mb-0 text-muted" id="new${data.user_id}">${data.text} <span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span></p>`
+        var text2 =`<p class="mb-0" style="color: #788494;">${data.text}</p>`
+      }else if(data.msg_type =='photo'){
+        text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
+        text2 =` <img src="/media/${data.file}" alt="Avatar" class="img-fluid">`
+      }
+      else{
+        text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
+        text2 =`<a href="/download/${data.file}">Download File</a>`
+      }
       var li = `<li class="chat-contact-list-item" id="user${data.user_id}">
                   
                   <a class="d-flex align-items-center"   onclick="get_user_messages('/api/v1/user-message-get/${data.user_id}',${data.user_id})">
@@ -431,16 +306,26 @@ document.getElementById("text_operator").addEventListener("keyup", function(even
                     </div>
                     <div class="chat-contact-info flex-grow-1 ms-3">
                       <h6 class="chat-contact-name text-truncate m-0">${data.username}</h6>
-                      <p class="chat-contact-status text-truncate mb-0 text-muted" id="new${data.user_id}">${data.text} <span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span></p>
+                      `+
+                      text
+                      +
+                      `
                     </div>
                     <small class="text-muted mb-auto">5 Minutes</small>
                   </a>
                 </li>`
 
       basic_div_for_chat.insertAdjacentHTML('afterbegin', li);
+
+      var badge = document.getElementById('msg_count'+data.user_id)
+      console.log(badge)
+      var new_count=String(parseInt(badge.innerText)+1);
+      if(chat_list){
+        chat_list.remove()
+      }
       
       var chat_history = document.getElementById('chat_history')
-      
+      console.log(data.chat_id)
       chat_history.setAttribute('data-chat_id',data.chat_id)
       const attributeValue = chat_history.getAttribute('data-id')
       // console.log(attributeValue)
@@ -458,7 +343,8 @@ document.getElementById("text_operator").addEventListener("keyup", function(even
                             </div>
                             <div class="chat-message-wrapper flex-grow-1">
                               <div class="chat-message-text">
-                                <p class="mb-0" style="color: #788494;">${data.text}</p>
+                               `+ text2+
+                               `
                               </div>
                               <div class="text-muted mt-1">
                                 <small>10:02 AM</small>
@@ -473,8 +359,7 @@ document.getElementById("text_operator").addEventListener("keyup", function(even
           
       }
 
-      // console.log(chat_list)
-      // document.querySelector('#chat-text').value += (data.message) // add message to text box
+      
   } 
 
  //###### endwebsocket####
@@ -509,7 +394,20 @@ function get_user_messages(url,user_id){
       var chat_text =''
       for(let i=0; i< data.messages.length; i++){
         var message =""
-        // console.log(data.messages[i])
+        if(data.messages[i].msg_type =='text'){
+        
+        var text2 =`<p class="mb-0" style="color: #788494;">${data.messages[i].text}</p>`
+        }else if(data.messages[i].msg_type =='photo'){
+          
+          text2 =`<a href="/download/${data.messages[i].text}">Download Photo</a>`
+          text2 =`<img src="${data.messages[i].file}" class="img-fluid" alt="Responsive image">`
+        }
+        else{
+          
+          text2 =`<a href="/download/${data.messages[i].text}">Download File</a>`
+        }
+
+
         if (data.messages[i].owner ==3){
           message =`<li class="chat-message">
                         <div class="d-flex overflow-hidden">
@@ -520,7 +418,8 @@ function get_user_messages(url,user_id){
                           </div>
                           <div class="chat-message-wrapper flex-grow-1">
                             <div class="chat-message-text">
-                              <p class="mb-0" style="color: #788494;">${data.messages[i].text}</p>
+                              ` +text2+
+                              `
                             </div>
                             <div class="text-muted mt-1">
                               <small>10:02 AM</small>
@@ -533,7 +432,8 @@ function get_user_messages(url,user_id){
                         <div class="d-flex overflow-hidden">
                           <div class="chat-message-wrapper flex-grow-1">
                             <div class="chat-message-text">
-                              <p class="mb-0" style="color: #788494;">${data.messages[i].text}</p>
+                              `+text2+
+                              `
                             </div>
                             <div class="text-end text-muted mt-1">
                               <i class='bx bx-check-double text-success'></i>
@@ -566,26 +466,103 @@ function get_user_messages(url,user_id){
 
 function send_message(){
   var text = document.getElementById('text_operator')
+
+  var form = $('#my_form')[0];
+  var formData = new FormData(form);
   
-
+  
   var url ='{%url "send_message_to_client"%}'
-
+  
   var chat_history = document.getElementById('chat_history')
   const attributeValue = chat_history.getAttribute('data-id')
+  formData.append('user_id', attributeValue);
   
   if(attributeValue !='nan'){
     console.log(url);
     $.ajax({
       url: url,
       method: 'POST',
-      data: {
-        message: text.value,
-        user_id: attributeValue
-      },
-      dataType: 'json',
+      data: formData,
+      contentType: false,
+      processData: false,
+      // {
+      //   message: text.value,
+      //   user_id: attributeValue,
+      //   file:formData,
+      // },
+      // dataType: 'json',
       success: function(response) {
-        // Handle the response data
-        console.log(response);
+        var newElement = document.createElement('li');
+        newElement.className = 'chat-message chat-message-right';
+        var chats = document.getElementById('chats');
+        var chat_text =''
+        if (response.msg_type =='text'){
+
+          newElement.innerHTML =`
+                              <div class="d-flex overflow-hidden">
+                            <div class="chat-message-wrapper flex-grow-1">
+                              <div class="chat-message-text">
+                                <p class="mb-0" style="color: #788494;">${text.value}</p>
+                              </div>
+                              <div class="text-end text-muted mt-1">
+                                <i class='bx bx-check-double text-success'></i>
+                                <small>10:00 AM</small>
+                              </div>
+                            </div>
+                            <div class="user-avatar flex-shrink-0 ms-3">
+                              <div class="avatar avatar-sm">
+                                <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
+                              </div>
+                            </div>
+                          </div>`
+            
+        }
+        else if(response.msg_type =='photo'){
+          newElement.innerHTML =`
+                              <div class="d-flex overflow-hidden">
+                            <div class="chat-message-wrapper flex-grow-1">
+                              <div class="chat-message-text">
+                                <img src="/media/uploads/${response.text}" alt="" class="img-fluid">
+                              </div>
+                              <div class="text-end text-muted mt-1">
+                                <i class='bx bx-check-double text-success'></i>
+                                <small>10:00 AM</small>
+                              </div>
+                            </div>
+                            <div class="user-avatar flex-shrink-0 ms-3">
+                              <div class="avatar avatar-sm">
+                                <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
+                              </div>
+                            </div>
+                          </div>`
+            
+        }
+          
+        else{
+          newElement.innerHTML =`
+                              <div class="d-flex overflow-hidden">
+                            <div class="chat-message-wrapper flex-grow-1">
+                              <div class="chat-message-text">
+                                <p class="mb-0" style="color: #788494;"><a style="color: #788494;" class='btn btn-info' href="/media/uploads/${response.text}">${response.text}</a></p>
+                                
+                              </div>
+                              <div class="text-end text-muted mt-1">
+                                <i class='bx bx-check-double text-success'></i>
+                                <small>10:00 AM</small>
+                              </div>
+                            </div>
+                            <div class="user-avatar flex-shrink-0 ms-3">
+                              <div class="avatar avatar-sm">
+                                <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
+                              </div>
+                            </div>
+                          </div>`
+            
+        }
+        
+        chats.appendChild(newElement)
+          var formElement = document.getElementById('my_form');
+          formElement.reset();
       },
       error: function(xhr, status, error) {
         // Handle any errors
@@ -595,32 +572,7 @@ function send_message(){
 
 
 
-    var chats = document.getElementById('chats');
-        var chat_text =''
-        var newElement = document.createElement('li');
-        newElement.className = 'chat-message chat-message-right';
-  
-        newElement.innerHTML =`
-                            <div class="d-flex overflow-hidden">
-                          <div class="chat-message-wrapper flex-grow-1">
-                            <div class="chat-message-text">
-                              <p class="mb-0" style="color: #788494;">${text.value}</p>
-                            </div>
-                            <div class="text-end text-muted mt-1">
-                              <i class='bx bx-check-double text-success'></i>
-                              <small>10:00 AM</small>
-                            </div>
-                          </div>
-                          <div class="user-avatar flex-shrink-0 ms-3">
-                            <div class="avatar avatar-sm">
-                              <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
-                            </div>
-                          </div>
-                        </div>`
-          
-          chats.appendChild(newElement)
-          var formElement = document.getElementById('my_form');
-          formElement.reset();
+    
           // var text = document.getElementById('text_operator')
           // text.value ="";
   }
