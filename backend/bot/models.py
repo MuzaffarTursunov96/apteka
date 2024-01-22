@@ -47,21 +47,24 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     ADMIN = 1
-    STAFF = 2
-    CLIENT = 3
+    OPERATOR = 2
+    XODIM = 3
+    CLIENT = 4
 
     ROLE_CHOICE = (
         (ADMIN,'Admin'),
-        (STAFF, 'Operator'),
+        (OPERATOR, 'Operator'),
+        (XODIM, 'Xodim'),
         (CLIENT, 'Client'),
     )
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50,blank=True, null=True)
-    username = models.CharField(max_length=50, unique=True,blank=True,null=True)
+    username = models.CharField(max_length=50, blank=True,null=True)
     email = models.EmailField(max_length=50, unique=True,blank=True,null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE, blank=True, null=True)
     viloyat = models.ForeignKey('Viloyatlar',on_delete = models.CASCADE,blank=True,null=True)
+    client_count = models.IntegerField(default = 0)
     # required fields
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
@@ -78,7 +81,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.username} {self.last_name}'
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
@@ -92,14 +95,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         return set()
     
     def get_role(self):
-      if self.role == 2:
-        user_role ='operator'
-      elif self.role == 3:
-        user_role ='client'
-      else:
-        user_role ='admin'
-    #   print(self.role)
-      return user_role
+        if self.role == 2:
+            user_role ='operator'
+        elif self.role == 3:
+            user_role ='xodim'
+        elif self.role == 4:
+            user_role ='client'
+        elif self.role==1:
+            user_role ='admin'
+        #   print(self.role)
+        return user_role
     
     
 
@@ -132,3 +137,7 @@ class Viloyatlar(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     def __str__(self):
        return self.name
+    
+
+
+    

@@ -5,7 +5,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework import authentication, permissions
 from bot.models import User,Viloyatlar
 from main.models import TelegramUser,Message
-from .serializers import UserSerializer,ViloyatSerializer,TelegramUserSerializer,MessageSerializer,ClientSerializer
+from .serializers import UserSerializer,ViloyatSerializer,TelegramUserSerializer,MessageSerializer,ClientSerializer,OperatorSerializer
 from django.http import JsonResponse
 import requests as rq
 from django.urls import reverse
@@ -13,10 +13,34 @@ from django.views.decorators.csrf import csrf_exempt
 import websocket
 import json
 from datetime import datetime
+from aiogram import Bot, types
+from aiogram.dispatcher import Dispatcher
+import asyncio
+from .forms import FileUploadForm
+from PIL import Image
+from config.settings import MEDIA_ROOT
+from asgiref.sync import sync_to_async
+import os
+from django.core.files.base import ContentFile
 
+def hodimlar_save(APIView):
+    serializer_class = OperatorSerializer
+    queryset = User.objects.all()
+    permission_classes =[permissions.AllowAny]
 
+    def post(self,request):
+        print(request.data)
+        return Response({'data':'a'})
+    
 
+def operator_save(APIView):
+    serializer_class = OperatorSerializer
+    queryset = User.objects.all()
+    permission_classes =[permissions.AllowAny]
 
+    def post(self,request):
+        print(request.data)
+        return Response({'data':'a'})
 
 
 def send_message_to_websocket(websocket_url,data):
@@ -33,7 +57,7 @@ class ListOperators(APIView):
     permission_classes =[permissions.AllowAny]
 
     def get(self,request,region_name):
-        queryset = User.objects.filter(viloyat__name__icontains =region_name)
+        queryset = User.objects.filter(viloyat__name__icontains =region_name,is_active=True)
         serializer= UserSerializer(queryset,many=True)
         return Response(data=serializer.data)
 
@@ -47,10 +71,15 @@ class ListViloyatlar(APIView):
         queryset = Viloyatlar.objects.all()
         serializer= ViloyatSerializer(queryset,many=True)
         return Response(data=serializer.data)
+
+
     
+   
 @csrf_exempt
 def user_message_receive(request):
+    # print('aaaaaaaaa',dict(request.POST))
     websocket_url ='ws://127.0.0.1:8000/ws/messages/'
+    
     if request.method =='POST':
         data = dict(request.POST)
         chat_id = 0
@@ -58,7 +87,11 @@ def user_message_receive(request):
         user_id =1
         text =''
         owner =3
-        operator_id = 1
+       
+        # bot = Bot(token='6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU')
+        # print('$$'*80)
+        
+
         if 'chat_id' in data:
             chat_id = data['chat_id'][0]
         if 'message_id' in data:
@@ -72,25 +105,49 @@ def user_message_receive(request):
         if 'text' in data:
             text = data['text'][0]
         
-
-        message = Message(
-            chat_id =chat_id,
-            message_id=message_id,
-            user=user,
-            text=text,
-            owner=owner
-        )
-        message.save()
-
+        
+        # print(response.content)
+        
+        if 'file' in data:
+            file_path =data['file'][0]
+            bot_token = '6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
+            file_url = f'https://api.telegram.org/file/bot{bot_token}/{file_path}'
+            response = rq.get(file_url)
+           
+            message = Message(
+                chat_id =chat_id,
+                message_id=message_id,
+                user=user,
+                text=text,
+                owner=owner,
+                msg_type=data['msg_type'][0]
+            )
+            message.save()
+            message.file.save('filename.jpg', ContentFile(response.content), save=True)
+        else:
+            message = Message(
+                chat_id =chat_id,
+                message_id=message_id,
+                user=user,
+                text=text,
+                owner=owner,
+                msg_type=data['msg_type'][0]
+            )
+            message.save()
+        
+        
         data ={
             'chat_id':chat_id,
             'message_id':message_id,
             'user_id':user_id,
             'text':text,
+            'msg_type':data['msg_type'][0],
             'owner':owner,
             'image':str(user.image),
-            'username':user.first_name
+            'username':user.first_name,
+            'file':str(message.file)
         }
+        print(data,'<<<<<<'*10)
         websocket_url +=str(user.operator.id)+'/'
         send_message_to_websocket(websocket_url,data=data)
         
@@ -99,6 +156,19 @@ def user_message_receive(request):
     else:
         return JsonResponse({'msg':'GET method not allowed!'})
 
+def download_and_save_file(file_path, msg):
+    print(msg)
+    
+    return True
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        # Create an instance of your model
+        img_name =file_path.split('/')[-1]
+        
+        message = Message.objects.get(id=msg_id)
+        message.file = file
+        message.save()
+        return True
 
 
 @csrf_exempt
@@ -133,6 +203,8 @@ def TelegramUserSave(request):
                 return JsonResponse({'msg':'User updated'})
             else:
                 operator = User.objects.get(id=operator_id)
+                operator.client_count +=1
+                operator.save()
                 TelegramUser(
                     user_id =data['user_id'][0],
                     username =username,
@@ -168,39 +240,93 @@ def get_operator_id(request,id):
     
     operator_id = TelegramUser.objects.get(user_id = id).operator.id
 
-    return JsonResponse({'operator_id':operator_id})    
+    return JsonResponse({'operator_id':operator_id})   
+
+def is_photo(file_path):
+    try:
+        # Open the file using Pillow
+        img = Image.open(file_path)
+
+        # Check if the file is a recognized image format
+        return img.format is not None
+
+    except Exception as e:
+        # Handle the case where the file is not a photo or cannot be opened
+        print(f"Error checking file: {e}")
+        return False 
+    
 
 @csrf_exempt    
 def send_message_to_client(request):
     if request.method =='POST':
-        data = dict(request.POST)
-        chat = Message.objects.filter(user__user_id =int(data['user_id'][0]))[:1].get()
-        sended = send_message_to_aiogram(chat_id=chat.chat_id,text=data['message'][0])
-        message =Message(
-            chat_id =chat.chat_id,
-            message_id=chat.message_id,
-            user =chat.user,
-            text =data['message'][0],
-            owner =2,
-            saw=1
-        )
-        message.save()
-        if sended:
-            return JsonResponse({'msg':True})
-    return JsonResponse({'msg':False})
+        data = request.POST
+        _mutable = data._mutable
 
-def send_message_to_aiogram(chat_id,text):
-    bot_token = '6918479750:AAFm4eunDMv6IHZaAHv7w_YDup-VSL7YhHA'  
-    url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
-    payload = {
+        data._mutable = True
+        chat = Message.objects.filter(user__user_id =int(data['user_id']))[:1].get()
+        data['chat_id'] = chat.chat_id
+        data['message_id'] = chat.message_id
+        data['user'] = chat.user
+        data['owner'] = 2
+        if 'file' in request.FILES:
+            uploaded_file = str(request.FILES['file'])
+
+            path = os.path.join(MEDIA_ROOT,uploaded_file)
+            check_photo = is_photo(path)
+            if check_photo:
+                msg_type ='photo'
+            else:
+                msg_type ='document'
+            text =uploaded_file
+        else:
+            text =data['text']
+            msg_type ='text'
+
+        data['msg_type'] = msg_type
+        
+
+        data._mutable = _mutable
+        form = FileUploadForm(data,request.FILES)
+        file_form =None
+        if form.is_valid():
+            print('valid')
+            file_form = form.save()
+        else:
+            print('helllo',form.errors)
+        send_message_to_aiogram(data['chat_id'],data['text'],msg_type,file_form.file)
+        
+    return JsonResponse({'msg':False,'text':text,'msg_type':msg_type})
+
+
+def send_message_to_aiogram(chat_id,text,smg_type,file_path=None):
+
+    bot_token = '6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
+    if smg_type =='text': 
+        payload = {
         'chat_id': chat_id,
         'text': text
-    }
+        }
+        url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
+        response = rq.post(url, json=payload)
+    else:
+        url = f'https://api.telegram.org/bot{bot_token}/sendDocument'
+        with open(os.path.join(MEDIA_ROOT,str(file_path)), 'rb') as file:
+            files = {'document': file}
+            data = {'chat_id': chat_id, 'caption': ''}
 
-    response = rq.post(url, json=payload)
+            response = rq.post(url, files=files, data=data)
+
+    
+    
+    
+        
+
+    
     if response.status_code == 200:
         print('Message sent successfully')
         return True
     else:
-        print('Failed to send message:', response.text)
         return False
+    
+
+    

@@ -2,6 +2,13 @@ from rest_framework import serializers
 from main.models import TelegramUser,Message
 from bot.models import Viloyatlar,User
 
+class OperatorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -26,7 +33,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ['chat_id','message_id','text','owner']
+        fields = ['chat_id','message_id','text','owner','msg_type','file']
 
 
 class ClientSerializer(serializers.ModelSerializer):

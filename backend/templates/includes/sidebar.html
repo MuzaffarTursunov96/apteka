@@ -3,7 +3,7 @@
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <a href="index.html" class="app-brand-link">
+      <a href="{% url 'index'%}" class="app-brand-link">
         <span class="app-brand-logo demo">
           <svg
             width="25"
@@ -72,7 +72,7 @@
     <ul class="menu-inner py-1">
       <!-- Dashboard -->
       <li class="menu-item active">
-        <a href="index.html" class="menu-link">
+        <a href="{% url 'index'%}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Dashboard</div>
         </a>
@@ -83,44 +83,55 @@
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Manage</span></li>
       <!-- Cards -->
       <li class="menu-item">
-        <a href="cards-basic.html" class="menu-link">
+        <a href="{%url 'teamlead_list'%}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-collection"></i>
-          <div data-i18n="Basic">Operators</div>
+          <div data-i18n="Basic">Operatorlar</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="{%url 'operator_list'%}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-user-circle"></i>
+          <div data-i18n="Basic">Xodimlar</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="{%url 'client_list'%}" class="menu-link">
+          <!-- <i class="menu-icon tf-icons bx bx-user"></i> -->
+          <i class='menu-icon bx bxs-user-detail' ></i>
+          <div data-i18n="Basic">Clientlar</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="{%url 'viloyat_show'%}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-map"></i>
+          <div data-i18n="Basic">Viloyatlar</div>
         </a>
       </li>
       {%endif%}
+      
       <!-- Extended components -->
       
       <li class="menu-item">
         <a href="javascript:void(0)" class="menu-link menu-toggle">
           <!-- <i class="menu-icon tf-icons bx bx-copy"></i> -->
           <i class='menu-icon tf-icons bx bx-message-rounded-dots'></i>
-          <div data-i18n="Extended UI">Messages</div>
+          <div data-i18n="Extended UI">Xabarlar</div>
         </a>
-       
         {% if user_role == 'admin' %}
         <ul class="menu-sub">
           <li class="menu-item">
-            <a href="{%url 'chat'%}" class="menu-link">
-              <div data-i18n="Perfect Scrollbar">Yangi xabarlar</div>
-            </a>
-          </li>
-          <li class="menu-item">
             <a href="extended-ui-text-divider.html" class="menu-link">
-              <div data-i18n="Text Divider">Eski xabarlar</div>
+              <div data-i18n="Text Divider">Xabar jo'natish</div>
             </a>
           </li>
         </ul>
         {%else%}
         <ul class="menu-sub">
-          
-          
           <li class="menu-item">
             <a href="{%url 'chat_operator' %}" class="menu-link">
               <div data-i18n="Perfect Scrollbar">Yangi xabarlar</div>
             </a>
           </li>
-          
         </ul>
         {% endif %}
       </li>

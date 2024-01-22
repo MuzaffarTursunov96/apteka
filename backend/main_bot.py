@@ -15,11 +15,12 @@ import os
 import string
 import random
 import requests as rq
+from aiogram.types import ContentType
 
 
 from aiohttp import web
 
-API_TOKEN = '6918479750:AAFm4eunDMv6IHZaAHv7w_YDup-VSL7YhHA'
+API_TOKEN = '6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
 
 loop = asyncio.get_event_loop()
 
@@ -108,13 +109,12 @@ def generate_random_string(length):
     random_string = ''.join(random.choice(letters) for _ in range(length))
     return random_string
 
-@dp.message_handler()
+@dp.message_handler(content_types=[ContentType.TEXT,ContentType.PHOTO,ContentType.DOCUMENT])
 async def operator_start(message: types.Message):
     
     global real_operators
     state = user_states.get(message.chat.id)
 
-    print(state)
     
     
 
@@ -146,14 +146,22 @@ async def operator_start(message: types.Message):
         # Process the age input and transition to the next state
         
         viloyatlar2 = await get_viloyatlar()
+        
         shaxarlar =[ vil['name'] for vil in viloyatlar2]
         if message.text in shaxarlar:
             operatorss = await operators(vil_name=message.text)
+            
+            if len(operatorss) < 1:
+                user_states[message.chat.id] = STATES['MENU']
+                return await bot.send_message(text='👩‍🚀 operator topilmadi, iltimos adminga murojat qilib ko\'ring.',chat_id=message.chat.id,reply_markup=menu_markup)
+
+            
             operators_new ={}
             for o in operatorss:
                 operators_new[o['username']+'##'+o['last_name']]=o['id']
             real_operators[message.chat.id] = operators_new
             user_states[message.chat.id] = STATES['OPERATOR']
+
             await bot.send_message(text='Iltimos 👩‍🚀 operatorni tanlang.',chat_id=message.chat.id,reply_markup=get_operators(operatorss))
         else:
             await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>viloyat</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=get_viloyat_markup(viloyatlar2),parse_mode='HTML')
@@ -191,15 +199,48 @@ async def operator_start(message: types.Message):
             remove_keyboard = ReplyKeyboardRemove()
             await bot.send_message(text="<em>Savollaringiz bolsa 👇 pastga yozing.</em>",chat_id=message.chat.id,reply_markup=remove_keyboard,parse_mode='HTML')
         else:
-            await bot.send_message(text='Iltimos 👩‍🚀 operatorni tanlang.',chat_id=message.chat.id,reply_markup=get_operators(real_operators[message.chat.id],older=True))
+            if len(get_operators(real_operators[message.chat.id],older=True).keyboard) > 0:
+                await bot.send_message(text='Iltimos 👩‍🚀 operatorni tanlang.',chat_id=message.chat.id,reply_markup=get_operators(real_operators[message.chat.id],older=True))
+            else:
+                user_states[message.chat.id] = STATES['MENU']
+                await bot.send_message(text='👩‍🚀 operator topilmadi, iltimos adminga murojat qilib ko\'ring.',chat_id=message.chat.id,reply_markup=menu_markup)
 
     elif state == STATES['FINISH']:
-        
+    
+        file_type ='text'
+        file_path =''
+        if message.content_type == types.ContentType.TEXT:
+            text = message.text
+            
+        elif message.photo:
+            file_type ='photo'
+            # Handle document/file message
+            photo = message.photo[-1]
+            text = photo.file_id
+
+            file_info = await bot.get_file(photo.file_id)
+            file_path =file_info.file_path
+            # print(f"Received document/file with file_path: {file_path}")
+            # You can use the file_id to download and save the file if needed
+        elif message.document:
+            file_type ='document'
+
+            text = message.document.file_id
+           
+
+            file_info = await bot.get_file(message.document.file_id)
+            file_path = file_info.file_path
+            # Handle other content types as needed
+            # print(f"Received message with content type: {file_path}")
+
+       
         data ={
             'chat_id':message.chat.id,
             'message_id':message.message_id,
             'user_id':message.from_user.id,
-            'text':message.text
+            'text':text,
+            'msg_type':file_type,
+            'file':str(file_path),
         }
         await user_message_save(data=data) 
 
@@ -213,6 +254,7 @@ async def operators(vil_name):
 
 
 async def user_message_save(data):
+    print(data,'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
     async with aiohttp.ClientSession() as session:
         async with session.post(local_url+'/api/v1/user-message-receive',data=data) as response:
             data = await response.json()

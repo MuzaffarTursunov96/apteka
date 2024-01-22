@@ -1,0 +1,265 @@
+{% extends 'base.html'%}
+{%load static %}
+{%block content%}
+<div class="layout-page">
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <h5 class="card-title">Xodimlar</h5>
+                </div>
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="row mx-2">
+                            <div class="col-md-4">
+                                <div class="me-5">
+                                    <form method="GET">
+                                    <div class="dataTables_length" id="DataTables_Table_0_length">
+                                        <label>
+                                            
+                                            <select id="UserRole" class="form-select text-capitalize" name="viloyat">
+                                                <option value=""> Viloyatlar </option>
+                                                {%for viloyat in viloyatlar%}
+                                                <option value="{{viloyat.name}}">{{viloyat.name}}</option>
+                                                {%endfor%}
+                                            </select>
+                                        </label>
+                                        <button class=" btn btn-primary">Qidirish</button>
+                                    </div>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4 p-1">
+                                <div class="me-1"><span>Umumiy mijozlar soni: {{count_of_client}}</span></div>
+                                
+                            </div>
+                            <div class="col-md-4">
+                                <div
+                                    class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
+                                    <div id="DataTables_Table_0_filter" class="dataTables_filter"><label></label></div>
+                                    <div class="dt-buttons"> <button class="dt-button add-new btn btn-primary"
+                                            tabindex="0" aria-controls="DataTables_Table_0" type="button"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser"><span><i
+                                                    class="bx bx-plus me-0 me-sm-1"></i><span
+                                                    class="d-none d-sm-inline-block">Yangi xodim
+                                                    qo'shish</span></span></button> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="datatables-users table border-top dataTable no-footer dtr-column"
+                            id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 954px;">
+                            <thead>
+                                <tr>
+                                    <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1"
+                                        style="width: 0px; display: none;" aria-label=""></th>
+                                    <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0"
+                                        rowspan="1" colspan="1" style="width: 229px;"
+                                        aria-label="User: activate to sort column ascending" aria-sort="descending">User
+                                    </th>
+                                    
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 107px;"
+                                        aria-label="Role: activate to sort column ascending">Role</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 107px;"
+                                        aria-label="Role: activate to sort column ascending">Mijoz</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 65px;"
+                                        aria-label="Status: activate to sort column ascending">Messages</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 65px;"
+                                        aria-label="Status: activate to sort column ascending">Status</th>
+                                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 88px;"
+                                        aria-label="Actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {%for operator in operators%}
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td class="sorting_1">
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="avatar-wrapper">
+                                                <div class="avatar avatar-sm me-3"><img
+                                                        src="{% static 'icons/operator.png'%}" alt="Avatar"
+                                                        class="rounded-circle"></div>
+                                            </div>
+                                            <div class="d-flex flex-column"><a href="app-user-view-account.html"
+                                                    class="text-body text-truncate"><span class="fw-medium">{{operator}}</span></a><small
+                                                    class="text-muted">{{operator.email}}</small></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-cog bx-xs"></i></span>Xodim<br>{{operator.viloyat.name}}</span></td>
+                                    <td><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"></span>{{operator.client_count}} ta</span></td>
+                                    <td><a href="{% url 'message_show' operator.id %}"><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-show"></i></span>Yozishmalar</span></a></td>
+                                    {%if operator.is_active %}
+                                    <td><span class="badge bg-label-success">Active</span></td>
+                                    {%else%}
+                                    <td><span class="badge bg-label-secondary">Inactive</span></td>
+                                    {%endif%}
+                                    <td>
+                                        <div class="d-inline-block text-nowrap">
+                                                    <a class="btn btn-sm btn-icon" href="{% url 'hodim_edit' operator.id %}"><i
+                                                    class="bx bx-edit"></i></a>
+                                                    <a href="{% url 'operator_delete' operator.id %}" onclick="return confirm('Rostdan ham o\'chirmoqchimisiz?')"
+                                                        class="btn btn-sm btn-icon delete-record"><i
+                                                    class="bx bx-trash"></i></a>
+                                                    <button
+                                                        class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
+                                                        data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded me-2"></i></button>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a
+                                                    href="app-user-view-account.html" class="dropdown-item">View</a><a
+                                                    href="javascript:;" class="dropdown-item">Suspend</a></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                        <div class="row mx-2">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
+                                    aria-live="polite">
+                                   </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous disabled"
+                                            id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0"
+                                                aria-disabled="true" role="link" data-dt-idx="previous" tabindex="0"
+                                                class="page-link">Previous</a></li>
+                                        <li class="paginate_button page-item active"><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" aria-current="page"
+                                                data-dt-idx="0" tabindex="0" class="page-link">1</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" data-dt-idx="1"
+                                                tabindex="0" class="page-link">2</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" data-dt-idx="2"
+                                                tabindex="0" class="page-link">3</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" data-dt-idx="3"
+                                                tabindex="0" class="page-link">4</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" data-dt-idx="4"
+                                                tabindex="0" class="page-link">5</a></li>
+                                        <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a
+                                                href="#" aria-controls="DataTables_Table_0" role="link"
+                                                data-dt-idx="next" tabindex="0" class="page-link">Next</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Offcanvas to add new user -->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser"
+                    aria-labelledby="offcanvasAddUserLabel">
+                    <div class="offcanvas-header">
+                        <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add User</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body mx-0 flex-grow-0">
+                        <form class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm"
+                            
+                              action="{%url 'operator_save_view' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3 fv-plugins-icon-container">
+                                <label class="form-label" for="add-user-fullname">Familiya *</label>
+                                <input type="text" class="form-control" id="add-user-fullname" placeholder="John Doe"
+                                    name="last_name" aria-label="John Doe" required>
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="mb-3 fv-plugins-icon-container">
+                                <label class="form-label" for="add-user-fullname">Ism *</label>
+                                <input type="text" class="form-control" id="add-user-fullname" placeholder="John Doe"
+                                    name="username" aria-label="John Doe" required>
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="mb-3 fv-plugins-icon-container">
+                                <label class="form-label" for="add-user-email">Email</label>
+                                <input type="text" id="add-user-email" class="form-control"
+                                    placeholder="john.doe@example.com" aria-label="john.doe@example.com"
+                                    name="email">
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-user-contact">Contact</label>
+                                <input type="text" id="add-user-contact" class="form-control phone-mask"
+                                    placeholder="+99899 123-45-67" aria-label="john.doe@example.com"
+                                    name="phone_number">
+                            </div>
+                            
+                            
+                            <div class="mb-3">
+                                <label class="form-label" for="country">Viloyat</label>
+                                <div class="position-relative">
+                                    
+                                    <select id="country"
+                                        class="select2 form-select select2-hidden-accessible" 
+                                        tabindex="-1" aria-hidden="true" name="viloyat" required>
+                                        <option value="" data-select2-id="2">Select</option>
+                                        {% for viloyat in viloyatlar%}
+                                        <option value="{{viloyat.id}}">{{viloyat.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="1" style="width: 335.333px;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-country-container"><span
+                                                    class="select2-selection__rendered" id="select2-country-container"
+                                                    role="textbox" aria-readonly="true"><span
+                                                        class="select2-selection__placeholder">Viloyatni 
+                                                        tanlang</span></span><span class="select2-selection__arrow"
+                                                    role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="user-role">User Role</label>
+                                <select id="user-role" class="form-select" name="role" required>
+                                    <option value="" data-select2-id="2">Select</option>
+                                    <option value="3">Xodim</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="add-user-contact">Password</label>
+                                <input type="password"  class="form-control "
+                                    placeholder="Password..."
+                                    name="password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-user-contact">Confirmation password</label>
+                                <input type="password"  class="form-control"
+                                    placeholder="Password confirmation ..." aria-label=""
+                                    name="password2" required>
+                            </div>
+                            
+                            
+                            <input type="submit" class="btn btn-primary me-sm-3 me-1 data-submit" value="Submit"></input>
+                            <button type="reset" class="btn btn-label-secondary"
+                                data-bs-dismiss="offcanvas">Cancel</button>
+                            <input type="hidden">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

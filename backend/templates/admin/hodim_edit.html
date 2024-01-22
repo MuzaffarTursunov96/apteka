@@ -1,0 +1,110 @@
+{% extends 'base.html'%}
+{%load static %}
+{%block content%}
+<div class="layout-page">
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="card">
+                
+               
+                    
+                    <div class="offcanvas-body mx-0 flex-grow-0">
+                        <form class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm"
+                            
+                               method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3 fv-plugins-icon-container">
+                                <label class="form-label" for="add-user-fullname">Familiya *</label>
+                                <input type="text" class="form-control" id="add-user-fullname" placeholder="John Doe"
+                                    name="last_name" aria-label="John Doe" required value="{{user.last_name}}">
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="mb-3 fv-plugins-icon-container">
+                                <label class="form-label" for="add-user-fullname">Ism *</label>
+                                <input type="text" class="form-control" id="add-user-fullname" placeholder="John Doe"
+                                    name="username" aria-label="John Doe" required value="{{user.username}}">
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="mb-3 fv-plugins-icon-container">
+                                <label class="form-label" for="add-user-email">Email</label>
+                                <input type="text" id="add-user-email" class="form-control"
+                                    placeholder="john.doe@example.com" aria-label="john.doe@example.com"
+                                    name="email" value="{{user.email}}">
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-user-contact">Contact</label>
+                                <input type="text" id="add-user-contact" class="form-control phone-mask"
+                                    placeholder="+99899 123-45-67" aria-label="john.doe@example.com"
+                                    name="phone_number" value="{{user.phone_number}}">
+                            </div>
+                            
+                            
+                            <div class="mb-3">
+                                <label class="form-label" for="country">Viloyat</label>
+                                <div class="position-relative">
+                                    
+                                    <select id="country"
+                                        class="select2 form-select select2-hidden-accessible" 
+                                        tabindex="-1" aria-hidden="true" name="viloyat" required>
+                                        <option value="" data-select2-id="2">Select</option>
+                                        {% for viloyat in viloyatlar%}
+                                        {% if viloyat == user.viloyat %}
+                                        <option value="{{viloyat.id}}" selected>{{viloyat.name}}</option>
+                                        {%else%}
+                                        <option value="{{viloyat.id}}">{{viloyat.name}}</option>
+                                        {%endif%}
+                                        {% endfor %}
+                                    </select>
+                                    <span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="1" style="width: 335.333px;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-country-container"><span
+                                                    class="select2-selection__rendered" id="select2-country-container"
+                                                    role="textbox" aria-readonly="true"><span
+                                                        class="select2-selection__placeholder">Viloyatni 
+                                                        tanlang</span></span><span class="select2-selection__arrow"
+                                                    role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="user-role">User Role</label>
+                                <select id="user-role" class="form-select" name="role" required>
+                                    <option value="" data-select2-id="2">Select</option>
+                                    <option value="3" selected >Xodim</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="user-role">User Activity</label>
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" name="is_active" {%if user.is_active %}value='checked' checked {%endif%} id="defaultCheck1" />
+                                    <label class="form-check-label" for="defaultCheck1"> Active </label>
+                                </div>
+                            </div>
+
+                            
+                            
+                            
+                            <input type="submit" class="btn btn-primary me-sm-3 me-1 data-submit" value="Submit"></input>
+                            <button type="reset" class="btn btn-label-secondary"
+                                data-bs-dismiss="offcanvas">Cancel</button>
+                            <input type="hidden">
+                        </form>
+                    </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -12,13 +12,17 @@ urlpatterns = [
     path('telegram-user-save',views.TelegramUserSave,name='telegram_user_save'),
 
     path('user-message-receive',views.user_message_receive,name='user_message_receive'),
+    path('hodimlar-save',views.hodimlar_save,name='operator_save'),
 
 
 
     ########## messages #######
     path('user-message-get/<int:id>',views.messages_all,name='messages_all'),
 
-    path('receive-operator-message',views.send_message_to_client,name='send_message_to_client')
+    path('receive-operator-message',views.send_message_to_client,name='send_message_to_client'),
+
+
+
 
    
 ]

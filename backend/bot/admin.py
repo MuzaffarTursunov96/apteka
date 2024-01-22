@@ -17,6 +17,6 @@ class CustomUserAdmin(UserAdmin):
 
 # admin.site.register(User, CustomUserAdmin)
 admin.site.register(User)
-# admin.site.register(User,CustomUserAdmin)
+# admin.site.register(Operator)
 admin.site.register(UserProfile)
 admin.site.register(Viloyatlar)
