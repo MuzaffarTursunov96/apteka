@@ -17,8 +17,13 @@ urlpatterns = [
     path('messages-admin/<int:id>',views.message_show,name='message_show'),
     path('hodim-edit/<int:id>',views.hodim_edit,name='hodim_edit'),
 
-    ########## operator#######
+    ########## team lead >>> operator#######
     path('teamlead-list',views.teamlead_list,name='teamlead_list'),
+    path('xodim-edit/<int:id>',views.xodim_edit,name='xodim_edit'),
+    path('xodim-save',views.xodim_save_view,name='hodim_save'),
+    path('xodim-delete/<int:id>',views.hodim_delete,name='hodim_delete'),
+    path('messages-operator/<int:id>',views.message_show_for_staff,name='message_show_for_operator'),
+    path('xodimlar-royxati',views.xodim_list,name='hodim_list'),
     path('teamlead-edit/<int:id>',views.teamlead_edit,name='teamlead_edit'),
     path('teamlead-save',views.teamlead_save_view,name='teamlead_save_view'),
     path('teamlead-delete/<int:id>',views.teamlead_delete,name='teamlead_delete'),

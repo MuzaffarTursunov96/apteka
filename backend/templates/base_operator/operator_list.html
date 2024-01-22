@@ -9,14 +9,14 @@
 
             <div class="card">
                 <div class="card-header border-bottom">
-                    <h5 class="card-title">Operatorlar</h5>
+                    <h5 class="card-title">Xodimlar</h5>
                 </div>
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <div class="row mx-2">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="me-5">
-                                    <form method="GET">
+                                    <!-- <form method="GET">
                                     <div class="dataTables_length" id="DataTables_Table_0_length">
                                         <label>
                                             
@@ -29,11 +29,15 @@
                                         </label>
                                         <button class=" btn btn-primary">Qidirish</button>
                                     </div>
-                                    </form>
+                                    </form> -->
+                                    
                                 </div>
                             </div>
-                            
-                            <div class="col-md-7">
+                            <div class="col-md-4 p-1">
+                                <div class="me-1"><span>Umumiy mijozlar soni: {{count_of_client}}</span></div>
+                                
+                            </div>
+                            <div class="col-md-4">
                                 <div
                                     class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                     <div id="DataTables_Table_0_filter" class="dataTables_filter"><label></label></div>
@@ -41,7 +45,7 @@
                                             tabindex="0" aria-controls="DataTables_Table_0" type="button"
                                             data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser"><span><i
                                                     class="bx bx-plus me-0 me-sm-1"></i><span
-                                                    class="d-none d-sm-inline-block">Yangi operator
+                                                    class="d-none d-sm-inline-block">Yangi xodim
                                                     qo'shish</span></span></button> </div>
                                 </div>
                             </div>
@@ -60,7 +64,9 @@
                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                         colspan="1" style="width: 107px;"
                                         aria-label="Role: activate to sort column ascending">Role</th>
-                                    
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 107px;"
+                                        aria-label="Role: activate to sort column ascending">Mijoz</th>
                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                         colspan="1" style="width: 65px;"
                                         aria-label="Status: activate to sort column ascending">Messages</th>
@@ -78,19 +84,18 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="avatar-wrapper">
-                                                <div class="avatar avatar-sm me-3">
-                                                    <img src="{% static 'icons/user-pin.png'%}" alt="Avatar"
-                                                        class="rounded-circle">
-                                                </div>
+                                                <div class="avatar avatar-sm me-3"><img
+                                                        src="{% static 'icons/operator.png'%}" alt="Avatar"
+                                                        class="rounded-circle"></div>
                                             </div>
                                             <div class="d-flex flex-column"><a href="app-user-view-account.html"
                                                     class="text-body text-truncate"><span class="fw-medium">{{operator}}</span></a><small
                                                     class="text-muted">{{operator.email}}</small></div>
                                         </div>
                                     </td>
-                                    <td><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-cog bx-xs"></i></span>Operator<br>{{operator.viloyat.name}}</span></td>
-                                    
-                                    <td><a href="{% url 'operator_list' %}?operator_id={{operator.id}}"><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class='bx bxs-user-detail'></i></span>Xodimlar</span></a></td>
+                                    <td><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-cog bx-xs"></i></span>Xodim<br>{{operator.viloyat.name}}</span></td>
+                                    <td><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"></span>{{operator.client_count}} ta</span></td>
+                                    <td><a href="{% url 'message_show_for_operator' operator.id %}"><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-show"></i></span>Yozishmalar</span></a></td>
                                     {%if operator.is_active %}
                                     <td><span class="badge bg-label-success">Active</span></td>
                                     {%else%}
@@ -98,9 +103,9 @@
                                     {%endif%}
                                     <td>
                                         <div class="d-inline-block text-nowrap">
-                                                    <a class="btn btn-sm btn-icon" href="{% url 'teamlead_edit' operator.id %}"><i
+                                                    <a class="btn btn-sm btn-icon" href="{% url 'xodim_edit' operator.id %}"><i
                                                     class="bx bx-edit"></i></a>
-                                                    <a href="{% url 'teamlead_delete' operator.id %}" onclick="return confirm('Rostdan ham o\'chirmoqchimisiz?')"
+                                                    <a href="{% url 'hodim_delete' operator.id %}" onclick="return confirm('Rostdan ham o\'chirmoqchimisiz?')"
                                                         class="btn btn-sm btn-icon delete-record"><i
                                                     class="bx bx-trash"></i></a>
                                                     <button
@@ -181,7 +186,7 @@
                     <div class="offcanvas-body mx-0 flex-grow-0">
                         <form class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm"
                             
-                              action="{%url 'teamlead_save_view' %}" method="POST">
+                              action="{%url 'hodim_save' %}" method="POST">
                             {% csrf_token %}
                             <div class="mb-3 fv-plugins-icon-container">
                                 <label class="form-label" for="add-user-fullname">Familiya *</label>
@@ -245,7 +250,7 @@
                                 <label class="form-label" for="user-role">User Role</label>
                                 <select id="user-role" class="form-select" name="role" required>
                                     <option value="" data-select2-id="2">Select</option>
-                                    <option value="2">Operator</option>
+                                    <option value="3">Xodim</option>
                                 </select>
                             </div>
 

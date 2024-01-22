@@ -120,6 +120,59 @@ def message_show(request,id):
     return render(request,'admin/chat.html',context)
 
 @login_required(login_url='/accounts/login/')
+def message_show_for_staff(request,id):
+    
+    teleg_user_id = request.GET.get('user_id',None)
+    user = User.objects.get(id=id)
+    users = TelegramUser.objects.filter(operator =user)
+    messagess = None
+    telegram_user = None
+    if teleg_user_id:
+        messagess = Message.objects.filter(user__user_id = int(teleg_user_id))
+        telegram_user = TelegramUser.objects.get(user_id = int(teleg_user_id))
+
+    
+    context ={
+        'users':users,
+        'messages':messagess,
+        'telegram_user':telegram_user,
+        'operator_id':id
+    }
+    return render(request,'base_operator/chat.html',context)
+
+@login_required(login_url='/accounts/login/')
+def xodim_list(request):
+
+    
+    operators = User.objects.filter(viloyat__name =request.user.viloyat,is_active=True,role=3)
+    
+
+    paginator = Paginator(operators, 25)
+
+    if request.GET.get('page') != None:
+        page_number = request.GET.get('page')
+    else:
+        page_number=1
+    
+    page_obj = paginator.get_page(page_number)
+
+
+     
+    count_of_client = User.objects.filter(viloyat__name =request.user.viloyat,is_active=True,role=3).aggregate(clientt_count = Sum('client_count'))['clientt_count']
+
+    if not count_of_client:
+        count_of_client = 0
+    viloyatlar = Viloyatlar.objects.all()
+    context ={
+        'operators': page_obj,
+        'viloyatlar':viloyatlar,
+        'count_of_client':count_of_client
+    }
+   
+    return render(request,'base_operator/operator_list.html',context)
+
+
+@login_required(login_url='/accounts/login/')
 def teamlead_list(request):
 
     viloyat =request.GET.get('viloyat',None)
@@ -189,6 +242,40 @@ def client_list(request):
     }
    
     return render(request,'admin/client_list.html',context)
+
+@login_required(login_url='/accounts/login/')
+def xodim_edit(request,id):
+    user = get_object_or_404(User,id=id)
+    if request.method =='POST':
+        form = OperatorForm(request.POST)
+        viloyat_id = request.POST.get('viloyat')
+        role = request.POST.get('role')
+        active = request.POST.get('is_active',None)
+         
+        viloyat = Viloyatlar.objects.get( id = int(viloyat_id))
+        data =form.data 
+        
+        user.username =data['username']
+        user.last_name =data['last_name']
+        user.email =data['email']
+        user.phone_number =data['phone_number']
+        user.role =int(role)
+        if active:
+            if active =='checked' or active =='on':
+                user.is_active =True
+        else:
+            user.is_active =False
+
+        user.viloyat =viloyat
+        user.save()
+        
+        return redirect('hodim_list')
+    context ={
+        'user':user,
+        'viloyatlar':Viloyatlar.objects.all()
+    }
+
+    return render(request,'base_operator/hodim_edit.html',context)
 
 @login_required(login_url='/accounts/login/')
 def hodim_edit(request,id):
@@ -370,6 +457,32 @@ def operator_save_view(request):
     return redirect('operator_list')
 
 @login_required(login_url='/accounts/login/')
+def xodim_save_view(request):
+    if request.method == 'POST':
+        form = OperatorForm(request.POST)
+        viloyat_id = request.POST.get('viloyat')
+        role = request.POST.get('role')
+        viloyat = Viloyatlar.objects.get( id = int(viloyat_id))
+        data =form.data 
+        if data['password'] != data['password2']:
+            return HttpResponseForbidden('Password did\'nt match')
+        user = User(
+            username =data['username'],
+            last_name =data['last_name'],
+            email =data['email'],
+            phone_number =data['phone_number'],
+            role =role,
+            viloyat =viloyat
+            )
+        print(data)
+        
+        user.save()
+        user.set_password(data['password'])
+        user.save()
+    
+    return redirect('hodim_list')
+
+@login_required(login_url='/accounts/login/')
 def teamlead_save_view(request):
     if request.method == 'POST':
         form = OperatorForm(request.POST)
@@ -433,8 +546,18 @@ def viloyat_add(request):
 @login_required(login_url='/accounts/login/')
 def viloyat_show(request):
     viloyatolar = Viloyatlar.objects.all()
+
+    paginator = Paginator(viloyatolar, 10)
+
+    if request.GET.get('page') != None:
+        page_number = request.GET.get('page')
+    else:
+        page_number=1
+    
+    page_obj = paginator.get_page(page_number)
+
     context ={
-        'viloyatlar':viloyatolar
+        'viloyatlar':page_obj
     }
     return render(request,'admin/viloyat_list.html',context)
 
@@ -444,6 +567,13 @@ def operator_delete(request,id):
         user =User.objects.get(id =id)
         user.delete()
     return redirect('operator_list')
+
+@login_required(login_url='/accounts/login/')
+def hodim_delete(request,id):
+    if User.objects.filter(id = id).exists():
+        user =User.objects.get(id =id)
+        user.delete()
+    return redirect('hodim_list')
 
 @login_required(login_url='/accounts/login/')
 def teamlead_delete(request,id):

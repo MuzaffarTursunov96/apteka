@@ -1,7 +1,8 @@
 ROLE_CHOICES ={
     1:'admin',
     2:'operator',
-    3:'client'
+    3:'xodim',
+    4:'client'
 }
 
 def get_user_role(request):
