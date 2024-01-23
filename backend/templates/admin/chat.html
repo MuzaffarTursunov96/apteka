@@ -275,13 +275,18 @@ document.getElementById("text_operator").addEventListener("keyup", function(even
       var chat_list = document.getElementById('user'+data.user_id)
       var badge = document.getElementById('msg_count'+data.user_id)
       
+      var new_count ='1'
+      
+
       if(badge){
         var new_count=String(parseInt(badge.innerText)+1);
+        if (new_count =='NaN'){
+          new_count = 1 ;
+        }
+        
         if(chat_list){
           chat_list.remove()
         }
-      }else{
-        var new_count ='0'
       }
      
       

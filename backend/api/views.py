@@ -72,7 +72,11 @@ class ListViloyatlar(APIView):
         serializer= ViloyatSerializer(queryset,many=True)
         return Response(data=serializer.data)
 
+import random, string
 
+def randomword(length):
+   letters = string.ascii_lowercase
+   return ''.join(random.choice(letters) for i in range(length))
     
    
 @csrf_exempt
@@ -120,7 +124,7 @@ def user_message_receive(request):
                 msg_type=data['msg_type'][0]
             )
             message.save()
-            message.file.save('filename.jpg', ContentFile(response.content), save=True)
+            message.file.save(str(randomword(10))+str(file_path.split('/')[-1]), ContentFile(response.content), save=True)
         else:
             message = Message(
                 chat_id =chat_id,
