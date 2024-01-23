@@ -46,6 +46,11 @@ menu_markup = ReplyKeyboardMarkup(resize_keyboard=True).add(
     KeyboardButton('👨‍💻 Operator bilan bog\'lanish'),
     KeyboardButton('🔄 Tilni o\'zgartirish'),
 )
+menu_markup_ru = ReplyKeyboardMarkup(resize_keyboard=True).add(
+    KeyboardButton('👨‍💻 Свяжитесь с оператором'),
+    KeyboardButton('🔄 Изменить язык'),
+)
+
 menu_markup2 = ReplyKeyboardMarkup(resize_keyboard=True).add(
     KeyboardButton('🔄 Tilni o\'zgartirish'),
 )

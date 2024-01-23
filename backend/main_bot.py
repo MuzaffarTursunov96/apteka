@@ -45,6 +45,7 @@ app = web.Application()
 
 
 STATES = {
+    'LANG':'lan',
     'START': 'start',
     'LANGUAGE': 'lang',
     'MENU': 'menu',
@@ -103,7 +104,7 @@ async def cancel_handler(message: types.Message, state: FSMContext, raw_state: O
     await message.reply('Canceled.', reply_markup=types.ReplyKeyboardRemove())
 
 real_operators={}
-
+user_lang ={}
 
 def generate_random_string(length):
     letters = string.ascii_letters + string.digits  # Includes uppercase letters, lowercase letters, and digits
@@ -115,7 +116,7 @@ async def operator_start(message: types.Message):
     
     global real_operators
     state = user_states.get(message.chat.id)
-
+    global user_lang
     
     
 
@@ -125,125 +126,248 @@ async def operator_start(message: types.Message):
     
     
     if state == STATES['LANGUAGE']:
-        if message.text =='🇺🇿 Uz' or message.text =='🇺🇿 Uz':
+        if message.text =='🇺🇿 Uz' or message.text =='🇷🇺 Ru':
             user_states[message.chat.id] = STATES['MENU']
-            await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>menu</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=menu_markup,parse_mode='HTML')
-        else:
-            await bot.send_message(text='<em>Iltimos tilni tanlang</em>',chat_id=message.chat.id,reply_markup=lang_markup,parse_mode='HTML')
-
-    elif state == STATES['MENU']:
-        # Process the age input and transition to the next state
-        if message.text =='🔄 Tilni o\'zgartirish':
-            await bot.send_message(text='<em>Iltimos tilni tanlang</em>',chat_id=message.chat.id,reply_markup=lang_markup,parse_mode='HTML')
-        elif message.text =='🇺🇿 Uz' or message.text =='🇺🇿 Uz':
-            await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>menu</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=menu_markup,parse_mode='HTML')
-        elif message.text =='👨‍💻 Operator bilan bog\'lanish':
-            user_states[message.chat.id] = STATES['VILOYAT']
-            viloyatlar2 = await get_viloyatlar()
-            await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>viloyat</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=get_viloyat_markup(viloyatlar2),parse_mode='HTML')
-        else:
-            await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>menu</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=menu_markup,parse_mode='HTML')
-    elif state == STATES['VILOYAT']:
-        # Process the age input and transition to the next state
-        
-        viloyatlar2 = await get_viloyatlar()
-        
-        shaxarlar =[ vil['name'] for vil in viloyatlar2]
-        if message.text in shaxarlar:
-            operatorss = await operators(vil_name=message.text)
-            
-            if len(operatorss) < 1:
-                user_states[message.chat.id] = STATES['MENU']
-                return await bot.send_message(text='👩‍🚀 operator topilmadi, iltimos adminga murojat qilib ko\'ring.',chat_id=message.chat.id,reply_markup=menu_markup)
-
-            
-            operators_new ={}
-            for o in operatorss:
-                operators_new[o['username']+'##'+o['last_name']]=o['id']
-            real_operators[message.chat.id] = operators_new
-            user_states[message.chat.id] = STATES['OPERATOR']
-
-            await bot.send_message(text='Iltimos 👩‍🚀 operatorni tanlang.',chat_id=message.chat.id,reply_markup=get_operators(operatorss))
-        else:
-            await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>viloyat</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=get_viloyat_markup(viloyatlar2),parse_mode='HTML')
-    elif state == STATES['OPERATOR']:
-        user_key = message.text.split(' ')
-        if len(user_key) >=2:
-            name = user_key[0] +'##'+ user_key[1]
-        else:
-            name = user_key[0] +'##'+ 'qwerty'
-        if name in real_operators[message.chat.id]:
-            user_states[message.chat.id]=STATES['FINISH']
-            UserProfilePhotos = await bot.get_user_profile_photos(user_id=message.from_user.id)
-            img_path = 'uploads/images/man.png'
-            if UserProfilePhotos.total_count > 0:
-                first_photo = UserProfilePhotos.photos[0][0]
-                file_id = first_photo.file_id
-
-                file = await bot.get_file(file_id)
-                file_path = file.file_path
-                
-                random_string =generate_random_string(10)
-                current_directory = os.getcwd()+f'\\media\\uploads\\images\\{message.from_user.id}{random_string}.jpg'
-                img_path =f'uploads\\images\\{message.from_user.id}{random_string}.jpg'
-                await bot.download_file(file_path, current_directory)
-            teleg_user = message.from_user
-            data ={
-                'user_id':teleg_user.id,
-                'username':teleg_user.username,
-                'first_name':teleg_user.first_name,
-                'last_name':teleg_user.last_name,
-                'operator_id':real_operators[message.chat.id][name],
-                'image':img_path
-            }
-            await telegram_user_save(data=data)
-            remove_keyboard = ReplyKeyboardRemove()
-            await bot.send_message(text="<em>Savollaringiz bolsa 👇 pastga yozing.</em>",chat_id=message.chat.id,reply_markup=remove_keyboard,parse_mode='HTML')
-        else:
-            if len(get_operators(real_operators[message.chat.id],older=True).keyboard) > 0:
-                await bot.send_message(text='Iltimos 👩‍🚀 operatorni tanlang.',chat_id=message.chat.id,reply_markup=get_operators(real_operators[message.chat.id],older=True))
+            if message.text =='🇺🇿 Uz':
+                user_lang[message.chat.id] = 'uz'
+                await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>menu</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=menu_markup,parse_mode='HTML')
             else:
-                user_states[message.chat.id] = STATES['MENU']
-                await bot.send_message(text='👩‍🚀 operator topilmadi, iltimos adminga murojat qilib ko\'ring.',chat_id=message.chat.id,reply_markup=menu_markup)
+                user_lang[message.chat.id] = 'ru'
+                await bot.send_message(text='<em>Пожалуйста, выберите свое <b>меню</b> из списка ниже.</em>',chat_id=message.chat.id,reply_markup=menu_markup_ru,parse_mode='HTML')
 
-    elif state == STATES['FINISH']:
-    
-        file_type ='text'
-        file_path =''
-        if message.content_type == types.ContentType.TEXT:
-            text = message.text
+        else:
+            await bot.send_message(text='<em>Iltimos tilni tanlang</em>',chat_id=message.chat.id,reply_markup=lang_markup,parse_mode='HTML')
+    if user_lang[message.chat.id] =='uz':
+        if state == STATES['MENU']:
+            # Process the age input and transition to the next state
+            if message.text =='🔄 Tilni o\'zgartirish':
+                user_states[message.chat.id] = STATES['LANGUAGE']
+                await bot.send_message(text='<em>Iltimos tilni tanlang</em>',chat_id=message.chat.id,reply_markup=lang_markup,parse_mode='HTML')
+            elif message.text =='🇺🇿 Uz' or message.text =='🇺🇿 Uz':
+                await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>menu</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=menu_markup,parse_mode='HTML')
+            elif message.text =='👨‍💻 Operator bilan bog\'lanish':
+                user_states[message.chat.id] = STATES['VILOYAT']
+                viloyatlar2 = await get_viloyatlar()
+                await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>viloyat</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=get_viloyat_markup(viloyatlar2),parse_mode='HTML')
+            else:
+                await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>menu</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=menu_markup,parse_mode='HTML')
+        elif state == STATES['VILOYAT']:
+            # Process the age input and transition to the next state
             
-        elif message.photo:
-            file_type ='photo'
-            # Handle document/file message
-            photo = message.photo[-1]
-            text = photo.file_id
+            viloyatlar2 = await get_viloyatlar()
+            
+            shaxarlar =[ vil['name'] for vil in viloyatlar2]
+            if message.text in shaxarlar:
+                operatorss = await operators(vil_name=message.text)
+                
+                if len(operatorss) < 1:
+                    user_states[message.chat.id] = STATES['MENU']
+                    return await bot.send_message(text='👩‍🚀 operator topilmadi, iltimos adminga murojat qilib ko\'ring.',chat_id=message.chat.id,reply_markup=menu_markup)
 
-            file_info = await bot.get_file(photo.file_id)
-            file_path =file_info.file_path
-            # print(f"Received document/file with file_path: {file_path}")
-            # You can use the file_id to download and save the file if needed
-        elif message.document:
-            file_type ='document'
+                
+                operators_new ={}
+                for o in operatorss:
+                    operators_new[o['username']+'##'+o['last_name']]=o['id']
+                real_operators[message.chat.id] = operators_new
+                user_states[message.chat.id] = STATES['OPERATOR']
 
-            text = message.document.file_id
-           
+                await bot.send_message(text='Iltimos 👩‍🚀 operatorni tanlang.',chat_id=message.chat.id,reply_markup=get_operators(operatorss))
+            else:
+                await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>viloyat</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=get_viloyat_markup(viloyatlar2),parse_mode='HTML')
+        elif state == STATES['OPERATOR']:
+            user_key = message.text.split(' ')
+            if len(user_key) >=2:
+                name = user_key[0] +'##'+ user_key[1]
+            else:
+                name = user_key[0] +'##'+ 'qwerty'
+            if name in real_operators[message.chat.id]:
+                user_states[message.chat.id]=STATES['FINISH']
+                UserProfilePhotos = await bot.get_user_profile_photos(user_id=message.from_user.id)
+                img_path = 'uploads/images/man.png'
+                if UserProfilePhotos.total_count > 0:
+                    first_photo = UserProfilePhotos.photos[0][0]
+                    file_id = first_photo.file_id
 
-            file_info = await bot.get_file(message.document.file_id)
-            file_path = file_info.file_path
-            # Handle other content types as needed
-            # print(f"Received message with content type: {file_path}")
+                    file = await bot.get_file(file_id)
+                    file_path = file.file_path
+                    
+                    random_string =generate_random_string(10)
+                    current_directory = os.getcwd()+f'\\media\\uploads\\images\\{message.from_user.id}{random_string}.jpg'
+                    img_path =f'uploads\\images\\{message.from_user.id}{random_string}.jpg'
+                    await bot.download_file(file_path, current_directory)
+                teleg_user = message.from_user
+                data ={
+                    'user_id':teleg_user.id,
+                    'username':teleg_user.username,
+                    'first_name':teleg_user.first_name,
+                    'last_name':teleg_user.last_name,
+                    'operator_id':real_operators[message.chat.id][name],
+                    'image':img_path
+                }
+                await telegram_user_save(data=data)
+                remove_keyboard = ReplyKeyboardRemove()
+                await bot.send_message(text="<em>Savollaringiz bolsa 👇 pastga yozing.</em>",chat_id=message.chat.id,reply_markup=remove_keyboard,parse_mode='HTML')
+            else:
+                if len(get_operators(real_operators[message.chat.id],older=True).keyboard) > 0:
+                    await bot.send_message(text='Iltimos 👩‍🚀 operatorni tanlang.',chat_id=message.chat.id,reply_markup=get_operators(real_operators[message.chat.id],older=True))
+                else:
+                    user_states[message.chat.id] = STATES['MENU']
+                    await bot.send_message(text='👩‍🚀 operator topilmadi, iltimos adminga murojat qilib ko\'ring.',chat_id=message.chat.id,reply_markup=menu_markup)
+        elif state == STATES['FINISH']:
+    
+            file_type ='text'
+            file_path =''
+            if message.content_type == types.ContentType.TEXT:
+                text = message.text
+                
+            elif message.photo:
+                file_type ='photo'
+                # Handle document/file message
+                photo = message.photo[-1]
+                text = photo.file_id
 
-       
-        data ={
-            'chat_id':message.chat.id,
-            'message_id':message.message_id,
-            'user_id':message.from_user.id,
-            'text':text,
-            'msg_type':file_type,
-            'file':str(file_path),
-        }
-        await user_message_save(data=data) 
+                file_info = await bot.get_file(photo.file_id)
+                file_path =file_info.file_path
+                # print(f"Received document/file with file_path: {file_path}")
+                # You can use the file_id to download and save the file if needed
+            elif message.document:
+                file_type ='document'
+
+                text = message.document.file_id
+            
+
+                file_info = await bot.get_file(message.document.file_id)
+                file_path = file_info.file_path
+                # Handle other content types as needed
+                # print(f"Received message with content type: {file_path}")
+
+        
+            data ={
+                'chat_id':message.chat.id,
+                'message_id':message.message_id,
+                'user_id':message.from_user.id,
+                'text':text,
+                'msg_type':file_type,
+                'file':str(file_path),
+            }
+            await user_message_save(data=data) 
+    
+    else:
+        if state == STATES['MENU']:
+            # Process the age input and transition to the next state
+            if message.text =='🔄 Изменить язык':
+                user_states[message.chat.id] = STATES['LANGUAGE']
+                await bot.send_message(text='<em>Пожалуйста, выберите язык</em>',chat_id=message.chat.id,reply_markup=lang_markup,parse_mode='HTML')
+            elif message.text =='🇺🇿 Uz' or message.text =='🇺🇿 Uz':
+                await bot.send_message(text='<em>Пожалуйста, выберите свое <b>меню</b> из списка ниже.</em>',chat_id=message.chat.id,reply_markup=menu_markup_ru,parse_mode='HTML')
+            elif message.text =='👨‍💻 Свяжитесь с оператором':
+                user_states[message.chat.id] = STATES['VILOYAT']
+                viloyatlar2 = await get_viloyatlar()
+                await bot.send_message(text='<em>Пожалуйста, выберите свою <b>регион</b> из списка ниже.</em>',chat_id=message.chat.id,reply_markup=get_viloyat_markup(viloyatlar2),parse_mode='HTML')
+            else:
+                await bot.send_message(text='<em>Пожалуйста, выберите свое <b>меню</b> из списка ниже.</em>',chat_id=message.chat.id,reply_markup=menu_markup_ru,parse_mode='HTML')
+        elif state == STATES['VILOYAT']:
+            # Process the age input and transition to the next state
+            
+            viloyatlar2 = await get_viloyatlar()
+            
+            shaxarlar =[ vil['name'] for vil in viloyatlar2]
+            if message.text in shaxarlar:
+                operatorss = await operators(vil_name=message.text)
+                
+                if len(operatorss) < 1:
+                    user_states[message.chat.id] = STATES['MENU']
+                    return await bot.send_message(text='👩‍🚀 Оператор не найден, обратитесь к администратору.',chat_id=message.chat.id,reply_markup=menu_markup_ru)
+
+                
+                operators_new ={}
+                for o in operatorss:
+                    operators_new[o['username']+'##'+o['last_name']]=o['id']
+                real_operators[message.chat.id] = operators_new
+                user_states[message.chat.id] = STATES['OPERATOR']
+
+                await bot.send_message(text='Пожалуйста, выберите оператора 👩‍🚀.',chat_id=message.chat.id,reply_markup=get_operators(operatorss))
+            else:
+                await bot.send_message(text='<em>Пожалуйста, выберите свою <b>регион</b> из списка ниже.</em>',chat_id=message.chat.id,reply_markup=get_viloyat_markup(viloyatlar2),parse_mode='HTML')
+        elif state == STATES['OPERATOR']:
+            user_key = message.text.split(' ')
+            if len(user_key) >=2:
+                name = user_key[0] +'##'+ user_key[1]
+            else:
+                name = user_key[0] +'##'+ 'qwerty'
+            if name in real_operators[message.chat.id]:
+                user_states[message.chat.id]=STATES['FINISH']
+                UserProfilePhotos = await bot.get_user_profile_photos(user_id=message.from_user.id)
+                img_path = 'uploads/images/man.png'
+                if UserProfilePhotos.total_count > 0:
+                    first_photo = UserProfilePhotos.photos[0][0]
+                    file_id = first_photo.file_id
+
+                    file = await bot.get_file(file_id)
+                    file_path = file.file_path
+                    
+                    random_string =generate_random_string(10)
+                    current_directory = os.getcwd()+f'\\media\\uploads\\images\\{message.from_user.id}{random_string}.jpg'
+                    img_path =f'uploads\\images\\{message.from_user.id}{random_string}.jpg'
+                    await bot.download_file(file_path, current_directory)
+                teleg_user = message.from_user
+                data ={
+                    'user_id':teleg_user.id,
+                    'username':teleg_user.username,
+                    'first_name':teleg_user.first_name,
+                    'last_name':teleg_user.last_name,
+                    'operator_id':real_operators[message.chat.id][name],
+                    'image':img_path
+                }
+                await telegram_user_save(data=data)
+                remove_keyboard = ReplyKeyboardRemove()
+                await bot.send_message(text="<em>Если у вас есть вопросы, напишите их ниже.👇</em>",chat_id=message.chat.id,reply_markup=remove_keyboard,parse_mode='HTML')
+            else:
+                if len(get_operators(real_operators[message.chat.id],older=True).keyboard) > 0:
+                    await bot.send_message(text='Пожалуйста, выберите оператора 👩‍🚀.',chat_id=message.chat.id,reply_markup=get_operators(real_operators[message.chat.id],older=True))
+                else:
+                    user_states[message.chat.id] = STATES['MENU']
+                    await bot.send_message(text='👩‍🚀оператор не найден, обратитесь к администратору.',chat_id=message.chat.id,reply_markup=menu_markup_ru)
+        elif state == STATES['FINISH']:
+    
+            file_type ='text'
+            file_path =''
+            if message.content_type == types.ContentType.TEXT:
+                text = message.text
+                
+            elif message.photo:
+                file_type ='photo'
+                # Handle document/file message
+                photo = message.photo[-1]
+                text = photo.file_id
+
+                file_info = await bot.get_file(photo.file_id)
+                file_path =file_info.file_path
+                # print(f"Received document/file with file_path: {file_path}")
+                # You can use the file_id to download and save the file if needed
+            elif message.document:
+                file_type ='document'
+
+                text = message.document.file_id
+            
+
+                file_info = await bot.get_file(message.document.file_id)
+                file_path = file_info.file_path
+                # Handle other content types as needed
+                # print(f"Received message with content type: {file_path}")
+
+        
+            data ={
+                'chat_id':message.chat.id,
+                'message_id':message.message_id,
+                'user_id':message.from_user.id,
+                'text':text,
+                'msg_type':file_type,
+                'file':str(file_path),
+            }
+            await user_message_save(data=data) 
+    
+
 
 async def operators(vil_name):
     async with aiohttp.ClientSession() as session:
