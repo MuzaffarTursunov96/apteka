@@ -143,7 +143,7 @@ async def operator_start(message: types.Message):
             if message.text =='🔄 Tilni o\'zgartirish':
                 user_states[message.chat.id] = STATES['LANGUAGE']
                 await bot.send_message(text='<em>Iltimos tilni tanlang</em>',chat_id=message.chat.id,reply_markup=lang_markup,parse_mode='HTML')
-            elif message.text =='🇺🇿 Uz' or message.text =='🇺🇿 Uz':
+            elif message.text =='🇺🇿 Uz' or message.text =='🇷🇺 Ru':
                 await bot.send_message(text='<em>Iltimos pastdagi ro\'yxatdan <b>menu</b>ingizni tanlang.</em>',chat_id=message.chat.id,reply_markup=menu_markup,parse_mode='HTML')
             elif message.text =='👨‍💻 Operator bilan bog\'lanish':
                 user_states[message.chat.id] = STATES['VILOYAT']
@@ -258,7 +258,7 @@ async def operator_start(message: types.Message):
             if message.text =='🔄 Изменить язык':
                 user_states[message.chat.id] = STATES['LANGUAGE']
                 await bot.send_message(text='<em>Пожалуйста, выберите язык</em>',chat_id=message.chat.id,reply_markup=lang_markup,parse_mode='HTML')
-            elif message.text =='🇺🇿 Uz' or message.text =='🇺🇿 Uz':
+            elif message.text =='🇺🇿 Uz' or message.text =='🇷🇺 Ru':
                 await bot.send_message(text='<em>Пожалуйста, выберите свое <b>меню</b> из списка ниже.</em>',chat_id=message.chat.id,reply_markup=menu_markup_ru,parse_mode='HTML')
             elif message.text =='👨‍💻 Свяжитесь с оператором':
                 user_states[message.chat.id] = STATES['VILOYAT']
