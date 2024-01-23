@@ -123,8 +123,9 @@ async def operator_start(message: types.Message):
     if state == None:
         await bot.send_message(text='<em>Iltimos start buyrug\'ini bosing</em>',chat_id=message.chat.id,reply_markup=start_markup,parse_mode='HTML')
         
-    
-    
+    if message.chat.id not in user_lang:
+        user_lang[message.chat.id] ='uz'
+        
     if state == STATES['LANGUAGE']:
         if message.text =='🇺🇿 Uz' or message.text =='🇷🇺 Ru':
             user_states[message.chat.id] = STATES['MENU']
