@@ -291,12 +291,13 @@ document.getElementById("text_operator").addEventListener("keyup", function(even
         var text =`<p class="chat-contact-status text-truncate mb-0 text-muted" id="new${data.user_id}">${data.text} <span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span></p>`
         var text2 =`<p class="mb-0" style="color: #788494;">${data.text}</p>`
       }else if(data.msg_type =='photo'){
-        text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
-        text2 =` <img src="/media/${data.file}" alt="Avatar" class="img-fluid">`
+        var text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
+        var text2 =` <img src="/media/${data.file}" alt="Avatar" class="img-fluid">`
       }
       else{
-        text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
-        text2 =`<a href="/download/${data.file}">Download File</a>`
+        var text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
+        var text2 =`<p class="mb-0" style="color: #788494;"><a style="color: #788494;" class='btn btn-info' href="/media/${data.file}">${data.file}</a></p>`
+        
       }
       var li = `<li class="chat-contact-list-item" id="user${data.user_id}">
                   
@@ -395,16 +396,14 @@ function get_user_messages(url,user_id){
       for(let i=0; i< data.messages.length; i++){
         var message =""
         if(data.messages[i].msg_type =='text'){
-        
-        var text2 =`<p class="mb-0" style="color: #788494;">${data.messages[i].text}</p>`
+          var text2 =`<p class="mb-0" style="color: #788494;">${data.messages[i].text}</p>`
         }else if(data.messages[i].msg_type =='photo'){
           
-          text2 =`<a href="/download/${data.messages[i].text}">Download Photo</a>`
-          text2 =`<img src="${data.messages[i].file}" class="img-fluid" alt="Responsive image">`
+          
+          var text2 =`<img src="${data.messages[i].file}" class="img-fluid" alt="Responsive image">`
         }
         else{
-          
-          text2 =`<a href="/download/${data.messages[i].text}">Download File</a>`
+          var text2 =`<p class="mb-0" style="color: #788494;"><a style="color: #788494;" class='btn btn-info' href="${data.messages[i].file}">${data.messages[i].file}</a></p>`
         }
 
 
