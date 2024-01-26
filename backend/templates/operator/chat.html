@@ -23,7 +23,7 @@
             <div class="col app-chat-sidebar-left app-sidebar overflow-hidden" id="app-chat-sidebar-left">
               <div class="chat-sidebar-left-user sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap p-4 mt-2">
                 <div class="avatar avatar-xl avatar-online">
-                  <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle">
+                  <img src="{%static 'assets/img/avatars/1.png'%}" alt="Avatar" class="rounded-circle">
                 </div>
                 <h5 class="mt-3 mb-1">John Doe</h5>
                 <small class="text-muted">UI/UX Designer</small>
@@ -142,65 +142,82 @@
             </div>
             <!-- /Chat contacts -->
 
-            <!-- Chat History -->
-            <div class="col app-chat-history"  id="chat_history" data-id="nan">
-              <div class="chat-history-wrapper">
-                <div class="chat-history-header border-bottom">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex overflow-hidden align-items-center">
-                      <i class="bx bx-menu bx-sm cursor-pointer d-lg-none d-block me-2" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-contacts"></i>
-                      <div class="flex-shrink-0 avatar">
-                        <img   class="rounded-circle" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-sidebar-right" id="client_basic_img">
-                      </div>
-                      <div class="chat-contact-info flex-grow-1 ms-3">
-                        <h6 class="m-0" id="client_name_basic"></h6>
-                       
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <i class="bx bx-phone-call cursor-pointer d-sm-block d-none me-3 fs-4"></i>
-                      <i class="bx bx-video cursor-pointer d-sm-block d-none me-3 fs-4"></i>
-                      <i class="bx bx-search cursor-pointer d-sm-block d-none me-3 fs-4"></i>
-                      <div class="dropdown">
-                        <button class="btn p-0" type="button" id="chat-header-actions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="bx bx-dots-vertical-rounded fs-4"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="chat-header-actions">
-                          <a class="dropdown-item" href="javascript:void(0);">View Contact</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Mute Notifications</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Block Contact</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Clear Chat</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Report</a>
-                        </div>
-                      </div>
-                    </div>
+            <div class="card mx-auto" style="max-width:600px" id="chat_history" data-id="nan" style="display:none;">
+              <div class="card-header bg-transparent">
+                  <div class="navbar navbar-expand p-0" >
+                      <ul class="navbar-nav me-auto align-items-center">
+                          <li class="nav-item" style="display:none;" id ='img_pict'>
+                              <a href="#!" class="nav-link">
+                                  <div class="position-relative"
+                                      style="width:50px; height: 50px; border-radius: 50%; border: 2px solid #e84118; padding: 2px">
+                                      <img id="client_basic_img"
+                                          class="img-fluid rounded-circle" alt="" >
+                                      <span
+                                          class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                                          <span class="visually-hidden">New alerts</span>
+                                      </span>
+                                  </div>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <h6 href="#!" class="nav-link" id="client_name_basic"></h6>
+                          </li>
+                      </ul>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a href="#!" class="nav-link">
+                                  <i class="fas fa-phone-alt"></i>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="#!" class="nav-link">
+                                  <i class="fas fa-video"></i>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="#!" class="nav-link">
+                                  <i class="fas fa-times"></i>
+                              </a>
+                          </li>
+                      </ul>
                   </div>
-                </div>
-                <div class="chat-history-body ps--scrolling-y">
-                  <ul class="list-unstyled chat-history mb-0" id="chats">
-                    
-                  </ul>
-                </div>
-                
-                <div class="chat-history-footer">
-                  <form class="form-send-message d-flex justify-content-between align-items-center " id="my_form" enctype="multipart/form-data">
-                    <input type="text" class="form-control message-input border-0 me-3 shadow-none"  name="text" placeholder="Type your message here..." id="text_operator">
-                    <div class="message-actions d-flex align-items-center">
-                      <i class="speech-to-text bx bx-microphone bx-sm cursor-pointer"></i>
-                      <label for="attach-doc" class="form-label mb-0">
-                        <i class="bx bx-paperclip bx-sm cursor-pointer mx-3 text-body"></i>
-                        <input type="file" id="attach-doc" name="file" hidden>
-                      </label>
-                      <button class="btn btn-primary d-flex send-msg-btn" onclick="send_message()"  id="send_msg">
-                        <i class="bx bx-paper-plane me-md-1 me-0"></i>
-                        <span class="align-middle d-md-inline-block d-none">Send</span>
-                      </button>
-                    </div>
-                  </form>
-                </div>
               </div>
-            </div>
+              <div class="card-body p-4" style="height: 200px; overflow: auto;" id="chats">
+        
+                  
+        
+        
+              </div>
               
+              <div class="card-footer bg-white position-absolute w-100 bottom-0 m-0 p-1">
+                <form id="my_form" enctype="multipart/form-data">
+                  <div class="input-group">
+                      <div class="input-group-text bg-transparent border-0">
+                          <span class="btn btn-light text-secondary">
+                            <label for="attach-doc" class="form-label mb-0">
+                              <i class="fas fa-paperclip"></i>
+                              <input type="file" id="attach-doc" name="file" hidden>
+                            </label>
+                              
+                          </span>
+                      </div>
+                      <input type="text" class="form-control border-0" placeholder="Write a message..." name="text" id="text_operator">
+                      <div class="input-group-text bg-transparent border-0">
+                        <button class="btn btn-primary d-flex send-msg-btn" onclick="send_message()"  id="send_msg">
+                          <i class="bx bx-paper-plane "></i>
+                          <span class="align-middle d-md-inline-block d-none">Send</span>
+                        </button>
+                      </div>
+                      <div class="input-group-text bg-transparent border-0">
+                          <button class="btn btn-light text-secondary">
+                              <i class="fas fa-microphone"></i>
+                          </button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+            
 
             <div class="app-overlay"></div>
           </div>
@@ -241,347 +258,367 @@
     </div>
 
 <script>
-  var myForm = document.getElementById("my_form");
-  myForm.addEventListener("submit", function(event) {
-  // Prevent the default form submission
-  
-  event.preventDefault();
-});
-
-
-document.getElementById("text_operator").addEventListener("keyup", function(event) {
-  // Check if the key pressed is Enter (keycode 13) or "Enter" (key property)
-  if (event.keyCode === 13 || event.key === "Enter") {
-    // send_message(); 
-    
-  }
-});
-
-
-
- // ###### Websocket####
-  var boxName ='{{request.user.id}}'
- var url = 'ws://127.0.0.1:8000/ws/messages/'+ boxName +'/'
-  const chatSocket = new WebSocket(
-    url
-  );
-
-  chatSocket.onmessage = function (e) {
-    console.log(e.data)
-
-    
-
-      const data = JSON.parse(e.data);
-      var chat_list = document.getElementById('user'+data.user_id)
-      var badge = document.getElementById('msg_count'+data.user_id)
+      var myForm = document.getElementById("my_form");
+      myForm.addEventListener("submit", function(event) {
+      // Prevent the default form submission
       
-      var new_count ='1'
-      
-
-      if(badge){
-        var new_count=String(parseInt(badge.innerText)+1);
-        if (new_count =='NaN'){
-          new_count = 1 ;
-        }
+      event.preventDefault();
+    });
+    
+    
+    document.getElementById("text_operator").addEventListener("keyup", function(event) {
+      // Check if the key pressed is Enter (keycode 13) or "Enter" (key property)
+      if (event.keyCode === 13 || event.key === "Enter") {
+        // send_message(); 
         
-        if(chat_list){
-          chat_list.remove()
-        }
       }
-     
+    });
+    
+    
+    
+     // ###### Websocket####
+    var boxName ='{{request.user.id}}'
+    var url = 'ws://127.0.0.1:8000/ws/messages/'+ boxName +'/'
+      const chatSocket = new WebSocket(
+        url
+      );
+    
+      chatSocket.onmessage = function (e) {
+        console.log(e.data)
+    
+        
+    
+          const data = JSON.parse(e.data);
+          var chat_list = document.getElementById('user'+data.user_id)
+          var badge = document.getElementById('msg_count'+data.user_id)
+          
+          var new_count ='1'
+          
+    
+          if(badge){
+            var new_count=String(parseInt(badge.innerText)+1);
+            if (new_count =='NaN'){
+              new_count = 1 ;
+            }
+            
+            if(chat_list){
+              chat_list.remove()
+            }
+          }
+         
+          
+    
+          var basic_div_for_chat = document.getElementById('basic_div_for_chat');
+          if(data.msg_type =='text'){
+            var text =`<p class="chat-contact-status text-truncate mb-0 text-muted" id="new${data.user_id}">${data.text} <span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span></p>`
+            var text2 =`<p class="mb-0" style="color: #788494;">${data.text}</p>`
+          }else if(data.msg_type =='photo'){
+           var text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
+            var text2 =` <img src="/media/${data.file}" alt="Avatar" class="img-fluid">`
+          }
+          else{
+           var text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
+            var text2 =`<p class="mb-0" style="color: #788494;"><a style="color: #788494;" class='btn btn-info' href="/media/${data.file}">${data.file}</a></p>`
+          }
+          var li = `<li class="chat-contact-list-item" id="user${data.user_id}">
+                      
+                      <a class="d-flex align-items-center"   onclick="get_user_messages('/api/v1/user-message-get/${data.user_id}',${data.user_id})">
+                        <div class="flex-shrink-0 avatar avatar-online">
+                          <img src="/media/${data.image}" alt="Avatar" class="rounded-circle">
+                        </div>
+                        <div class="chat-contact-info flex-grow-1 ms-3">
+                          <h6 class="chat-contact-name text-truncate m-0">${data.username}</h6>
+                          `+
+                          text
+                          +
+                          `
+                        </div>
+                        <small class="text-muted mb-auto">5 Minutes</small>
+                      </a>
+                    </li>`
+    
+          basic_div_for_chat.insertAdjacentHTML('afterbegin', li);
+    
+          var badge = document.getElementById('msg_count'+data.user_id)
+          console.log(badge)
+          var new_count=String(parseInt(badge.innerText)+1);
+          if(chat_list){
+            chat_list.remove()
+          }
+          
+          var chat_history = document.getElementById('chat_history')
+          console.log(data.chat_id)
+          chat_history.setAttribute('data-chat_id',data.chat_id)
+          const attributeValue = chat_history.getAttribute('data-id')
+          // console.log(attributeValue)
+          if(attributeValue !='nan' && String(attributeValue) ==data.user_id){
+            var chats = document.getElementById('chats');
+            var chat_text =''
+            var newElement = document.createElement('span');
+            newElement.className = 'chat-message';
       
+            newElement.innerHTML =`      
+            <div class="d-flex align-items-baseline mb-4">
+                      <div class="position-relative avatar">
+                          <img src="/media/${data.image}"
+                              class="img-fluid rounded-circle" alt="">
+                          <span
+                              class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                              <span class="visually-hidden">New alerts</span>
+                          </span>
+                      </div>
+                      <div class="pe-2">
+                          <div>
+                              <div class="card card-text d-inline-block p-2 px-3 m-1">` +text2+
+                              `</div>
+                          </div>
+                          <div>
+                              <div class="small">01:10PM</div>
+                          </div>
+                      </div>
+                  </div> `
+              
+              chats.appendChild(newElement)
+    
+    
+              
+              
+          }
+    
+          
+      } 
+    
+     //###### endwebsocket####
+    
+    function get_user_messages(url,user_id){
+      console.log(user_id)
+      var badge = document.getElementById('msg_count'+user_id)
+      badge.innerText ='0';
+      badge.style.display='none';
+      // console.log('funcga kel')
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json', // Set the appropriate content type
+          // Add any other headers if required
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data)
+          var chat_history = document.getElementById('chat_history')
+          var img_pict = document.getElementById('img_pict')
+          img_pict.style.display ='block';
 
-      var basic_div_for_chat = document.getElementById('basic_div_for_chat');
-      if(data.msg_type =='text'){
-        var text =`<p class="chat-contact-status text-truncate mb-0 text-muted" id="new${data.user_id}">${data.text} <span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span></p>`
-        var text2 =`<p class="mb-0" style="color: #788494;">${data.text}</p>`
-      }else if(data.msg_type =='photo'){
-       var text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
-        var text2 =` <img src="/media/${data.file}" alt="Avatar" class="img-fluid">`
-      }
-      else{
-       var text =`<span class="badge badge-center rounded-pill bg-success ms-auto" id="msg_count${data.user_id}" style="display: block;">${new_count}</span>`
-        var text2 =`<p class="mb-0" style="color: #788494;"><a style="color: #788494;" class='btn btn-info' href="/media/${data.file}">${data.file}</a></p>`
-      }
-      var li = `<li class="chat-contact-list-item" id="user${data.user_id}">
-                  
-                  <a class="d-flex align-items-center"   onclick="get_user_messages('/api/v1/user-message-get/${data.user_id}',${data.user_id})">
-                    <div class="flex-shrink-0 avatar avatar-online">
-                      <img src="/media/${data.image}" alt="Avatar" class="rounded-circle">
-                    </div>
-                    <div class="chat-contact-info flex-grow-1 ms-3">
-                      <h6 class="chat-contact-name text-truncate m-0">${data.username}</h6>
-                      `+
-                      text
-                      +
-                      `
-                    </div>
-                    <small class="text-muted mb-auto">5 Minutes</small>
-                  </a>
-                </li>`
-
-      basic_div_for_chat.insertAdjacentHTML('afterbegin', li);
-
-      var badge = document.getElementById('msg_count'+data.user_id)
-      console.log(badge)
-      var new_count=String(parseInt(badge.innerText)+1);
-      if(chat_list){
-        chat_list.remove()
-      }
+          chat_history.setAttribute('data-id',data.client.user_id)
+          chat_history.style.display ='block';
+          var basic_img = document.getElementById('client_basic_img')
+          basic_img.setAttribute('src',data.client.image)
+          var client_name_basic = document.getElementById('client_name_basic')
+          client_name_basic.innerText = data.client.first_name
+          // console.log(chat_history)//,basic_img,client_name_basic)
+          // chats
+          var chats = document.getElementById('chats');
+          var chat_text =''
+          for(let i=0; i< data.messages.length; i++){
+            var message =""
+            if(data.messages[i].msg_type =='text'){
+            
+            var text2 =`<p class="mb-0" style="color: #788494;">${data.messages[i].text}</p>`
+            }else if(data.messages[i].msg_type =='photo'){
+              
+              var text2 =`<img src="${data.messages[i].file}" class="img-fluid" alt="Responsive image">`
+            }
+            else{
+              
+              var text2 =`<p class="mb-0" style="color: #788494;"><a style="color: #788494;" class='btn btn-info' href="${data.messages[i].file}">${data.messages[i].file}</a></p>`
+            }
+    
+    
+            if (data.messages[i].owner ==3){
+              message =`<div class="d-flex align-items-baseline mb-4">
+                      <div class="position-relative avatar">
+                          <img src="${data.client.image}"
+                              class="img-fluid rounded-circle" alt="">
+                          <span
+                              class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                              <span class="visually-hidden">New alerts</span>
+                          </span>
+                      </div>
+                      <div class="pe-2">
+                          <div>
+                              <div class="card card-text d-inline-block p-2 px-3 m-1">` +text2+
+                              `</div>
+                          </div>
+                          <div>
+                              <div class="small">01:10PM</div>
+                          </div>
+                      </div>
+                  </div>`
+            }else{
+              message =` <div class="d-flex align-items-baseline text-end justify-content-end mb-4">
+                      <div class="pe-2">
+                          <div>
+                              <div class="card card-text d-inline-block p-2 px-3 m-1">`+text2+
+                              `</div>
+                          </div>
+                          <div>
+                              <div class="small">01:13PM</div>
+                          </div>
+                      </div>
+                      <div class="position-relative avatar">
+                          <img src="{% static 'icons/operator.png' %}"
+                              class="img-fluid rounded-circle" alt="">
+                          <span
+                              class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                              <span class="visually-hidden">New alerts</span>
+                          </span>
+                      </div>
+                  </div>`
+            }
+            chat_text += message
+          }
+          console.log(chats)
+          chats.innerHTML = chat_text;
+         
+         
+        })
+        .catch(error => {
+          // Handle any errors
+          console.error(error);
+        });
+    }
+    
+    
+    
+    
+    function send_message(){
+      var text = document.getElementById('text_operator')
+    
+      var form = $('#my_form')[0];
+      var formData = new FormData(form);
+      
+      
+      var url ='{%url "send_message_to_client"%}'
       
       var chat_history = document.getElementById('chat_history')
-      console.log(data.chat_id)
-      chat_history.setAttribute('data-chat_id',data.chat_id)
       const attributeValue = chat_history.getAttribute('data-id')
-      // console.log(attributeValue)
-      if(attributeValue !='nan' && String(attributeValue) ==data.user_id){
-        var chats = document.getElementById('chats');
-        var chat_text =''
-        var newElement = document.createElement('li');
-        newElement.className = 'chat-message';
-  
-        newElement.innerHTML =`        <div class="d-flex ">
-                            <div class="user-avatar flex-shrink-0 me-3">
-                              <div class="avatar avatar-sm">
-                                <img src="/media/${data.image}" alt="Avatar" class="rounded-circle">
-                              </div>
-                            </div>
-                            <div class="chat-message-wrapper flex-grow-1">
-                              <div class="chat-message-text">
-                               `+ text2+
-                               `
-                              </div>
-                              <div class="text-muted mt-1">
-                                <small>10:02 AM</small>
-                              </div>
-                            </div>
-                          </div>`
-          
-          chats.appendChild(newElement)
-
-
-          
-          
-      }
-
+      formData.append('user_id', attributeValue);
       
-  } 
-
- //###### endwebsocket####
-
-function get_user_messages(url,user_id){
-  console.log(user_id)
-  var badge = document.getElementById('msg_count'+user_id)
-  console.log(badge)
-  badge.innerText ='0';
-  badge.style.display='none';
-  // console.log('funcga kel')
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json', // Set the appropriate content type
-      // Add any other headers if required
-    },
-  })
-    .then(response => response.json())
-    .then(data => {
-      
-      var chat_history = document.getElementById('chat_history')
-      chat_history.setAttribute('data-id',data.client.user_id)
-      chat_history.style.display ='block';
-      var basic_img = document.getElementById('client_basic_img')
-      basic_img.setAttribute('src',data.client.image)
-      var client_name_basic = document.getElementById('client_name_basic')
-      client_name_basic.innerText = data.client.first_name
-      // console.log(chat_history)//,basic_img,client_name_basic)
-      // chats
-      var chats = document.getElementById('chats');
-      var chat_text =''
-      for(let i=0; i< data.messages.length; i++){
-        var message =""
-        if(data.messages[i].msg_type =='text'){
-        
-        var text2 =`<p class="mb-0" style="color: #788494;">${data.messages[i].text}</p>`
-        }else if(data.messages[i].msg_type =='photo'){
-          
-          var text2 =`<img src="${data.messages[i].file}" class="img-fluid" alt="Responsive image">`
-        }
-        else{
-          
-          var text2 =`<p class="mb-0" style="color: #788494;"><a style="color: #788494;" class='btn btn-info' href="${data.messages[i].file}">${data.messages[i].file}</a></p>`
-        }
-
-
-        if (data.messages[i].owner ==3){
-          message =`<li class="chat-message">
-                        <div class="d-flex overflow-hidden">
-                          <div class="user-avatar flex-shrink-0 me-3">
-                            <div class="avatar avatar-sm">
-                              <img src="${data.client.image}" alt="Avatar" class="rounded-circle">
-                            </div>
-                          </div>
-                          <div class="chat-message-wrapper flex-grow-1">
-                            <div class="chat-message-text">
-                              ` +text2+
-                              `
-                            </div>
-                            <div class="text-muted mt-1">
-                              <small>10:02 AM</small>
-                            </div>
-                          </div>
-                        </div>
-                      </li>`
-        }else{
-          message =`<li class="chat-message chat-message-right">
-                        <div class="d-flex overflow-hidden">
-                          <div class="chat-message-wrapper flex-grow-1">
-                            <div class="chat-message-text">
-                              `+text2+
-                              `
-                            </div>
-                            <div class="text-end text-muted mt-1">
-                              <i class='bx bx-check-double text-success'></i>
-                              <small>10:00 AM</small>
-                            </div>
-                          </div>
-                          <div class="user-avatar flex-shrink-0 ms-3">
-                            <div class="avatar avatar-sm">
-                              <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
-                            </div>
-                          </div>
-                        </div>
-                      </li>"`
-        }
-        chat_text += message
-      }
-
-      chats.innerHTML = chat_text;
-     
-     
-    })
-    .catch(error => {
-      // Handle any errors
-      console.error(error);
-    });
-}
-
-
-
-
-function send_message(){
-  var text = document.getElementById('text_operator')
-
-  var form = $('#my_form')[0];
-  var formData = new FormData(form);
-  
-  
-  var url ='{%url "send_message_to_client"%}'
-  
-  var chat_history = document.getElementById('chat_history')
-  const attributeValue = chat_history.getAttribute('data-id')
-  formData.append('user_id', attributeValue);
-  
-  if(attributeValue !='nan'){
-    console.log(url);
-    $.ajax({
-      url: url,
-      method: 'POST',
-      data: formData,
-      contentType: false,
-      processData: false,
-      // {
-      //   message: text.value,
-      //   user_id: attributeValue,
-      //   file:formData,
-      // },
-      // dataType: 'json',
-      success: function(response) {
-        var newElement = document.createElement('li');
-        newElement.className = 'chat-message chat-message-right';
-        var chats = document.getElementById('chats');
-        var chat_text =''
-        if (response.msg_type =='text'){
-
-          newElement.innerHTML =`
-                              <div class="d-flex overflow-hidden">
-                            <div class="chat-message-wrapper flex-grow-1">
-                              <div class="chat-message-text">
-                                <p class="mb-0" style="color: #788494;">${text.value}</p>
-                              </div>
-                              <div class="text-end text-muted mt-1">
-                                <i class='bx bx-check-double text-success'></i>
-                                <small>10:00 AM</small>
-                              </div>
-                            </div>
-                            <div class="user-avatar flex-shrink-0 ms-3">
-                              <div class="avatar avatar-sm">
-                                <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
-                              </div>
-                            </div>
-                          </div>`
-            
-        }
-        else if(response.msg_type =='photo'){
-          newElement.innerHTML =`
-                              <div class="d-flex overflow-hidden">
-                            <div class="chat-message-wrapper flex-grow-1">
-                              <div class="chat-message-text">
-                                <img src="/media/uploads/${response.text}" alt="" class="img-fluid">
-                              </div>
-                              <div class="text-end text-muted mt-1">
-                                <i class='bx bx-check-double text-success'></i>
-                                <small>10:00 AM</small>
-                              </div>
-                            </div>
-                            <div class="user-avatar flex-shrink-0 ms-3">
-                              <div class="avatar avatar-sm">
-                                <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
-                              </div>
-                            </div>
-                          </div>`
-            
-        }
-          
-        else{
-          newElement.innerHTML =`
-                              <div class="d-flex overflow-hidden">
-                            <div class="chat-message-wrapper flex-grow-1">
-                              <div class="chat-message-text">
-                                <p class="mb-0" style="color: #788494;"><a style="color: #788494;" class='btn btn-info' href="/media/uploads/${response.text}">${response.text}</a></p>
-                                
-                              </div>
-                              <div class="text-end text-muted mt-1">
-                                <i class='bx bx-check-double text-success'></i>
-                                <small>10:00 AM</small>
-                              </div>
-                            </div>
-                            <div class="user-avatar flex-shrink-0 ms-3">
-                              <div class="avatar avatar-sm">
-                                <img src="{% static 'icons/operator.png' %}" alt="Avatar" class="rounded-circle">
-                              </div>
-                            </div>
-                          </div>`
-            
-        }
-        
-        chats.appendChild(newElement)
-          var formElement = document.getElementById('my_form');
-          formElement.reset();
-      },
-      error: function(xhr, status, error) {
-        // Handle any errors
-        console.error(error);
-      }
-    });
-
-
-
+      if(attributeValue !='nan'){
+        console.log(url);
+        $.ajax({
+          url: url,
+          method: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false,
+          // {
+          //   message: text.value,
+          //   user_id: attributeValue,
+          //   file:formData,
+          // },
+          // dataType: 'json',
+          success: function(response) {
+            var newElement = document.createElement('span');
+            newElement.className = 'chat-message chat-message-right';
+            var chats = document.getElementById('chats');
+            var chat_text =''
+            if (response.msg_type =='text'){
     
-          // var text = document.getElementById('text_operator')
-          // text.value ="";
-  }
-  
-  
-  }
-</script>
+              newElement.innerHTML =`
+              <div class="d-flex align-items-baseline text-end justify-content-end mb-4">
+                      <div class="pe-2">
+                          <div>
+                              <div class="card card-text d-inline-block p-2 px-3 m-1">${text.value}</div>
+                          </div>
+                          <div>
+                              <div class="small">01:13PM</div>
+                          </div>
+                      </div>
+                      <div class="position-relative avatar">
+                          <img src="{% static 'icons/operator.png' %}"
+                              class="img-fluid rounded-circle" alt="">
+                          <span
+                              class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                              <span class="visually-hidden">New alerts</span>
+                          </span>
+                      </div>
+                  </div>
+                  `
+                
+            }
+            else if(response.msg_type =='photo'){
+              newElement.innerHTML =`
+              <div class="d-flex align-items-baseline text-end justify-content-end mb-4">
+                      <div class="pe-2">
+                          <div>
+                              <div class="card card-text d-inline-block p-2 px-3 m-1">
+                                <img src="/media/uploads/${response.text}" alt="" class="img-fluid">
+                                </div>
+                          </div>
+                          <div>
+                              <div class="small">01:13PM</div>
+                          </div>
+                      </div>
+                      <div class="position-relative avatar">
+                          <img src="{% static 'icons/operator.png' %}"
+                              class="img-fluid rounded-circle" alt="">
+                          <span
+                              class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                              <span class="visually-hidden">New alerts</span>
+                          </span>
+                      </div>
+                  </div>
+                    `
+                
+            }
+              
+            else{
+              newElement.innerHTML =`
+              <div class="d-flex align-items-baseline text-end justify-content-end mb-4">
+                      <div class="pe-2">
+                          <div>
+                              <div class="card card-text d-inline-block p-2 px-3 m-1">
+                                <p class="mb-0" style="color: #788494;"><a style="color: #788494;" class='btn btn-info' href="/media/uploads/${response.text}">${response.text}</a></p>
+                                    
+                                </div>
+                          </div>
+                          <div>
+                              <div class="small">01:13PM</div>
+                          </div>
+                      </div>
+                      <div class="position-relative avatar">
+                          <img src="{% static 'icons/operator.png' %}"
+                              class="img-fluid rounded-circle" alt="">
+                          <span
+                              class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                              <span class="visually-hidden">New alerts</span>
+                          </span>
+                      </div>
+                  </div
+                                  `
+                
+            }
+            
+            chats.appendChild(newElement)
+              var formElement = document.getElementById('my_form');
+              formElement.reset();
+          },
+          error: function(xhr, status, error) {
+            // Handle any errors
+            console.error(error);
+          }
+        });
+    
+    
+    
+        
+              // var text = document.getElementById('text_operator')
+              // text.value ="";
+      }
+      
+      
+      }
+    </script>
 {%endblock%}

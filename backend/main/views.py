@@ -18,6 +18,9 @@ from decouple import config
 
 # Create your views here.
 
+def chat2(request):
+    return render(request,'operator/chat2.html')
+
 @login_required(login_url='/accounts/login/')
 def index(request):
     return render(request,'index.html')

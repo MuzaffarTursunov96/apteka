@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .models import TelegramUser
+
 
 class ChatRoomConsumer(AsyncWebsocketConsumer):
     async def connect(self):

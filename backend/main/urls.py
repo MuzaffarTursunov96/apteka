@@ -46,9 +46,10 @@ urlpatterns = [
 
     path('accounts/login/',views.login,name='login'),
     path('registration',views.registration,name='registration'),
-    path('logout/',views.logout,name='logout')
+    path('logout/',views.logout,name='logout'),
 
 
 
-
+    ##################aaditional
+    path('chat2',views.chat2,name='chat2')
 ]
