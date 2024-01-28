@@ -1,0 +1,9 @@
+{
+    "AWSEBDockerrunVersion":"3",
+    "Image":{
+        "Name":"muzaffar96/myimage"
+    },
+    "Ports":[
+        {"ContainerPort":"8000"}
+    ]
+}

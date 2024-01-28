@@ -278,7 +278,7 @@
     
      // ###### Websocket####
     var boxName ='{{request.user.id}}'
-    var url = 'ws://127.0.0.1:8000/ws/messages/'+ boxName +'/'
+    var url = 'ws://'+document.location.host+'/ws/messages/'+ boxName +'/'
       const chatSocket = new WebSocket(
         url
       );

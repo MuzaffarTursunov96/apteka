@@ -1,9 +1,14 @@
+import os
 from django.core.asgi import get_asgi_application
-from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.auth import AuthMiddlewareStack
 from django.urls import re_path
 from main import consumers
 
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+
+from django.conf import settings
 # URLs that handle the WebSocket connection are placed here.
 websocket_urlpatterns=[
                     re_path(
