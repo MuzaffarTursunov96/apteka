@@ -16,12 +16,14 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'channels',
     'jazzmin',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
     'main',
     'api',
     'bot',
@@ -30,7 +32,7 @@ INSTALLED_APPS = [
     
 ]
 
-ASGI_APPLICATION = "config.routing.application"
+ASGI_APPLICATION = "config.asgi.application"
 
 CHANNEL_LAYERS = {
     'default': {
@@ -43,6 +45,7 @@ AUTH_USER_MODEL ='bot.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -67,6 +70,12 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://merospharm.us-west-2.elasticbeanstalk.com',
+    'https://merospharm.us-west-2.elasticbeanstalk.com',
+    'http://127.0.0.1:8000'
 ]
 
 REST_FRAMEWORK = {

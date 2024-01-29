@@ -1,9 +1,0 @@
-option_settings:
-  aws:elasticbeanstalk:container:python:
-    WSGIPath: config.wsgi:application
-  aws:elasticbeanstalk:environment:proxy:staticfiles:
-    /static: static/
-    /media: media/
-  aws:elasticbeanstalk:application:environment:
-    DJANGO_SETTINGS_MODULE: "backend.config.settings"
-    DJANGO_ASGI_APPLICATION: "config.asgi.application"

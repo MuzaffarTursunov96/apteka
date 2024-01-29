@@ -47,13 +47,13 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
 class MessageConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        print('connected')
+        print('connected>>>>>')
         # print(self.scope["url_route"]["kwargs"]["chat_box_name"])
         # print(self.scope)
         # Called when the WebSocket handshake is successful
         self.chat_box_name = self.scope["url_route"]["kwargs"]["chat_box_name"]
         self.group_name = "chat_%s" % self.chat_box_name
-        # self.group_name = "message_1100"
+        # # self.group_name = "message_1100"
         
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
@@ -103,7 +103,6 @@ class MessageConsumer(AsyncWebsocketConsumer):
         # await self.send(text_data=json.dumps({'message': response_message}))
         # print(self)
     async def chatbox_message(self, event):
-       
         chat_id = event["chat_id"]
         message_id = event["message_id"]
         user_id = event["user_id"]
@@ -114,19 +113,16 @@ class MessageConsumer(AsyncWebsocketConsumer):
         msg_type = event["msg_type"]
         file = event["file"]
 
+        message_data = {
+            "chat_id": chat_id,
+            "message_id": message_id,
+            "user_id": user_id,
+            "text": text,
+            "owner": owner,
+            "image": image,
+            "username": username,
+            "msg_type": msg_type,
+            "file": file
+        }
+        await self.send(text_data=json.dumps(message_data))
         
-        await self.send(
-            text_data=json.dumps(
-                {
-                    "chat_id": chat_id,
-                    "message_id": message_id,
-                    "user_id": user_id,
-                    "text": text,
-                    "owner": owner,
-                    "image":image,
-                    "username":username,
-                    "msg_type":msg_type,
-                    "file":file
-                }
-            )
-        )

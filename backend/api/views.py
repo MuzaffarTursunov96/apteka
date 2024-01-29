@@ -150,6 +150,7 @@ def user_message_receive(request):
         }
         print(data,'<<<<<<'*10)
         websocket_url +=str(user.operator.id)+'/'
+        print(websocket_url)
         send_message_to_websocket(websocket_url,data=data)
         
         return JsonResponse({'message':'Successfully saved!'})
