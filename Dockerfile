@@ -3,7 +3,6 @@ WORKDIR /app
 COPY ./backend ./
 
 
-COPY ./supervisord.conf ./
 
 RUN pip install --upgrade pip --no-cache-dir
 RUN pip install twisted
