@@ -9,7 +9,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 import os
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1','54.172.126.253','http://54.172.126.253','https://54.172.126.253','ec2-54-172-126-253.compute-1.amazonaws.com','http://ec2-54-172-126-253.compute-1.amazonaws.com','https://ec2-54-172-126-253.compute-1.amazonaws.com']
 
 
 
@@ -24,13 +24,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'corsheaders',
     'main',
     'api',
     'bot',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
     
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://54.172.126.253",
+    "https://54.172.126.253",
+    "http://localhost:8000",  # Add your localhost for testing
+    # Add other origins as needed
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ASGI_APPLICATION = "config.asgi.application"
 
