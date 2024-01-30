@@ -73,9 +73,13 @@ TEMPLATES = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://merospharm.us-west-2.elasticbeanstalk.com',
-    'https://merospharm.us-west-2.elasticbeanstalk.com',
-    'http://127.0.0.1:8000'
+    'https://ec2-54-209-72-127.compute-1.amazonaws.com',
+    'http://ec2-54-209-72-127.compute-1.amazonaws.com',
+    'http://127.0.0.1:8000',
+    'http://54.209.72.127',
+    'https://54.209.72.127',
+
+
 ]
 
 REST_FRAMEWORK = {
