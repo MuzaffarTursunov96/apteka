@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "corsheaders",
+    
     'main',
     'api',
     'bot',
@@ -45,7 +45,6 @@ AUTH_USER_MODEL ='bot.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -72,15 +71,7 @@ TEMPLATES = [
     },
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'https://ec2-54-209-72-127.compute-1.amazonaws.com',
-    'http://ec2-54-209-72-127.compute-1.amazonaws.com',
-    'http://127.0.0.1:8000',
-    'http://54.209.72.127',
-    'https://54.209.72.127',
 
-
-]
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
