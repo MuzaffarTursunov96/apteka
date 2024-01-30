@@ -16,6 +16,8 @@ import asyncio
 from asgiref.sync import async_to_sync
 from decouple import config
 
+from django.views.decorators.csrf import csrf_protect
+
 # Create your views here.
 
 def chat2(request):
@@ -47,7 +49,7 @@ def chat_box(request, chat_box_name):
     return render(request, "chatbox.html", {"chat_box_name": chat_box_name})
 
 
-
+@csrf_protect
 def login(request):
     if request.user.is_authenticated:
         return redirect('index')
