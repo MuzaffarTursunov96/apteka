@@ -33,8 +33,8 @@ bot = Bot(token=API_TOKEN, loop=loop)
 
 webhook_path = f'/{API_TOKEN}'
 
-base_url ='https://f474-188-113-204-5.ngrok-free.app'
-local_url ='http://127.0.0.1:8000'
+
+local_url =config('URL')
 
 
 websocket_connection = None

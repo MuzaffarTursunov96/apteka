@@ -44,6 +44,7 @@ def operator_save(APIView):
 
 
 def send_message_to_websocket(websocket_url,data):
+    print(websocket_url)
     ws = websocket.WebSocket()
     ws.connect(websocket_url)
     ws.send(json.dumps(data))
@@ -57,7 +58,7 @@ class ListOperators(APIView):
     permission_classes =[permissions.AllowAny]
 
     def get(self,request,region_name):
-        queryset = User.objects.filter(viloyat__name__icontains =region_name,is_active=True)
+        queryset = User.objects.filter(viloyat__name__icontains =region_name,is_active=True,role=3)
         serializer= UserSerializer(queryset,many=True)
         return Response(data=serializer.data)
 

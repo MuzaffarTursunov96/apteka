@@ -149,7 +149,7 @@ def message_show_for_staff(request,id):
 def xodim_list(request):
 
     
-    operators = User.objects.filter(viloyat__name =request.user.viloyat,is_active=True,role=3)
+    operators = User.objects.filter(viloyat__name =request.user.viloyat,is_active=True,role=3).order_by('-created_date')
     
 
     paginator = Paginator(operators, 25)
@@ -182,9 +182,9 @@ def teamlead_list(request):
 
     viloyat =request.GET.get('viloyat',None)
     if viloyat:
-        operators = User.objects.filter(viloyat__name =viloyat,is_active=True,role=2)
+        operators = User.objects.filter(viloyat__name =viloyat,is_active=True,role=2).order_by('-created_date')
     else:
-        operators = User.objects.filter(role=2)
+        operators = User.objects.filter(role=2).order_by('-created_date')
 
     paginator = Paginator(operators, 25)
 
@@ -212,7 +212,7 @@ def client_list(request):
     firma_nomi =request.GET.get('firma',None)
     operator =request.GET.get('operator',None)
 
-    clients = TelegramUser.objects.all()
+    clients = TelegramUser.objects.all().order_by('-created_at')
     
     if viloyat:
         clients = clients.filter(operator__viloyat__name =viloyat)
@@ -406,9 +406,9 @@ def operatorlist(request):
     viloyat =request.GET.get('viloyat',None)
     operator_id =request.GET.get('operator_id',None)
     if viloyat:
-        operators =User.objects.filter(role=3,viloyat__name =viloyat)
+        operators =User.objects.filter(role=3,viloyat__name =viloyat).order_by('-created_date')
     else:
-        operators = User.objects.filter(role =3)
+        operators = User.objects.filter(role =3).order_by('-created_date')
 
     if operator_id:
         operator = User.objects.get(id =int(operator_id))
@@ -550,7 +550,7 @@ def viloyat_add(request):
 
 @login_required(login_url='/accounts/login/')
 def viloyat_show(request):
-    viloyatolar = Viloyatlar.objects.all()
+    viloyatolar = Viloyatlar.objects.all().order_by('-created_at')
 
     paginator = Paginator(viloyatolar, 10)
 
