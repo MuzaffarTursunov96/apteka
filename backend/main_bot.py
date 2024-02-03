@@ -36,6 +36,7 @@ webhook_path = f'/{API_TOKEN}'
 
 local_url =config('URL')
 
+base_url =''
 
 websocket_connection = None
 # For example use simple MemoryStorage for Dispatcher.
