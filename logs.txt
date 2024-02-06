@@ -1,0 +1,532 @@
+failed to get console mode for stdout: The handle is invalid.
+#1 [django_app internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.31kB done
+#1 DONE 0.0s
+
+#2 [django_app internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [django_app internal] load metadata for docker.io/library/python:3.11
+#3 DONE 3.9s
+
+#4 [django_app 1/6] FROM docker.io/library/python:3.11@sha256:63bec515ae23ef6b4563d29e547e81c15d80bf41eff5969cb43d034d333b63b8
+#4 DONE 0.0s
+
+#5 [django_app internal] load build context
+#5 transferring context: 87.62kB 0.1s done
+#5 DONE 0.1s
+
+#6 [django_app 2/6] WORKDIR /app
+#6 CACHED
+
+#7 [django_app 3/6] COPY ./backend ./
+#7 CACHED
+
+#8 [django_app 4/6] RUN pip install --upgrade pip --no-cache-dir
+#8 CACHED
+
+#9 [django_app 5/6] COPY ./requrement3.txt /app/
+#9 DONE 0.0s
+
+#10 [django_app 6/6] RUN pip install -r /app/requrement3.txt
+#10 0.920 Collecting aiofiles==23.1.0 (from -r /app/requrement3.txt (line 1))
+#10 1.413   Downloading aiofiles-23.1.0-py3-none-any.whl (14 kB)
+#10 1.599 Collecting aiogram==2.23.1 (from -r /app/requrement3.txt (line 2))
+#10 1.808   Downloading aiogram-2.23.1-py3-none-any.whl (199 kB)
+#10 2.098      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 199.7/199.7 kB 662.5 kB/s eta 0:00:00
+#10 2.654 Collecting aiohttp==3.8.6 (from -r /app/requrement3.txt (line 3))
+#10 2.830   Downloading aiohttp-3.8.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+#10 2.977 Collecting aiosignal==1.3.1 (from -r /app/requrement3.txt (line 4))
+#10 3.134   Downloading aiosignal-1.3.1-py3-none-any.whl (7.6 kB)
+#10 3.281 Collecting annotated-types==0.6.0 (from -r /app/requrement3.txt (line 5))
+#10 3.443   Downloading annotated_types-0.6.0-py3-none-any.whl.metadata (12 kB)
+#10 3.627 Collecting anyio==4.2.0 (from -r /app/requrement3.txt (line 6))
+#10 3.853   Downloading anyio-4.2.0-py3-none-any.whl.metadata (4.6 kB)
+#10 4.088 Collecting asgiref==3.7.2 (from -r /app/requrement3.txt (line 7))
+#10 4.266   Downloading asgiref-3.7.2-py3-none-any.whl.metadata (9.2 kB)
+#10 4.402 Collecting async-timeout==4.0.3 (from -r /app/requrement3.txt (line 8))
+#10 4.567   Downloading async_timeout-4.0.3-py3-none-any.whl.metadata (4.2 kB)
+#10 4.801 Collecting attrs==23.1.0 (from -r /app/requrement3.txt (line 9))
+#10 4.981   Downloading attrs-23.1.0-py3-none-any.whl (61 kB)
+#10 5.004      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.2/61.2 kB 2.8 MB/s eta 0:00:00
+#10 5.181 Collecting autobahn==23.6.2 (from -r /app/requrement3.txt (line 10))
+#10 5.393   Downloading autobahn-23.6.2.tar.gz (480 kB)
+#10 5.704      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 480.8/480.8 kB 1.5 MB/s eta 0:00:00
+#10 5.768   Preparing metadata (setup.py): started
+#10 6.358   Preparing metadata (setup.py): finished with status 'done'
+#10 6.477 Collecting Automat==22.10.0 (from -r /app/requrement3.txt (line 11))
+#10 6.619   Downloading Automat-22.10.0-py2.py3-none-any.whl (26 kB)
+#10 6.786 Collecting awsebcli==3.20.10 (from -r /app/requrement3.txt (line 12))
+#10 6.925   Downloading awsebcli-3.20.10.tar.gz (260 kB)
+#10 7.027      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 260.2/260.2 kB 2.9 MB/s eta 0:00:00
+#10 7.066   Preparing metadata (setup.py): started
+#10 7.292   Preparing metadata (setup.py): finished with status 'done'
+#10 7.437 Collecting Babel==2.9.1 (from -r /app/requrement3.txt (line 13))
+#10 7.574   Downloading Babel-2.9.1-py2.py3-none-any.whl (8.8 MB)
+#10 14.96      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.8/8.8 MB 1.2 MB/s eta 0:00:00
+#10 15.72 Collecting botocore==1.31.85 (from -r /app/requrement3.txt (line 14))
+#10 15.86   Downloading botocore-1.31.85-py3-none-any.whl.metadata (6.1 kB)
+#10 15.99 Collecting cement==2.8.2 (from -r /app/requrement3.txt (line 15))
+#10 16.12   Downloading cement-2.8.2.tar.gz (165 kB)
+#10 16.19      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 165.8/165.8 kB 2.7 MB/s eta 0:00:00
+#10 16.23   Preparing metadata (setup.py): started
+#10 16.42   Preparing metadata (setup.py): finished with status 'done'
+#10 16.57 Collecting certifi==2023.11.17 (from -r /app/requrement3.txt (line 16))
+#10 16.70   Downloading certifi-2023.11.17-py3-none-any.whl.metadata (2.2 kB)
+#10 16.99 Collecting cffi==1.16.0 (from -r /app/requrement3.txt (line 17))
+#10 17.16   Downloading cffi-1.16.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.5 kB)
+#10 17.31 Collecting channels==3.0.4 (from -r /app/requrement3.txt (line 18))
+#10 17.45   Downloading channels-3.0.4-py3-none-any.whl (38 kB)
+#10 17.67 Collecting charset-normalizer==3.3.2 (from -r /app/requrement3.txt (line 19))
+#10 17.80   Downloading charset_normalizer-3.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (33 kB)
+#10 17.95 Collecting colorama==0.4.3 (from -r /app/requrement3.txt (line 20))
+#10 18.09   Downloading colorama-0.4.3-py2.py3-none-any.whl (15 kB)
+#10 18.21 Collecting constantly==23.10.4 (from -r /app/requrement3.txt (line 21))
+#10 18.36   Downloading constantly-23.10.4-py3-none-any.whl.metadata (1.8 kB)
+#10 18.69 Collecting cryptography==41.0.7 (from -r /app/requrement3.txt (line 22))
+#10 18.80   Downloading cryptography-41.0.7-cp37-abi3-manylinux_2_28_x86_64.whl.metadata (5.2 kB)
+#10 18.96 Collecting daphne==3.0.2 (from -r /app/requrement3.txt (line 23))
+#10 19.11   Downloading daphne-3.0.2-py3-none-any.whl (26 kB)
+#10 19.42 Collecting Django==4.0 (from -r /app/requrement3.txt (line 24))
+#10 19.62   Downloading Django-4.0-py3-none-any.whl (8.0 MB)
+#10 22.55      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.0/8.0 MB 2.7 MB/s eta 0:00:00
+#10 22.83 Collecting django-cors-headers==4.3.1 (from -r /app/requrement3.txt (line 25))
+#10 23.00   Downloading django_cors_headers-4.3.1-py3-none-any.whl.metadata (16 kB)
+#10 23.14 Collecting django-jazzmin==2.6.0 (from -r /app/requrement3.txt (line 26))
+#10 23.31   Downloading django_jazzmin-2.6.0-py3-none-any.whl (2.8 MB)
+#10 24.22      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.8/2.8 MB 3.1 MB/s eta 0:00:00
+#10 24.40 Collecting djangorestframework==3.14.0 (from -r /app/requrement3.txt (line 27))
+#10 24.54   Downloading djangorestframework-3.14.0-py3-none-any.whl (1.1 MB)
+#10 25.01      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 2.3 MB/s eta 0:00:00
+#10 25.20 Collecting frozenlist==1.4.1 (from -r /app/requrement3.txt (line 28))
+#10 25.36   Downloading frozenlist-1.4.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+#10 25.62 Collecting gevent==23.9.1 (from -r /app/requrement3.txt (line 29))
+#10 25.77   Downloading gevent-23.9.1-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (13 kB)
+#10 26.08 Collecting greenlet==3.0.3 (from -r /app/requrement3.txt (line 30))
+#10 26.20   Downloading greenlet-3.0.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+#10 26.34 Collecting gunicorn==21.2.0 (from -r /app/requrement3.txt (line 31))
+#10 26.47   Downloading gunicorn-21.2.0-py3-none-any.whl.metadata (4.1 kB)
+#10 26.61 Collecting h11==0.14.0 (from -r /app/requrement3.txt (line 32))
+#10 26.79   Downloading h11-0.14.0-py3-none-any.whl (58 kB)
+#10 26.81      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.3/58.3 kB 3.2 MB/s eta 0:00:00
+#10 26.95 Collecting h2==4.1.0 (from -r /app/requrement3.txt (line 33))
+#10 27.06   Downloading h2-4.1.0-py3-none-any.whl (57 kB)
+#10 27.10      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.5/57.5 kB 3.0 MB/s eta 0:00:00
+#10 27.32 Collecting hpack==4.0.0 (from -r /app/requrement3.txt (line 34))
+#10 27.51   Downloading hpack-4.0.0-py3-none-any.whl (32 kB)
+#10 27.65 Collecting httpcore==1.0.2 (from -r /app/requrement3.txt (line 35))
+#10 27.82   Downloading httpcore-1.0.2-py3-none-any.whl.metadata (20 kB)
+#10 27.99 Collecting httpx==0.25.2 (from -r /app/requrement3.txt (line 36))
+#10 28.12   Downloading httpx-0.25.2-py3-none-any.whl.metadata (6.9 kB)
+#10 28.26 Collecting Hypercorn==0.16.0 (from -r /app/requrement3.txt (line 37))
+#10 28.43   Downloading hypercorn-0.16.0-py3-none-any.whl.metadata (5.4 kB)
+#10 28.56 Collecting hyperframe==6.0.1 (from -r /app/requrement3.txt (line 38))
+#10 28.74   Downloading hyperframe-6.0.1-py3-none-any.whl (12 kB)
+#10 28.87 Collecting hyperlink==21.0.0 (from -r /app/requrement3.txt (line 39))
+#10 29.04   Downloading hyperlink-21.0.0-py2.py3-none-any.whl (74 kB)
+#10 29.06      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 74.6/74.6 kB 4.5 MB/s eta 0:00:00
+#10 29.19 Collecting idna==3.6 (from -r /app/requrement3.txt (line 40))
+#10 29.35   Downloading idna-3.6-py3-none-any.whl.metadata (9.9 kB)
+#10 29.59 Collecting incremental==22.10.0 (from -r /app/requrement3.txt (line 41))
+#10 29.76   Downloading incremental-22.10.0-py2.py3-none-any.whl (16 kB)
+#10 29.90 Collecting jmespath==1.0.1 (from -r /app/requrement3.txt (line 42))
+#10 30.05   Downloading jmespath-1.0.1-py3-none-any.whl (20 kB)
+#10 30.17 Collecting magic-filter==1.0.12 (from -r /app/requrement3.txt (line 43))
+#10 30.37   Downloading magic_filter-1.0.12-py3-none-any.whl.metadata (1.5 kB)
+#10 30.70 Collecting multidict==6.0.4 (from -r /app/requrement3.txt (line 44))
+#10 30.82   Downloading multidict-6.0.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (117 kB)
+#10 30.87      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.4/117.4 kB 3.0 MB/s eta 0:00:00
+#10 31.02 Collecting packaging==23.2 (from -r /app/requrement3.txt (line 45))
+#10 31.19   Downloading packaging-23.2-py3-none-any.whl.metadata (3.2 kB)
+#10 31.34 Collecting pathspec==0.10.1 (from -r /app/requrement3.txt (line 46))
+#10 31.50   Downloading pathspec-0.10.1-py3-none-any.whl (27 kB)
+#10 31.92 Collecting Pillow==10.1.0 (from -r /app/requrement3.txt (line 47))
+#10 32.11   Downloading Pillow-10.1.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+#10 32.26 Collecting priority==1.3.0 (from -r /app/requrement3.txt (line 48))
+#10 32.37   Downloading priority-1.3.0-py2.py3-none-any.whl (11 kB)
+#10 32.53 Collecting pyasn1==0.5.1 (from -r /app/requrement3.txt (line 49))
+#10 32.65   Downloading pyasn1-0.5.1-py2.py3-none-any.whl.metadata (8.6 kB)
+#10 32.87 Collecting pyasn1-modules==0.3.0 (from -r /app/requrement3.txt (line 50))
+#10 33.04   Downloading pyasn1_modules-0.3.0-py2.py3-none-any.whl (181 kB)
+#10 33.07      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.3/181.3 kB 6.0 MB/s eta 0:00:00
+#10 33.20 Collecting pycparser==2.21 (from -r /app/requrement3.txt (line 51))
+#10 33.34   Downloading pycparser-2.21-py2.py3-none-any.whl (118 kB)
+#10 33.40      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 118.7/118.7 kB 2.0 MB/s eta 0:00:00
+#10 33.65 Collecting pydantic==2.5.3 (from -r /app/requrement3.txt (line 52))
+#10 33.86   Downloading pydantic-2.5.3-py3-none-any.whl.metadata (65 kB)
+#10 33.87      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 65.6/65.6 kB 4.1 MB/s eta 0:00:00
+#10 34.77 Collecting pydantic_core==2.14.6 (from -r /app/requrement3.txt (line 53))
+#10 34.89   Downloading pydantic_core-2.14.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+#10 35.02 Collecting pyOpenSSL==23.3.0 (from -r /app/requrement3.txt (line 54))
+#10 35.14   Downloading pyOpenSSL-23.3.0-py3-none-any.whl.metadata (12 kB)
+#10 35.28 Collecting python-dateutil==2.8.2 (from -r /app/requrement3.txt (line 55))
+#10 35.49   Downloading python_dateutil-2.8.2-py2.py3-none-any.whl (247 kB)
+#10 35.53      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 247.7/247.7 kB 7.1 MB/s eta 0:00:00
+#10 35.66 Collecting python-decouple==3.8 (from -r /app/requrement3.txt (line 56))
+#10 35.80   Downloading python_decouple-3.8-py3-none-any.whl (9.9 kB)
+#10 35.96 Collecting python-telegram-bot==20.7 (from -r /app/requrement3.txt (line 57))
+#10 36.11   Downloading python_telegram_bot-20.7-py3-none-any.whl.metadata (15 kB)
+#10 36.30 Collecting pytz==2023.3.post1 (from -r /app/requrement3.txt (line 58))
+#10 36.52   Downloading pytz-2023.3.post1-py2.py3-none-any.whl.metadata (22 kB)
+#10 36.69 Collecting PyYAML==6.0.1 (from -r /app/requrement3.txt (line 59))
+#10 36.82   Downloading PyYAML-6.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+#10 36.97 Collecting requests==2.31.0 (from -r /app/requrement3.txt (line 60))
+#10 37.13   Downloading requests-2.31.0-py3-none-any.whl.metadata (4.6 kB)
+#10 37.28 Collecting semantic-version==2.8.5 (from -r /app/requrement3.txt (line 61))
+#10 37.44   Downloading semantic_version-2.8.5-py2.py3-none-any.whl (15 kB)
+#10 37.57 Collecting service-identity==23.1.0 (from -r /app/requrement3.txt (line 62))
+#10 37.75   Downloading service_identity-23.1.0-py3-none-any.whl.metadata (5.5 kB)
+#10 37.89 Collecting six==1.16.0 (from -r /app/requrement3.txt (line 63))
+#10 38.00   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#10 38.15 Collecting sniffio==1.3.0 (from -r /app/requrement3.txt (line 64))
+#10 38.36   Downloading sniffio-1.3.0-py3-none-any.whl (10 kB)
+#10 38.50 Collecting sqlparse==0.4.4 (from -r /app/requrement3.txt (line 65))
+#10 38.67   Downloading sqlparse-0.4.4-py3-none-any.whl (41 kB)
+#10 38.69      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.2/41.2 kB 2.6 MB/s eta 0:00:00
+#10 38.82 Collecting termcolor==1.1.0 (from -r /app/requrement3.txt (line 66))
+#10 38.98   Downloading termcolor-1.1.0.tar.gz (3.9 kB)
+#10 39.00   Preparing metadata (setup.py): started
+#10 39.16   Preparing metadata (setup.py): finished with status 'done'
+#10 39.31 Collecting Twisted==23.10.0 (from -r /app/requrement3.txt (line 67))
+#10 39.49   Downloading twisted-23.10.0-py3-none-any.whl.metadata (9.5 kB)
+#10 39.63 Collecting txaio==23.1.1 (from -r /app/requrement3.txt (line 68))
+#10 39.80   Downloading txaio-23.1.1-py2.py3-none-any.whl (30 kB)
+#10 39.94 Collecting typing_extensions==4.7.1 (from -r /app/requrement3.txt (line 69))
+#10 40.10   Downloading typing_extensions-4.7.1-py3-none-any.whl.metadata (3.1 kB)
+#10 40.25 Collecting tzdata==2023.3 (from -r /app/requrement3.txt (line 70))
+#10 40.41   Downloading tzdata-2023.3-py2.py3-none-any.whl (341 kB)
+#10 40.49      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 341.8/341.8 kB 4.5 MB/s eta 0:00:00
+#10 40.65 Collecting urllib3==1.26.18 (from -r /app/requrement3.txt (line 71))
+#10 40.82   Downloading urllib3-1.26.18-py2.py3-none-any.whl.metadata (48 kB)
+#10 40.84      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.9/48.9 kB 2.3 MB/s eta 0:00:00
+#10 40.98 Collecting wcwidth==0.1.9 (from -r /app/requrement3.txt (line 72))
+#10 41.13   Downloading wcwidth-0.1.9-py2.py3-none-any.whl (19 kB)
+#10 41.36 Collecting websocket-client==1.7.0 (from -r /app/requrement3.txt (line 73))
+#10 41.54   Downloading websocket_client-1.7.0-py3-none-any.whl.metadata (7.9 kB)
+#10 41.75 Collecting websockets==12.0 (from -r /app/requrement3.txt (line 74))
+#10 41.93   Downloading websockets-12.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+#10 42.08 Collecting wsproto==1.2.0 (from -r /app/requrement3.txt (line 75))
+#10 42.25   Downloading wsproto-1.2.0-py3-none-any.whl (24 kB)
+#10 42.55 Collecting yarl==1.9.4 (from -r /app/requrement3.txt (line 76))
+#10 42.67   Downloading yarl-1.9.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (31 kB)
+#10 42.82 Collecting zope.event==5.0 (from -r /app/requrement3.txt (line 77))
+#10 42.97   Downloading zope.event-5.0-py3-none-any.whl.metadata (4.4 kB)
+#10 43.30 Collecting zope.interface==6.1 (from -r /app/requrement3.txt (line 78))
+#10 43.48   Downloading zope.interface-6.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (41 kB)
+#10 43.49      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.7/41.7 kB 3.7 MB/s eta 0:00:00
+#10 43.67 Requirement already satisfied: setuptools in /usr/local/lib/python3.11/site-packages (from autobahn==23.6.2->-r /app/requrement3.txt (line 10)) (65.5.1)
+#10 43.98 Collecting blessed>=1.9.5 (from awsebcli==3.20.10->-r /app/requrement3.txt (line 12))
+#10 44.20   Downloading blessed-1.20.0-py2.py3-none-any.whl (58 kB)
+#10 44.21      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.4/58.4 kB 5.0 MB/s eta 0:00:00
+#10 45.43 Downloading aiohttp-3.8.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.1 MB)
+#10 45.74    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 3.5 MB/s eta 0:00:00
+#10 45.94 Downloading annotated_types-0.6.0-py3-none-any.whl (12 kB)
+#10 46.14 Downloading anyio-4.2.0-py3-none-any.whl (85 kB)
+#10 46.16    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.5/85.5 kB 6.2 MB/s eta 0:00:00
+#10 46.35 Downloading asgiref-3.7.2-py3-none-any.whl (24 kB)
+#10 46.56 Downloading async_timeout-4.0.3-py3-none-any.whl (5.7 kB)
+#10 46.76 Downloading botocore-1.31.85-py3-none-any.whl (11.3 MB)
+#10 51.35    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.3/11.3 MB 2.4 MB/s eta 0:00:00
+#10 51.57 Downloading certifi-2023.11.17-py3-none-any.whl (162 kB)
+#10 51.60    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 162.5/162.5 kB 8.5 MB/s eta 0:00:00
+#10 51.98 Downloading cffi-1.16.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (464 kB)
+#10 52.35    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 464.8/464.8 kB 1.2 MB/s eta 0:00:00
+#10 52.49 Downloading charset_normalizer-3.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (140 kB)
+#10 52.56    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 140.3/140.3 kB 2.0 MB/s eta 0:00:00
+#10 52.70 Downloading constantly-23.10.4-py3-none-any.whl (13 kB)
+#10 52.84 Downloading cryptography-41.0.7-cp37-abi3-manylinux_2_28_x86_64.whl (4.4 MB)
+#10 55.60    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.4/4.4 MB 1.6 MB/s eta 0:00:00
+#10 55.72 Downloading django_cors_headers-4.3.1-py3-none-any.whl (12 kB)
+#10 55.86 Downloading frozenlist-1.4.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (272 kB)
+#10 55.95    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 272.3/272.3 kB 3.3 MB/s eta 0:00:00
+#10 56.19 Downloading gevent-23.9.1-cp311-cp311-manylinux_2_28_x86_64.whl (6.5 MB)
+#10 58.55    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.5/6.5 MB 2.8 MB/s eta 0:00:00
+#10 58.74 Downloading greenlet-3.0.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (620 kB)
+#10 58.95    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 620.0/620.0 kB 3.0 MB/s eta 0:00:00
+#10 59.06 Downloading gunicorn-21.2.0-py3-none-any.whl (80 kB)
+#10 59.10    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.2/80.2 kB 2.5 MB/s eta 0:00:00
+#10 59.22 Downloading httpcore-1.0.2-py3-none-any.whl (76 kB)
+#10 59.26    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 76.9/76.9 kB 2.1 MB/s eta 0:00:00
+#10 59.46 Downloading httpx-0.25.2-py3-none-any.whl (74 kB)
+#10 59.48    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.0/75.0 kB 3.3 MB/s eta 0:00:00
+#10 59.67 Downloading hypercorn-0.16.0-py3-none-any.whl (59 kB)
+#10 59.68    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.9/59.9 kB 3.6 MB/s eta 0:00:00
+#10 59.87 Downloading idna-3.6-py3-none-any.whl (61 kB)
+#10 59.89    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.6/61.6 kB 3.3 MB/s eta 0:00:00
+#10 60.07 Downloading magic_filter-1.0.12-py3-none-any.whl (11 kB)
+#10 60.27 Downloading packaging-23.2-py3-none-any.whl (53 kB)
+#10 60.29    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.0/53.0 kB 4.6 MB/s eta 0:00:00
+#10 60.42 Downloading Pillow-10.1.0-cp311-cp311-manylinux_2_28_x86_64.whl (3.6 MB)
+#10 61.64    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 3.0 MB/s eta 0:00:00
+#10 61.81 Downloading pyasn1-0.5.1-py2.py3-none-any.whl (84 kB)
+#10 61.83    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.9/84.9 kB 4.6 MB/s eta 0:00:00
+#10 61.96 Downloading pydantic-2.5.3-py3-none-any.whl (381 kB)
+#10 62.10    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 381.9/381.9 kB 2.7 MB/s eta 0:00:00
+#10 62.32 Downloading pydantic_core-2.14.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#10 62.72    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 5.3 MB/s eta 0:00:00
+#10 62.84 Downloading pyOpenSSL-23.3.0-py3-none-any.whl (58 kB)
+#10 62.87    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.8/58.8 kB 2.2 MB/s eta 0:00:00
+#10 63.04 Downloading python_telegram_bot-20.7-py3-none-any.whl (552 kB)
+#10 63.15    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 552.6/552.6 kB 5.1 MB/s eta 0:00:00
+#10 63.35 Downloading pytz-2023.3.post1-py2.py3-none-any.whl (502 kB)
+#10 63.45    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 502.5/502.5 kB 5.4 MB/s eta 0:00:00
+#10 63.65 Downloading PyYAML-6.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (757 kB)
+#10 63.81    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 757.7/757.7 kB 4.9 MB/s eta 0:00:00
+#10 63.96 Downloading requests-2.31.0-py3-none-any.whl (62 kB)
+#10 63.98    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.6/62.6 kB 4.6 MB/s eta 0:00:00
+#10 64.17 Downloading service_identity-23.1.0-py3-none-any.whl (12 kB)
+#10 64.37 Downloading twisted-23.10.0-py3-none-any.whl (3.2 MB)
+#10 65.45    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.2/3.2 MB 2.9 MB/s eta 0:00:00
+#10 65.60 Downloading typing_extensions-4.7.1-py3-none-any.whl (33 kB)
+#10 65.81 Downloading urllib3-1.26.18-py2.py3-none-any.whl (143 kB)
+#10 65.85    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.8/143.8 kB 4.5 MB/s eta 0:00:00
+#10 66.01 Downloading websocket_client-1.7.0-py3-none-any.whl (58 kB)
+#10 66.03    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.5/58.5 kB 3.3 MB/s eta 0:00:00
+#10 66.22 Downloading websockets-12.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (130 kB)
+#10 66.24    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 130.9/130.9 kB 6.9 MB/s eta 0:00:00
+#10 66.42 Downloading yarl-1.9.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (328 kB)
+#10 66.55    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 328.1/328.1 kB 2.5 MB/s eta 0:00:00
+#10 66.67 Downloading zope.event-5.0-py3-none-any.whl (6.8 kB)
+#10 66.83 Downloading zope.interface-6.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (249 kB)
+#10 66.93    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 249.1/249.1 kB 2.4 MB/s eta 0:00:00
+#10 67.02 Building wheels for collected packages: autobahn, awsebcli, cement, termcolor
+#10 67.02   Building wheel for autobahn (setup.py): started
+#10 67.62   Building wheel for autobahn (setup.py): finished with status 'done'
+#10 67.63   Created wheel for autobahn: filename=autobahn-23.6.2-py2.py3-none-any.whl size=666846 sha256=902b025e63b0cab00604da76b713fbd29eedc5f559fcfa3a4daee4f75bb6d6d9
+#10 67.63   Stored in directory: /root/.cache/pip/wheels/2c/68/6a/d0d59a63751958c289282ac0f7d47ecdcbdf125cc385d83013
+#10 67.63   Building wheel for awsebcli (setup.py): started
+#10 67.98   Building wheel for awsebcli (setup.py): finished with status 'done'
+#10 67.98   Created wheel for awsebcli: filename=awsebcli-3.20.10-py3-none-any.whl size=362194 sha256=48420517dcf1634fbb44061c31b5473c9336c002b5a23f2948b3c7ddb37cde7e
+#10 67.98   Stored in directory: /root/.cache/pip/wheels/e4/87/da/a2c9e23af4154b13ce4d5a35c0a39126c8332655a81fc05332
+#10 67.99   Building wheel for cement (setup.py): started
+#10 68.32   Building wheel for cement (setup.py): finished with status 'done'
+#10 68.32   Created wheel for cement: filename=cement-2.8.2-py3-none-any.whl size=99504 sha256=0d3880ae07a9c0db1b6b4d188093fc4d12aafe115722493609501134afdd58fd
+#10 68.32   Stored in directory: /root/.cache/pip/wheels/a7/53/ec/f6f97ea577967a8cd08381e4b96f0c16caf67df6a78ba43888
+#10 68.32   Building wheel for termcolor (setup.py): started
+#10 68.53   Building wheel for termcolor (setup.py): finished with status 'done'
+#10 68.53   Created wheel for termcolor: filename=termcolor-1.1.0-py3-none-any.whl size=4832 sha256=1508b5c45b2abe2b8df4b269af3ec56e9e97bd1f0aea5f0d1056a2e051ed75fb
+#10 68.53   Stored in directory: /root/.cache/pip/wheels/9f/ca/d7/8f2399d70f5d641d4fef951a78d6aa4ab64cc582e1c4dec9a3
+#10 68.54 Successfully built autobahn awsebcli cement termcolor
+#10 68.92 Installing collected packages: wcwidth, termcolor, pytz, python-decouple, priority, incremental, cement, zope.interface, zope.event, websockets, websocket-client, urllib3, tzdata, typing_extensions, txaio, sqlparse, sniffio, six, semantic-version, PyYAML, pycparser, pyasn1, Pillow, pathspec, packaging, multidict, magic-filter, jmespath, idna, hyperframe, hpack, h11, greenlet, frozenlist, constantly, colorama, charset-normalizer, certifi, Babel, attrs, async-timeout, asgiref, annotated-types, aiofiles, yarl, wsproto, requests, python-dateutil, pydantic_core, pyasn1-modules, hyperlink, httpcore, h2, gunicorn, gevent, Django, cffi, blessed, Automat, anyio, aiosignal, Twisted, pydantic, Hypercorn, httpx, djangorestframework, django-jazzmin, django-cors-headers, cryptography, botocore, aiohttp, service-identity, python-telegram-bot, pyOpenSSL, awsebcli, autobahn, aiogram, daphne, channels
+#10 78.13 Successfully installed Automat-22.10.0 Babel-2.9.1 Django-4.0 Hypercorn-0.16.0 Pillow-10.1.0 PyYAML-6.0.1 Twisted-23.10.0 aiofiles-23.1.0 aiogram-2.23.1 aiohttp-3.8.6 aiosignal-1.3.1 annotated-types-0.6.0 anyio-4.2.0 asgiref-3.7.2 async-timeout-4.0.3 attrs-23.1.0 autobahn-23.6.2 awsebcli-3.20.10 blessed-1.20.0 botocore-1.31.85 cement-2.8.2 certifi-2023.11.17 cffi-1.16.0 channels-3.0.4 charset-normalizer-3.3.2 colorama-0.4.3 constantly-23.10.4 cryptography-41.0.7 daphne-3.0.2 django-cors-headers-4.3.1 django-jazzmin-2.6.0 djangorestframework-3.14.0 frozenlist-1.4.1 gevent-23.9.1 greenlet-3.0.3 gunicorn-21.2.0 h11-0.14.0 h2-4.1.0 hpack-4.0.0 httpcore-1.0.2 httpx-0.25.2 hyperframe-6.0.1 hyperlink-21.0.0 idna-3.6 incremental-22.10.0 jmespath-1.0.1 magic-filter-1.0.12 multidict-6.0.4 packaging-23.2 pathspec-0.10.1 priority-1.3.0 pyOpenSSL-23.3.0 pyasn1-0.5.1 pyasn1-modules-0.3.0 pycparser-2.21 pydantic-2.5.3 pydantic_core-2.14.6 python-dateutil-2.8.2 python-decouple-3.8 python-telegram-bot-20.7 pytz-2023.3.post1 requests-2.31.0 semantic-version-2.8.5 service-identity-23.1.0 six-1.16.0 sniffio-1.3.0 sqlparse-0.4.4 termcolor-1.1.0 txaio-23.1.1 typing_extensions-4.7.1 tzdata-2023.3 urllib3-1.26.18 wcwidth-0.1.9 websocket-client-1.7.0 websockets-12.0 wsproto-1.2.0 yarl-1.9.4 zope.event-5.0 zope.interface-6.1
+#10 78.13 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#10 DONE 79.6s
+
+#11 [django_app] exporting to image
+#11 exporting layers
+#11 exporting layers 2.3s done
+#11 writing image sha256:af92bfe1c022ee8bf54538f6f9585a8c01dfca7e4ffa8a974db905f43087434d done
+#11 naming to docker.io/library/apteka-django_app done
+#11 DONE 2.3s
+http://127.0.0.1:8000/
+
+#12 [nginx internal] load build definition from Dockerfile
+#12 transferring dockerfile: 29B
+#12 transferring dockerfile: 113B done
+#12 DONE 0.0s
+
+#13 [nginx internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [nginx internal] load metadata for docker.io/library/nginx:1.24.0-alpine
+#14 ...
+
+#15 [nginx auth] library/nginx:pull token for registry-1.docker.io
+#15 DONE 0.0s
+
+#14 [nginx internal] load metadata for docker.io/library/nginx:1.24.0-alpine
+#14 DONE 6.1s
+
+#16 [nginx 1/2] FROM docker.io/library/nginx:1.24.0-alpine@sha256:6845649eadc1f0a5dacaf5bb3f01b480ce200ae1249114be11fef9d389196eaf
+#16 DONE 0.0s
+
+#17 [nginx internal] load build context
+#17 transferring context: 34B done
+#17 DONE 0.0s
+
+#18 [nginx 2/2] COPY ./default.conf /etc/nginx/conf.d/default.conf
+#18 CACHED
+
+#19 [nginx] exporting to image
+#19 exporting layers done
+#19 writing image sha256:eeb4a0b15e6d0ebd9784907a0540a15dc6c8221f5866a6873ca3c79edf24198e done
+#19 naming to docker.io/library/apteka-nginx done
+#19 DONE 0.0s
+[1A[1B[0G[?25l[+] Running 0/0
+ - Network apteka_default  Creating[34m0.1s [0m
+[?25h[1A[1A[0G[?25l[34m[+] Running 1/1[0m
+ [32m✔[0m Network apteka_default         [32mCreated[0m[34m0.1s [0m
+ - Container apteka-django_app-1  Creating[34m0.1s [0m
+[?25h[1A[1A[1A[0G[?25l[34m[+] Running 2/2[0m
+ [32m✔[0m Network apteka_default         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container apteka-django_app-1  [32mCreated[0m[34m0.1s [0m
+ - Container apteka-nginx-1       Creating[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 2/3
+ [32m✔[0m Network apteka_default         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container apteka-django_app-1  [32mCreated[0m[34m0.1s [0m
+ - Container apteka-nginx-1       Creating[34m0.2s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[34m[+] Running 3/3[0m
+ [32m✔[0m Network apteka_default         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container apteka-django_app-1  [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container apteka-nginx-1       [32mCreated[0m[34m0.2s [0m
+[?25hAttaching to apteka-django_app-1, apteka-nginx-1
+apteka-nginx-1       | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+apteka-nginx-1       | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+apteka-nginx-1       | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+apteka-nginx-1       | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+apteka-nginx-1       | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf differs from the packaged version
+apteka-nginx-1       | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+apteka-nginx-1       | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+apteka-nginx-1       | /docker-entrypoint.sh: Configuration complete; ready for start up
+apteka-django_app-1  | Performing system checks...
+apteka-django_app-1  | 
+apteka-django_app-1  | System check identified no issues (0 silenced).
+apteka-django_app-1  | February 06, 2024 - 23:46:33
+apteka-django_app-1  | Django version 4.0, using settings 'config.settings'
+apteka-django_app-1  | Starting ASGI/Channels version 3.0.4 development server at http://127.0.0.1:8000/
+apteka-django_app-1  | Quit the server with CONTROL-C.
+failed to get console mode for stdout: The handle is invalid.
+failed to get console mode for stdout: The handle is invalid.
+[1A[1B[0G[?25l[+] Stopping 0/0
+ - Container apteka-nginx-1  Stopping[34m0.1s [0m
+[?25h[1A[1A[0G[?25l[+] Stopping 0/1
+ - Container apteka-nginx-1  Stopping[34m0.2s [0m
+[?25h[1A[1A[0G[?25l[+] Stopping 0/1
+ - Container apteka-nginx-1  Stopping[34m0.3s [0m
+[?25h[1A[1A[0G[?25l[+] Stopping 0/1
+ - Container apteka-nginx-1  Stopping[34m0.4s [0m
+[?25h[1A[1A[0G[?25l[34m[+] Stopping 1/1[0m
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m0.1s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m0.2s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m0.3s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m0.4s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m0.5s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m0.6s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m0.7s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m0.8s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m0.9s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.0s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.1s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.2s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.3s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.4s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.5s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.6s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.7s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.8s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m1.9s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.0s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.1s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.2s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.3s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.4s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.5s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.6s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.7s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.8s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m2.9s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.0s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.1s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.2s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.3s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.4s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.5s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.6s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.7s [0m
+[?25hfailed to get console mode for stdout: The handle is invalid.
+[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.8s [0m
+[?25h[1A[1B[0G[?25l[+] Killing 0/0
+ - Container apteka-django_app-1  Killing[34m0.1s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m3.9s [0m
+[?25h[1A[1A[0G[?25l[+] Killing 0/1
+ - Container apteka-django_app-1  Killing[34m0.2s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ - Container apteka-django_app-1  Stopping[34m4.0s [0m
+[?25h[1A[1A[0G[?25l[+] Killing 0/1
+ - Container apteka-django_app-1  Killing[34m0.3s [0m
+[?25h[1A[1A[0G[?25l[34m[+] Killing 1/1[0m
+ [32m✔[0m Container apteka-django_app-1  [32mKilled[0m[34m0.3s [0m
+[?25h[1A[1A[1A[0G[?25l[34m[+] Stopping 2/2[0m
+ [32m✔[0m Container apteka-nginx-1       [32mStopped[0m[34m0.4s [0m
+ [32m✔[0m Container apteka-django_app-1  [32mStopped[0m[34m4.0s [0m
+[?25h

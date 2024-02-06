@@ -49,7 +49,7 @@ def send_message_to_websocket(websocket_url,data):
     ws.connect(websocket_url)
     ws.send(json.dumps(data))
     response = ws.recv()
-    print(response)
+    # print(response)
     ws.close()
 
 class ListOperators(APIView):
@@ -82,7 +82,8 @@ def randomword(length):
    
 @csrf_exempt
 def user_message_receive(request):
-    websocket_url =config('WEBSOCKET_URL')
+    websocket_url ='ws://127.0.0.1:8000/ws/messages/'
+    #config('WEBSOCKET_URL')
     
     if request.method =='POST':
         data = dict(request.POST)

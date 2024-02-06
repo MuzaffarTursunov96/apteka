@@ -15,7 +15,6 @@ ALLOWED_HOSTS = ['127.0.0.1','54.172.126.253','http://54.172.126.253','https://5
 
 INSTALLED_APPS = [
     'channels',
-    'jazzmin',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,6 +48,7 @@ CHANNEL_LAYERS = {
         'BACKEND': "channels.layers.InMemoryChannelLayer"
         }
     }
+
 
 AUTH_USER_MODEL ='bot.User'
 

@@ -3,7 +3,8 @@ import asyncio
 
 async def connect_websocket():
     async with aiohttp.ClientSession() as session:
-        async with session.ws_connect('ws://127.0.0.1:8000/ws/messages') as ws:
+        # async with session.ws_connect('ws://3.89.144.86:80/ws/messages/3/') as ws:
+        async with session.ws_connect('ws://127.0.0.1:8000/ws/messages/3/') as ws:
             # Perform actions with the WebSocket connection
             await ws.send_str('Hello, WebSocket!')
             
