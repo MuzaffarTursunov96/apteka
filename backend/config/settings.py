@@ -9,7 +9,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 import os
-ALLOWED_HOSTS = ['127.0.0.1','54.172.126.253','http://54.172.126.253','https://54.172.126.253','ec2-54-172-126-253.compute-1.amazonaws.com','http://ec2-54-172-126-253.compute-1.amazonaws.com','https://ec2-54-172-126-253.compute-1.amazonaws.com']
+ALLOWED_HOSTS = ['127.0.0.1','34.227.99.8']
 
 
 
