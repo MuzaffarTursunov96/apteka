@@ -1,5 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 class ChatRoomConsumer(AsyncWebsocketConsumer):
@@ -80,11 +82,14 @@ class MessageConsumer(AsyncWebsocketConsumer):
         file = text_data_json['file']
 
         # Process the message and prepare the response
-        
-        
+        chanell = self.channel_layer
+        # chanell['client'][0]='3.89.144.86'
+        # chanell['client'][1]='80'
+        print(self.channel_layer,self.scope,'befor<<<<<<<')
         await self.channel_layer.group_send(
             self.group_name,
             {
+                "client":['3.89.144.86','80'],
                 "type": "chatbox_message",
                 "chat_id": chat_id,
                 "message_id": message_id,
@@ -97,12 +102,14 @@ class MessageConsumer(AsyncWebsocketConsumer):
                 "file":file
             },
         )
+        print('after>>>>>> ',self.channel_layer,self.scope)
 
         # Send the response back to the connected client
         # print(response_message)
         # await self.send(text_data=json.dumps({'message': response_message}))
         # print(self)
     async def chatbox_message(self, event):
+        print('send>>>')
         chat_id = event["chat_id"]
         message_id = event["message_id"]
         user_id = event["user_id"]

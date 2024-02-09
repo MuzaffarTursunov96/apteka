@@ -35,8 +35,8 @@ bot = Bot(token=API_TOKEN, loop=loop)
 webhook_path = f'/{API_TOKEN}'
 
 
-local_url ='http://127.0.0.1:8000'
-# local_url =config('URL')
+# local_url ='http://127.0.0.1:8000'
+local_url =config('LOCAL_URL')
 
 base_url =''
 

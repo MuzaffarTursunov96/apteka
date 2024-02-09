@@ -17,4 +17,6 @@
 
 # for debug
 python manage.py runserver 0.0.0.0:8000
+
+python main_bot.py
 # gunicorn config.asgi:application -w 3 -b 0.0.0.0:8000  --worker-class uvicorn.workers.UvicornWorker
