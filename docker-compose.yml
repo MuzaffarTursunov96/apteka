@@ -9,7 +9,16 @@ services:
       - media_vol:/app/media
     ports:
       - "8000:8000"
-    
+  telegram_bot:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - static_vol:/app/staticfiles
+      - media_vol:/app/media
+    command: ["python", "main_bot.py"]
+    depends_on:
+      - django_app
     
 
 
