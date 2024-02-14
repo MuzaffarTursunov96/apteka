@@ -301,6 +301,8 @@ async def operator_start(message: types.Message):
                 name = user_key[0] +'##'+ 'qwerty'
             if name in real_operators[message.chat.id]:
                 user_states[message.chat.id]=STATES['FINISH']
+
+
                 UserProfilePhotos = await bot.get_user_profile_photos(user_id=message.from_user.id)
                 img_path = 'uploads/images/man.png'
                 if UserProfilePhotos.total_count > 0:
@@ -308,12 +310,12 @@ async def operator_start(message: types.Message):
                     file_id = first_photo.file_id
 
                     file = await bot.get_file(file_id)
-                    file_path = file.file_path
+                    img_path = str(file.file_path)
                     
-                    random_string =generate_random_string(10)
-                    current_directory = os.getcwd()+f'\\media\\uploads\\images\\{message.from_user.id}{random_string}.jpg'
-                    img_path =f'uploads\\images\\{message.from_user.id}{random_string}.jpg'
-                    await bot.download_file(file_path, current_directory)
+                    # random_string =generate_random_string(10)
+                    # current_directory = os.getcwd()+f'\\media\\uploads\\images\\{message.from_user.id}{random_string}.jpg'
+                    # img_path =f'uploads\\images\\{message.from_user.id}{random_string}.jpg'
+                    # await bot.download_file(file_path, current_directory)
                 teleg_user = message.from_user
                 data ={
                     'user_id':teleg_user.id,

@@ -180,7 +180,12 @@ def TelegramUserSave(request):
         if 'operator_id' in data:
             operator_id = data['operator_id'][0]
         if 'image' in data:
-            image = data['image'][0]
+            # image = data['image'][0]
+            
+            file_path =data['image'][0]
+            bot_token = config('API_TOKEN')
+            file_url = f'https://api.telegram.org/file/bot{bot_token}/{file_path}'
+            response = rq.get(file_url)
 
         if 'user_id' in data:
             user_exists = TelegramUser.objects.filter(user_id=data['user_id'][0]).exists()
@@ -189,14 +194,14 @@ def TelegramUserSave(request):
                 teleg_user.username =username
                 teleg_user.first_name =first_name
                 teleg_user.last_name =last_name
-                teleg_user.image =image
                 teleg_user.save()
+                teleg_user.image.save(str(randomword(10))+str(file_path.split('/')[-1]), ContentFile(response.content), save=True)
                 return JsonResponse({'msg':'User updated'})
             else:
                 operator = User.objects.get(id=operator_id)
                 operator.client_count +=1
                 operator.save()
-                TelegramUser(
+                user =TelegramUser(
                     user_id =data['user_id'][0],
                     username =username,
                     first_name=first_name,
@@ -204,6 +209,7 @@ def TelegramUserSave(request):
                     operator=operator,
                     image =image
                 ).save()
+                user.image.save(str(randomword(10))+str(file_path.split('/')[-1]), ContentFile(response.content), save=True)
                 return JsonResponse({'msg':'User created'})
         
         else:

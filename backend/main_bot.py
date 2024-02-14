@@ -311,8 +311,8 @@ async def operator_start(message: types.Message):
                     file_path = file.file_path
                     
                     random_string =generate_random_string(10)
-                    current_directory = os.getcwd()+f'\\media\\uploads\\images\\{message.from_user.id}{random_string}.jpg'
-                    img_path =f'uploads\\images\\{message.from_user.id}{random_string}.jpg'
+                    current_directory = os.getcwd()+f'/media/uploads/{message.from_user.id}{random_string}.jpg'
+                    img_path =f'uploads/{message.from_user.id}{random_string}.jpg'
                     await bot.download_file(file_path, current_directory)
                 teleg_user = message.from_user
                 data ={
