@@ -11,6 +11,16 @@
                 <div class="card-header border-bottom">
                     <h5 class="card-title">Operatorlar</h5>
                 </div>
+                
+                
+                {% if messages %}
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        {% for message in messages %}
+                        {{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <div class="row mx-2">
@@ -178,6 +188,11 @@
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                             aria-label="Close"></button>
                     </div>
+
+                   
+
+
+
                     <div class="offcanvas-body mx-0 flex-grow-0">
                         <form class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm"
                             
@@ -274,4 +289,7 @@
         </div>
     </div>
 </div>
+<script>
+
+</script>
 {%endblock%}

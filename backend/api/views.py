@@ -82,7 +82,8 @@ def randomword(length):
    
 @csrf_exempt
 def user_message_receive(request):
-    websocket_url ='ws://34.227.99.8:8001/ws/messages/'
+    websocket_url ='ws://54.210.252.107:8001/ws/messages/'
+    # websocket_url =config('WEBSOCKET_URL')
     #config('WEBSOCKET_URL')
     
     if request.method =='POST':

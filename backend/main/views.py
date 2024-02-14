@@ -15,6 +15,7 @@ from django.http import HttpResponse
 import asyncio
 from asgiref.sync import async_to_sync
 from decouple import config
+from django.contrib import messages
 
 from django.views.decorators.csrf import csrf_protect
 
@@ -445,19 +446,22 @@ def operator_save_view(request):
         data =form.data 
         if data['password'] != data['password2']:
             return HttpResponseForbidden('Password did\'nt match')
-        user = User(
-            username =data['username'],
-            last_name =data['last_name'],
-            email =data['email'],
-            phone_number =data['phone_number'],
-            role =role,
-            viloyat =viloyat
-            )
-        print(data)
-        
-        user.save()
-        user.set_password(data['password'])
-        user.save()
+        if User.objects.filter( email =data['email']).exists():
+            messages.success(request, 'This email already exists!')
+        else:
+            user = User(
+                username =data['username'],
+                last_name =data['last_name'],
+                email =data['email'],
+                phone_number =data['phone_number'],
+                role =role,
+                viloyat =viloyat
+                )
+            print(data)
+            
+            user.save()
+            user.set_password(data['password'])
+            user.save()
     
     return redirect('operator_list')
 
@@ -497,18 +501,21 @@ def teamlead_save_view(request):
         data =form.data 
         if data['password'] != data['password2']:
             return HttpResponseForbidden('Password did\'nt match')
-        user = User(
-            username =data['username'],
-            last_name =data['last_name'],
-            email =data['email'],
-            phone_number =data['phone_number'],
-            role =role,
-            viloyat =viloyat
-            )
-        
-        user.save()
-        user.set_password(data['password'])
-        user.save()
+        if User.objects.filter(email=data['email']).exists():
+            messages.success(request, 'This email already exists!')
+        else:
+            user = User(
+                username =data['username'],
+                last_name =data['last_name'],
+                email =data['email'],
+                phone_number =data['phone_number'],
+                role =role,
+                viloyat =viloyat
+                )
+            
+            user.save()
+            user.set_password(data['password'])
+            user.save()
     
     return redirect('teamlead_list')
 

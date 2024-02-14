@@ -21,8 +21,8 @@ from decouple import config
 
 from aiohttp import web
 
-# API_TOKEN = config('API_TOKEN')
-API_TOKEN = '6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
+API_TOKEN = config('API_TOKEN')
+# API_TOKEN = '6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
 
 loop = asyncio.get_event_loop()
 
@@ -35,8 +35,8 @@ bot = Bot(token=API_TOKEN, loop=loop)
 webhook_path = f'/{API_TOKEN}'
 
 
-local_url ='http://34.227.99.8:80'
-# local_url =config('URL')
+# local_url ='http://34.227.99.8:80'
+local_url =config('URL')
 
 base_url =''
 
