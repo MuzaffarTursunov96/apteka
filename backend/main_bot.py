@@ -21,8 +21,8 @@ from decouple import config
 
 from aiohttp import web
 
-API_TOKEN = config('API_TOKEN')
-# API_TOKEN = '6678648593:AAHPDXTI7C6KEESxpWQKXna77isoSj6OBhU'
+# API_TOKEN = config('API_TOKEN')
+API_TOKEN = '6135265293:AAHtwxCTWRDbWW7icGZm3vprrf2stKjALfs'
 
 loop = asyncio.get_event_loop()
 
@@ -36,7 +36,7 @@ webhook_path = f'/{API_TOKEN}'
 
 
 # local_url ='http://34.227.99.8:80'
-local_url =config('URL')
+local_url ='http://127.0.0.1:8006'
 
 base_url =''
 
@@ -187,18 +187,18 @@ async def operator_start(message: types.Message):
             if name in real_operators[message.chat.id]:
                 user_states[message.chat.id]=STATES['FINISH']
                 UserProfilePhotos = await bot.get_user_profile_photos(user_id=message.from_user.id)
-                img_path = 'uploads/images/man.png'
+                img_path = '/man.png'
                 if UserProfilePhotos.total_count > 0:
                     first_photo = UserProfilePhotos.photos[0][0]
                     file_id = first_photo.file_id
 
                     file = await bot.get_file(file_id)
-                    file_path = file.file_path
+                    img_path = str(file.file_path)
                     
-                    random_string =generate_random_string(10)
-                    current_directory = os.getcwd()+f'\\media\\uploads\\images\\{message.from_user.id}{random_string}.jpg'
-                    img_path =f'uploads\\images\\{message.from_user.id}{random_string}.jpg'
-                    await bot.download_file(file_path, current_directory)
+                    # random_string =generate_random_string(10)
+                    # current_directory = os.getcwd()+f'\\media\\uploads\\images\\{message.from_user.id}{random_string}.jpg'
+                    # img_path =f'uploads\\images\\{message.from_user.id}{random_string}.jpg'
+                    # await bot.download_file(file_path, current_directory)
                 teleg_user = message.from_user
                 data ={
                     'user_id':teleg_user.id,

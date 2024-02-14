@@ -196,7 +196,10 @@ def TelegramUserSave(request):
                 teleg_user.first_name =first_name
                 teleg_user.last_name =last_name
                 teleg_user.save()
-                teleg_user.image.save(str(randomword(10))+str(file_path.split('/')[-1]), ContentFile(response.content), save=True)
+                if 'man.png' not in file_path:
+                    teleg_user.image.save(str(randomword(10))+str(file_path.split('/')[-1]), ContentFile(response.content), save=True)
+                else:
+                    teleg_user.image.save(str(file_path.split('/')[-1]), ContentFile(response.content), save=True)
                 return JsonResponse({'msg':'User updated'})
             else:
                 operator = User.objects.get(id=operator_id)
@@ -207,10 +210,13 @@ def TelegramUserSave(request):
                     username =username,
                     first_name=first_name,
                     last_name=last_name,
-                    operator=operator,
-                    image =image
-                ).save()
-                user.image.save(str(randomword(10))+str(file_path.split('/')[-1]), ContentFile(response.content), save=True)
+                    operator=operator
+                )
+                user.save()
+                if 'man.png' not in file_path:
+                    user.image.save(str(randomword(10))+str(file_path.split('/')[-1]), ContentFile(response.content), save=True)
+                else:
+                    user.image.save(str(file_path.split('/')[-1]), ContentFile(response.content), save=True)
                 return JsonResponse({'msg':'User created'})
         
         else:
