@@ -9,7 +9,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 import os
-ALLOWED_HOSTS = ['127.0.0.1','34.227.99.8']
+ALLOWED_HOSTS = ['127.0.0.1','34.227.99.8','54.210.252.107']
 
 
 
